@@ -38,12 +38,12 @@ void ConsoleUI::start()
             personService.add(p);
 
             // Syna vidkomandi:
-            // personService.find(Person p); // Overload?
+            // personService.find(Person p); // Overload a find fyrir akvedna Person?
         }
         else
         {
             cout << "The command was not recognized.\n";
-            cout << "The available commands are:\n add, del, list, find.\n";
+            cout << "The available commands are:\n add, del, list, find and quit.\n";
         }
     }
 }
