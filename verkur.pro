@@ -20,3 +20,6 @@ SOURCES += main.cpp \
 
 HEADERS += \
     person.h
+
+OTHER_FILES += \
+    README.md

@@ -23,7 +23,7 @@ Notandi skal geta skráð þekktar persónur úr sögu tölvunarfræðinnar. Að
 Skila skal lokaútgáfu kóðans í einni .zip/.rar skrá, ásamt upplýsingum um það hvar kóðann er að finna, þ.e. á GitHub/BitBucket etc. Þá skal fylgja með keyranleg útgáfa kerfisins, ásamt gagnaskrá með a.m.k. 10 færslum.
 
 Hópur:
-* Bragi Bergþórsson
+* Bragi Bergþórsson - 8979876 - bragi14@ru.is
 * Daníel Freyr Sigurðsson
 * Ólafur Kári Sigurbjörnsson
 * Rakel Ýr Káradóttir
