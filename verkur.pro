@@ -16,10 +16,14 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    person.cpp
+    person.cpp \
+    consoleui.cpp \
+    personservice.cpp
 
 HEADERS += \
-    person.h
+    person.h \
+    consoleui.h \
+    personservice.h
 
 OTHER_FILES += \
     README.md
