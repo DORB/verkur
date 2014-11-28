@@ -8,9 +8,8 @@ class Person
 {
 public:
     Person();
-private:
     string name;
-    char sex;
+    string sex;
     int birth_year;
     int death_year;
 };
