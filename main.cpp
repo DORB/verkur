@@ -1,5 +1,4 @@
-#include <iostream>
-using namespace std;
+#include "person.h"
 
 int main(int argc, char *argv[])
 {
