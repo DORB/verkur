@@ -9,7 +9,7 @@ Person::Person()
 
 }
 
-Person::Person(string n, int by, int dy, char s)
+Person::Person(string n, int by, int dy, string s)
 {
     name = n;
     sex = s;
@@ -39,7 +39,7 @@ int Person::getDY()
     return death_year;
 }
 
-char Person::getSex()
+string Person::getSex()
 {
     return sex;
 }

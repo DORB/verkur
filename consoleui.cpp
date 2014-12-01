@@ -11,7 +11,7 @@ void ConsoleUI::start()
     cout << "\nOMG. Welcome to this awesome program.\n" << endl;
 
     cout << "The available commands are:" << endl;
-    cout << "add, del, list, find\n" << endl;
+    cout << "add, del, list, sort, find\n" << endl;
 
     cout << "Should the need arise, you can exit this exceptional program\nby executing the command \'quit\'" << endl;
 
@@ -27,7 +27,7 @@ void ConsoleUI::start()
 
             // Fylla inn:
             string name;
-            char sex;
+            string sex;
             int birth_year, death_year;
 
             cout << "Name: " << endl;
@@ -40,10 +40,10 @@ void ConsoleUI::start()
             cout << "Sex: " << endl;
             cin >> sex;
 
-            Person p = Person(name, birth_year, death_year, sex);
+            // Vantar ad bæta vid stadfestingu, birta Person og spyrja yes/no
 
             // Adda vidkomandi:
-            personService.add(p);
+            personService.add(Person(name, birth_year, death_year, sex));
 
             // Senda skilabod um ad that hafi tekist
             cout << "Thank you for this wonderful addition to the list." << endl;
@@ -84,14 +84,18 @@ void ConsoleUI::start()
                          << setw(5) << listed[i].getDY()
                          << setw(5) << listed[i].getSex()
                          << endl;
-                if((i+1) % 10 == 0 && size-1 > 10)
-                {
-                    cout << "Press <RETURN> to see more people" << endl;
-                    cin.ignore();
-                }
+//                if((i+1) % 10 == 0 && size-1 > 10)
+//                {
+//                    cout << "Press <RETURN> to see more people" << endl;
+//                    cin.ignore();
+//                }
             }
                 cout << "+---------------------END-------------------+" << endl;
             }
+        }
+        else if(inp == "sort")
+        {
+            cout << "This does not do anything yet, please go again." << endl;
         }
         else if(inp == "find")
         {
@@ -120,7 +124,7 @@ void ConsoleUI::start()
         {
             cout << "The command \'" << inp << "\' was not recognized." << endl;
             cout << "Perhaps you meant one of these?:" << endl;
-            cout << "add, del, list, find or quit." << endl;
+            cout << "add, del, list, sort, find or quit." << endl;
         }
     }
 }

@@ -2,10 +2,6 @@
 
 PersonRepo::PersonRepo()
 {
-    // personVector = vector<Person>();
-    // Tharf ad lesa upp ur skranni sem vid skrifum i
-    // Populata listann
-
     try
     {
         ifstream inFile("list.txt");
@@ -15,19 +11,22 @@ PersonRepo::PersonRepo()
              // people = PersonContainer();
              while(!inFile.eof()) // End of file
              {
-                 string line, name = "";
-                 char next, sex;
+                 string line[4], name, sex;
                  int birth_year, death_year;
 
-//                 char c;
-//                 while(inFile.get(c))
-//                 {
-//                     if(c == '\t')
-//                         break;
-//                     name += c;
-//                 }
-//                 inFile >> birth_year >> death_year >> sex;
                  inFile >> name >> birth_year >> death_year >> sex;
+
+                 /*for(int i = 0; i < 4; i++)
+                 {
+                    getline(inFile, line[i], '\t');
+                    // cout << line[i] << endl;
+                 }
+
+                 name = line[0];
+                 birth_year = atoi(line[1].c_str());
+                 death_year = atoi(line[2].c_str());
+                 sex = line[3];*/
+
                  Person p = Person(name, birth_year, death_year, sex);
                  people.push_back(p);
              }
