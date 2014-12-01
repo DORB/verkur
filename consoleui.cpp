@@ -67,6 +67,7 @@ void ConsoleUI::start()
                 personService.add(Person(name, birth_year, death_year, sex));
 
                 // Senda skilabod um ad that hafi tekist
+                list(Person(name, birth_year, death_year, sex));
                 cout << "\nThank you for this wonderful addition to the list." << endl;
             }
             else
@@ -95,7 +96,9 @@ void ConsoleUI::start()
 
             if(answer == 'Y' || answer == 'y')
             {
+                string delName = listed[id-1].getName();
                 personService.del(id);
+                cout << "\n" << delName << " was most gruesomely deleted from the database. Bless." << endl;
             }
             else
             {
