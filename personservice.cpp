@@ -7,7 +7,6 @@ PersonService::PersonService()
 
 void PersonService::add(Person p)
 {
-    // Vantar: Ef til þá ekki
     personRepo.add(p);
 }
 
@@ -33,7 +32,6 @@ PersonContainer PersonService::find_p(string str, bool& exists)
         transform(data.begin(), data.end(), data.begin(),(int (*)(int))tolower);
         transform(str.begin(), str.end(), str.begin(),(int (*)(int))tolower);
 
-        //auto found = tofind[i].getName().find(str);
         auto found = data.find(str);
 
         if (found != string::npos)
