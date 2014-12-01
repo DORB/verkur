@@ -16,4 +16,6 @@ private:
     PersonService personService;
 };
 
+void list(PersonContainer listed);
+
 #endif // CONSOLEUI_H

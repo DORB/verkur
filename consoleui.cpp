@@ -84,11 +84,6 @@ void ConsoleUI::start()
                          << setw(5) << listed[i].getDY()
                          << setw(5) << listed[i].getSex()
                          << endl;
-                if((i+1) % 10 == 0 && size-1 > 10)
-                {
-                    cout << "Press <RETURN> to see more people" << endl;
-                    cin.ignore();
-                }
                 }
                     cout << "+---------------------END-------------------+" << endl;
              }
@@ -105,7 +100,7 @@ void ConsoleUI::start()
             string search;
             cout << "Enter a search string: " << endl;
             cin >> search;
-            personService.find_p(search, exists);
+            PersonContainer found = personService.find_p(search, exists);
 
             if(exists == false)
             {
@@ -113,7 +108,8 @@ void ConsoleUI::start()
             }
             else
             {
-
+                // cout << search << " found in " << found.size() << " entries:\n" << endl;
+                list(found);
             }
         }
         else if(inp == "quit")
@@ -127,4 +123,36 @@ void ConsoleUI::start()
             cout << "add, del, list, sort, find or quit." << endl;
         }
     }
+}
+
+void list(PersonContainer listed)
+{
+    int size = listed.size();
+
+    if(size == 0)
+    {
+        cout << "No one in database!" << endl;
+    }
+    else
+    {
+
+        cout << "+-------------------------------------------+" << endl;
+        cout << setw(3) << "No."
+             << setw(27) << "Name"
+             << setw(5) << "Born"
+             << setw(5) << "Dead"
+             << setw(5) << "Sex"
+             << endl;
+        cout << "+-------------------------------------------+" << endl;
+        for(int i = 0; i < size; i++)
+        {
+            cout << setw(3) << i+1
+                 << setw(27) << listed[i].getName()
+                 << setw(5) << listed[i].getBY()
+                 << setw(5) << listed[i].getDY()
+                 << setw(5) << listed[i].getSex()
+                 << endl;
+        }
+            cout << "+---------------------END-------------------+" << endl;
+     }
 }

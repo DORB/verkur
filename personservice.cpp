@@ -9,7 +9,7 @@ void PersonService::add(Person p)
 {
     // Vantar: Ef til þá ekki
     personRepo.add(p);
-    personRepo = PersonRepo();
+    // personRepo = PersonRepo();
 }
 
 PersonContainer PersonService::list()
@@ -22,12 +22,23 @@ void PersonService::del(Person p)
 {
 }
 
-void PersonService::find_p(string str, bool& exists)
+PersonContainer PersonService::find_p(string str, bool& exists)
 {
-    personRepo.find_p(str, exists);
-}
+    PersonContainer tofind = list();
+    PersonContainer result;
 
-Person PersonService::find_p(const Person& p)
-{
+    for(int i = 0; i < tofind.size(); i++)
+    {
+        // cout << i << ": " << tofind[i].getName() << endl;
 
+        size_t found = tofind[i].getName().find(str);
+
+        if (found != string::npos)
+        {
+            exists = true;
+            result.push_back(tofind[i]);
+        }
+    }
+
+    return result;
 }

@@ -68,19 +68,3 @@ PersonContainer PersonRepo::list()
 {
     return people;
 }
-
-void PersonRepo::find_p(const string& str, bool& exists)
-{
-    /*PersonContainer::iterator f = find(people.begin(), people.end(), str);
-
-    if (f != people.end())
-    {
-        exists = true;
-        cout << "Boo!" << endl;
-    }
-    else
-    {
-        exists = false;
-        cout << "Doesn't exist..." << endl;
-    }*/
-}

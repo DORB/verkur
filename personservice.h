@@ -11,8 +11,7 @@ public:
     void add(Person p);
     PersonContainer list();
     void del(Person p);
-    void find_p(string str, bool& exists);
-    Person find_p(const Person& p);
+    PersonContainer find_p(string str, bool &exists);
 private:
     PersonRepo personRepo;
 };

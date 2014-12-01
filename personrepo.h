@@ -17,7 +17,6 @@ public:
     PersonRepo();
     void add(Person p);
     PersonContainer list();
-    void find_p(const string &str, bool &exists);
 private:
     PersonContainer people;
 };
