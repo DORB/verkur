@@ -76,7 +76,7 @@ void ConsoleUI::start()
                      << setw(5) << "Sex"
                      << endl;
                 cout << "+-------------------------------------------+" << endl;
-                for(int i = 0; i < size - 1; i++)
+                for(int i = 0; i < size; i++)
                 {
                     cout << setw(3) << i+1
                          << setw(27) << listed[i].getName()
@@ -84,14 +84,14 @@ void ConsoleUI::start()
                          << setw(5) << listed[i].getDY()
                          << setw(5) << listed[i].getSex()
                          << endl;
-//                if((i+1) % 10 == 0 && size-1 > 10)
-//                {
-//                    cout << "Press <RETURN> to see more people" << endl;
-//                    cin.ignore();
-//                }
-            }
-                cout << "+---------------------END-------------------+" << endl;
-            }
+                if((i+1) % 10 == 0 && size-1 > 10)
+                {
+                    cout << "Press <RETURN> to see more people" << endl;
+                    cin.ignore();
+                }
+                }
+                    cout << "+---------------------END-------------------+" << endl;
+             }
         }
         else if(inp == "sort")
         {

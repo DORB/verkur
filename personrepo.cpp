@@ -8,28 +8,32 @@ PersonRepo::PersonRepo()
 
         if(inFile.is_open())
         {
-             // people = PersonContainer();
              while(!inFile.eof()) // End of file
              {
                  string line[4], name, sex;
                  int birth_year, death_year;
 
-                 inFile >> name >> birth_year >> death_year >> sex;
+                 // inFile >> name >> birth_year >> death_year >> sex;
 
-                 /*for(int i = 0; i < 4; i++)
+                 for(int i = 0; i < 4; i++)
                  {
-                    getline(inFile, line[i], '\t');
-                    // cout << line[i] << endl;
+                    getline(inFile, line[i], ';');
                  }
+                 inFile.ignore();
 
                  name = line[0];
+                    // cout << name << endl;
                  birth_year = atoi(line[1].c_str());
+                    // cout << birth_year << endl;
                  death_year = atoi(line[2].c_str());
-                 sex = line[3];*/
+                    // cout << death_year << endl;
+                 sex = line[3];
+                    // cout << sex;
 
                  Person p = Person(name, birth_year, death_year, sex);
                  people.push_back(p);
              }
+             people.pop_back(); // hendir út síðustu í vektornum
         }
 
         inFile.close();

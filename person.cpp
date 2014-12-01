@@ -19,7 +19,7 @@ Person::Person(string n, int by, int dy, string s)
 
 ostream& operator <<(ostream& out, const Person& p)
 {
-    out << p.name << "\t" << p.birth_year << "\t" << p.death_year << "\t" << p.sex;
+    out << p.name << ";" << p.birth_year << ";" << p.death_year << ";" << p.sex << ";";
 
     return out;
 }
