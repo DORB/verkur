@@ -10,7 +10,7 @@ public:
     PersonService();
     void add(Person p);
     PersonContainer list();
-    void del(Person p);
+    void del(const int& id);
     PersonContainer find_p(string str, bool &exists);
 private:
     PersonRepo personRepo;

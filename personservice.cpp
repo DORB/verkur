@@ -18,8 +18,9 @@ PersonContainer PersonService::list()
     return personRepo.list();
 }
 
-void PersonService::del(Person p)
+void PersonService::del(const int& id)
 {
+    personRepo.del(id);
 }
 
 PersonContainer PersonService::find_p(string str, bool& exists)

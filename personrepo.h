@@ -17,6 +17,7 @@ public:
     PersonRepo();
     void add(Person p);
     PersonContainer list();
+    void del(const int &id);
 private:
     PersonContainer people;
 };

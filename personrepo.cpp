@@ -58,6 +58,36 @@ void PersonRepo::add(Person p)
     }
 }
 
+void PersonRepo::del(const int& id)
+{
+    cout << people.size() << endl;
+    for(int i = (id - 1); i < people.size() - 1; i++)
+    {
+        people[i] = people[i+1];
+    }
+
+    people.pop_back();
+
+    ofstream outFile ("list.txt");
+
+    try
+    {
+        if(outFile.is_open())
+        {
+            for(int i = 0; i < people.size(); i++)
+            {
+                outFile << people[i] << endl;
+            }
+        }
+
+        outFile.close();
+    }
+    catch (...)
+    {
+        cout << "OMG. Writing to database failed." << endl;
+    }
+}
+
 PersonContainer PersonRepo::list()
 {
     return people;

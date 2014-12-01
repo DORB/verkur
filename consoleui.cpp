@@ -60,7 +60,23 @@ void ConsoleUI::start()
         {
             // Birta lista yfir skrá með linunumeri og fa svo ad velja numer til ad eyda?
             // Deletea
-            cout << "This does not do anything yet, please go again." << endl;
+            // cout << "This does not do anything yet, please go again." << endl;
+
+            PersonContainer listed = personService.list();
+            list(listed);
+
+            int id;
+            cout << "Enter no. of person you want to delete: " << endl;
+            cin >> id;
+
+            char answer;
+            cout << "Are you most definitely sure you want to delete this person Permanently? (y/n) ";
+            cin >> answer;
+
+            if(answer == 'Y' || answer == 'y')
+            {
+                personService.del(id);
+            }
         }
         else if(inp == "list")
         {
