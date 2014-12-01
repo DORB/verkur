@@ -44,6 +44,9 @@ void ConsoleUI::start()
 
             // Adda vidkomandi:
             personService.add(p);
+
+            // Senda skilabod um ad that hafi tekist
+            cout << "Thank you for this wonderful addition to the list." << endl;
         }
         else if(inp == "del")
         {
