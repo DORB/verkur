@@ -68,7 +68,7 @@ void ConsoleUI::start()
 
                 // Senda skilabod um ad that hafi tekist
                 list(Person(name, birth_year, death_year, sex));
-                cout << "\nThank you for this wonderful addition to the list." << endl;
+                cout << "\nThank you for this wonderful addition to the database." << endl;
             }
             else
             {
@@ -77,32 +77,39 @@ void ConsoleUI::start()
         }
         else if(inp == "del")
         {
-            // Birta lista yfir skrá með linunumeri og fa svo ad velja numer til ad eyda?
-            // Deletea
-            // cout << "\nThis does not do anything yet, please go again." << endl;
+            // Birta lista yfir skrá með linunumeri og fa svo ad velja numer til ad eyda
 
             PersonContainer listed = personService.list();
             list(listed);
 
-            int id;
-            cout << "Enter no. of person you want to delete: " << endl;
-            cin >> id;
+            string id_input;
+            cout << "Enter no. of person you want to delete (confirmation later required): " << endl;
+            cin >> id_input;
 
-            list(listed[id-1]);
+            int id = atoi(id_input.c_str());
 
-            char answer;
-            cout << "Are you most definitely sure you want to delete this person permanently? (y/n) ";
-            cin >> answer;
-
-            if(answer == 'Y' || answer == 'y')
+            if(id > 0 && id < listed.size())
             {
-                string delName = listed[id-1].getName();
-                personService.del(id);
-                cout << "\n" << delName << " was most gruesomely deleted from the database. Bless." << endl;
+                list(listed[id-1]);
+
+                char answer;
+                cout << "Are you most definitely sure you want to delete this person permanently? (y/n) ";
+                cin >> answer;
+
+                if(answer == 'Y' || answer == 'y')
+                {
+                    string delName = listed[id-1].getName();
+                    personService.del(id);
+                    cout << "\n" << delName << " was most gruesomely deleted from the database. Bless." << endl;
+                }
+                else
+                {
+                    cout << "\nNothing was deleted. Godspeed.\n" << endl;
+                }
             }
             else
             {
-                cout << "\nNothing was deleted. Godspeed.\n" << endl;
+                cout << "\nThe input was not valid. Sorry (with a swedish accent)." << endl;
             }
         }
         else if(inp == "list")
