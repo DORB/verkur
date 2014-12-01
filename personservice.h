@@ -1,6 +1,7 @@
 #ifndef PERSONSERVICE_H
 #define PERSONSERVICE_H
 
+#include <algorithm>
 #include "person.h"
 #include "personrepo.h"
 

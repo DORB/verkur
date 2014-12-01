@@ -28,9 +28,13 @@ PersonContainer PersonService::find_p(string str, bool& exists)
 
     for(int i = 0; i < tofind.size(); i++)
     {
-        // cout << i << ": " << tofind[i].getName() << endl;
+        string data = tofind[i].getName();
 
-        size_t found = tofind[i].getName().find(str);
+        transform(data.begin(), data.end(), data.begin(),(int (*)(int))tolower);
+        transform(str.begin(), str.end(), str.begin(),(int (*)(int))tolower);
+
+        //auto found = tofind[i].getName().find(str);
+        auto found = data.find(str);
 
         if (found != string::npos)
         {
