@@ -60,7 +60,7 @@ void PersonRepo::add(Person p)
 
 void PersonRepo::del(const int& id)
 {
-    cout << people.size() << endl;
+    // cout << people.size() << endl;
     for(int i = (id - 1); i < people.size() - 1; i++)
     {
         people[i] = people[i+1];

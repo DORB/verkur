@@ -9,12 +9,10 @@ void PersonService::add(Person p)
 {
     // Vantar: Ef til þá ekki
     personRepo.add(p);
-    // personRepo = PersonRepo();
 }
 
 PersonContainer PersonService::list()
 {
-    // personRepo = PersonRepo();
     return personRepo.list();
 }
 

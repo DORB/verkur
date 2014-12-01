@@ -17,5 +17,6 @@ private:
 };
 
 void list(PersonContainer listed);
+void list(Person listed);
 
 #endif // CONSOLEUI_H
