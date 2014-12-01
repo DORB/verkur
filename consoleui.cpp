@@ -84,10 +84,10 @@ void ConsoleUI::start()
                          << setw(5) << listed[i].getDY()
                          << setw(5) << listed[i].getSex()
                          << endl;
-                if((i+1) % 10 == 0)
+                if((i+1) % 10 == 0 && size-1 > 10)
                 {
                     cout << "Press <RETURN> to see more people" << endl;
-                    cin.get();
+                    cin.ignore();
                 }
             }
                 cout << "+---------------------END-------------------+" << endl;
@@ -104,7 +104,13 @@ void ConsoleUI::start()
             personService.find_p(search, exists);
 
             if(exists == false)
+            {
                 cout << "Search did not give any results." << endl;
+            }
+            else
+            {
+
+            }
         }
         else if(inp == "quit")
         {
