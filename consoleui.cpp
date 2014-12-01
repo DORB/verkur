@@ -77,6 +77,10 @@ void ConsoleUI::start()
             {
                 personService.del(id);
             }
+            else
+            {
+                cout << "Nothing was deleted." << endl;
+            }
         }
         else if(inp == "list")
         {
