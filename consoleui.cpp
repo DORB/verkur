@@ -8,7 +8,15 @@ ConsoleUI::ConsoleUI()
 void ConsoleUI::start()
 {
     string inp;
-    cout << "\nOMG. Welcome to this awesome program.\n" << endl;
+
+    ifstream splash ("splash.txt");
+    if(splash.is_open())
+    {
+        cout << splash.rdbuf();
+        splash.close();
+    }
+
+    cout << "OMG. Welcome to this awesome program.\n" << endl;
 
     cout << "The available commands are:" << endl;
     cout << "add, del, list, sort, find\n" << endl;
@@ -57,36 +65,7 @@ void ConsoleUI::start()
         else if(inp == "list")
         {
             // Prumpa út listanum bara í heild sinni
-            // cout << "This does not do anything yet, please go again." << endl;
             PersonContainer listed = personService.list();
-//            int size = listed.size();
-
-//            if(size == 0)
-//            {
-//                cout << "No one in database!" << endl;
-//            }
-//            else
-//            {
-
-//                cout << "+-------------------------------------------+" << endl;
-//                cout << setw(3) << "No."
-//                     << setw(27) << "Name"
-//                     << setw(5) << "Born"
-//                     << setw(5) << "Dead"
-//                     << setw(5) << "Sex"
-//                     << endl;
-//                cout << "+-------------------------------------------+" << endl;
-//                for(int i = 0; i < size; i++)
-//                {
-//                    cout << setw(3) << i+1
-//                         << setw(27) << listed[i].getName()
-//                         << setw(5) << listed[i].getBY()
-//                         << setw(5) << listed[i].getDY()
-//                         << setw(5) << listed[i].getSex()
-//                         << endl;
-//                }
-//                    cout << "+---------------------END-------------------+" << endl;
-//             }
             list(listed);
         }
         else if(inp == "sort")
