@@ -9,9 +9,10 @@ class PersonService
 public:
     PersonService();
     void add(Person p);
-    void list();
+    PersonContainer list();
     void del(Person p);
-    void find(string str);
+    void find_p(string str, bool& exists);
+    Person find_p(const Person& p);
 private:
     PersonRepo personRepo;
 };

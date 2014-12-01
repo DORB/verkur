@@ -1,0 +1,7 @@
++----------------------------------------+
+|                VERKUR                  |
+|                  ++                    |
+| OMG. Welcome to this awesome program.  |
+| We sincerely hope you have fun.        |
+|                                        |
++----------------------------------------+

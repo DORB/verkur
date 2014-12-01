@@ -28,4 +28,5 @@ HEADERS += \
     personrepo.h
 
 OTHER_FILES += \
-    README.md
+    README.md \
+    splash.txt

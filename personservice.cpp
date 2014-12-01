@@ -9,19 +9,25 @@ void PersonService::add(Person p)
 {
     // Vantar: Ef til þá ekki
     personRepo.add(p);
+    personRepo = PersonRepo();
 }
 
-void PersonService::list()
+PersonContainer PersonService::list()
 {
-
+    // personRepo = PersonRepo();
+    return personRepo.list();
 }
 
 void PersonService::del(Person p)
 {
-
 }
 
-void PersonService::find(string str)
+void PersonService::find_p(string str, bool& exists)
+{
+    personRepo.find_p(str, exists);
+}
+
+Person PersonService::find_p(const Person& p)
 {
 
 }
