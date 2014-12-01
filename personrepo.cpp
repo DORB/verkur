@@ -13,8 +13,6 @@ PersonRepo::PersonRepo()
                  string line[4], name, sex;
                  int birth_year, death_year;
 
-                 // inFile >> name >> birth_year >> death_year >> sex;
-
                  for(int i = 0; i < 4; i++)
                  {
                     getline(inFile, line[i], ';');
@@ -22,18 +20,14 @@ PersonRepo::PersonRepo()
                  inFile.ignore();
 
                  name = line[0];
-                    // cout << name << endl;
                  birth_year = atoi(line[1].c_str());
-                    // cout << birth_year << endl;
                  death_year = atoi(line[2].c_str());
-                    // cout << death_year << endl;
                  sex = line[3];
-                    // cout << sex;
 
                  Person p = Person(name, birth_year, death_year, sex);
                  people.push_back(p);
              }
-             people.pop_back(); // hendir út síðustu í vektornum
+             people.pop_back(); // hendir út síðustu færslu í vektornum (new line í lok fæls)
         }
 
         inFile.close();
