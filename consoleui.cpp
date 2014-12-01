@@ -36,17 +36,21 @@ void ConsoleUI::start()
             // Fylla inn:
             string name;
             string sex;
+            string years[2];
             int birth_year, death_year;
 
             cout << "Name: " << endl;
             cin.ignore(1000, '\n');
             getline(cin,name);
             cout << "Year of birth: " << endl;
-            cin >> birth_year;
+            cin >> years[0];
             cout << "Year of death: " << endl;
-            cin >> death_year;
+            cin >> years[1];
             cout << "Sex: " << endl;
             cin >> sex;
+
+            birth_year = atoi(years[0].c_str());
+            death_year = atoi(years[1].c_str());
 
             // Vantar ad bæta vid stadfestingu, birta Person og spyrja yes/no
 
@@ -61,13 +65,19 @@ void ConsoleUI::start()
                 cin >> add_answer;
             }
 
+            if(add_answer != 'n' && add_answer != 'N')
+            {
+                list(Person(name, birth_year, death_year, sex));
+                cout << "Does this seem about right? (y/n) ";
+                cin >> add_answer;
+            }
+
             if(add_answer == 'y' || add_answer == 'Y')
             {
                 // Adda vidkomandi:
                 personService.add(Person(name, birth_year, death_year, sex));
 
                 // Senda skilabod um ad that hafi tekist
-                list(Person(name, birth_year, death_year, sex));
                 cout << "\nThank you for this wonderful addition to the database." << endl;
             }
             else
@@ -88,7 +98,7 @@ void ConsoleUI::start()
 
             int id = atoi(id_input.c_str());
 
-            if(id > 0 && id < listed.size())
+            if(id > 0 && (id - 1) < listed.size())
             {
                 list(listed[id-1]);
 
@@ -104,7 +114,7 @@ void ConsoleUI::start()
                 }
                 else
                 {
-                    cout << "\nNothing was deleted. Godspeed.\n" << endl;
+                    cout << "\nNothing was deleted. Godspeed." << endl;
                 }
             }
             else
