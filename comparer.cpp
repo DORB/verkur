@@ -17,7 +17,13 @@ bool Comparer::operator()(const Person p1, const Person p2)
     else if(orderCol == 2)
         return (desc? p1.getBY() > p2.getBY() : p1.getBY() < p2.getBY());
     else if(orderCol == 3)
-        return (desc? p1.getDY() > p2.getDY() : p1.getDY() < p2.getDY());
+    {
+        int p1DY, p2DY;
+        (p1.getDY() == 0)? p1DY = 100000 : p1DY = p1.getDY();
+        (p2.getDY() == 0)? p2DY = 100000 : p2DY = p1.getDY();
+
+        return (desc? p1DY > p2DY : p1DY < p2DY);
+    }
     else if(orderCol == 4)
         return (desc? p1.getSex() > p2.getSex() : p1.getSex() < p2.getSex());
 
