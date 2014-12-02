@@ -19,8 +19,8 @@ bool Comparer::operator()(const Person p1, const Person p2)
     else if(orderCol == 3)
     {
         int p1DY, p2DY;
-        (p1.getDY() == 0)? p1DY = 100000 : p1DY = p1.getDY();
-        (p2.getDY() == 0)? p2DY = 100000 : p2DY = p1.getDY();
+        (p1.getDY() == 0 && !desc)? p1DY = 100000 : p1DY = p1.getDY();
+        (p2.getDY() == 0 && !desc)? p2DY = 100000 : p2DY = p2.getDY();
 
         return (desc? p1DY > p2DY : p1DY < p2DY);
     }
