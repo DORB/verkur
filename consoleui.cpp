@@ -25,14 +25,18 @@ void ConsoleUI::start()
 
     cout << "OMG. Welcome to this awesome program.\n" << endl;
 
-    cout << "The available commands are:" << endl;
+    /*cout << "The available commands are:" << endl;
     cout << "add, del, list, sort, find\n" << endl;
 
-    cout << "Should the need arise, you can exit this exceptional program\nby executing the command \'quit\'" << endl;
+    cout << "Should the need arise, you can exit this exceptional program\nby executing the command \'quit\'" << endl;*/
+
+    cout << "The program contains a list for you to maintain." << endl;
+    cout << "The available commands are:" << endl;
 
     // Loopa sem promptar userinn um input, keyrir svo lengi sem ekki er gefið inn 'quit'
     while(inp != "quit" && inp != "exit")
     {
+        printComms();
         cout << ":";
         cin >> inp;
 
@@ -206,7 +210,7 @@ void ConsoleUI::start()
                 cout << "What would you like to sort in the list? (Choose a number)" << endl;
                 cout << "(1) Names\n(2) Year of birth\n(3) Year of death\n(4) Sex" << endl;
                 // d fyrir descending
-                cout << "Append with <space>d for descending (Ex: sort 3 d)";
+                cout << "Append with <space>d for descending (Ex: '3 d')";
                 cout << ":";
                 cin >> sort_inp;
             }
@@ -287,15 +291,15 @@ void ConsoleUI::start()
         }
         // quit function
         // Hoppað útúr while lykkju og forritið hættir keyrslu
-        else if(inp == "quit")
+        else if(inp == "quit" || inp == "exit")
         {
             cout << "\nThank you very much for this program. Please come again.\n" << endl;
         }
         else
         {
             cout << "The command \'" << inp << "\' was not recognized." << endl;
-            cout << "Perhaps you meant one of these?:" << endl;
-            cout << "add, del, list, sort, find or quit." << endl;
+            /*cout << "Perhaps you meant one of these?:" << endl;
+            cout << "add, del, list, sort, find or quit." << endl;*/
             cin.ignore(1000, '\n');
         }
     }
@@ -422,4 +426,9 @@ bool isDoneFind(string& str)
     }
 
     return done;
+}
+
+void printComms()
+{
+    cout << "\n[add] [del] [list] [find] [sort] [quit]" << endl;
 }
