@@ -1,25 +1,32 @@
 #include "personservice.h"
 
+// Smiðurinn, byr til repository
 PersonService::PersonService()
 {
     personRepo = PersonRepo();
 }
 
+// milliliður fyrir add function
 void PersonService::add(Person p)
 {
     personRepo.add(p);
 }
 
+// milliliður fyrir list function
 PersonContainer PersonService::list()
 {
     return personRepo.list();
 }
 
+// milliliður fyrir del function
 void PersonService::del(const int& id)
 {
     personRepo.del(id);
 }
 
+// Leitarfall
+// Breytir gildi a exists i true gildi ef niðurstaða var ur leitinni, annars false
+// Skilar PersonContainer með leitarniðurstöðunum
 PersonContainer PersonService::find_p(string str, bool& exists)
 {
     PersonContainer tofind = list();
@@ -44,6 +51,8 @@ PersonContainer PersonService::find_p(string str, bool& exists)
     return result;
 }
 
+// Sort fallið
+// Tekur inn leitaraðferðina (sort_after) og bool breytu hvernig a að raða (asc/desc)
 PersonContainer PersonService::sort_list(const int& sort_after, const bool& desc)
 {
     PersonContainer sorted = list();
