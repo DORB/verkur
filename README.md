@@ -25,5 +25,6 @@ Skila skal lokaútgáfu kóðans í einni .zip/.rar skrá, ásamt upplýsingum u
 Hópur:
 * Bragi Bergþórsson - 8979876 - bragi14@ru.is
 * Daníel Freyr Sigurðsson
+* Magnús Norðdahl - 6968749 - magnusn06@ru.is
 * Ólafur Kári Sigurbjörnsson
 * Rakel Ýr Káradóttir
