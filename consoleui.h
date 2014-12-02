@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <algorithm>
 #include "personservice.h"
 using namespace std;
 
@@ -20,5 +21,6 @@ void list(PersonContainer listed);
 void list(Person listed);
 int isValidInput(const string& inp, const int& lessThan, bool& isOK);
 bool isDone(string& str);
+bool isDoneFind(string& str);
 
 #endif // CONSOLEUI_H

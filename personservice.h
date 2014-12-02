@@ -4,6 +4,7 @@
 #include <algorithm>
 #include "person.h"
 #include "personrepo.h"
+#include "comparer.h"
 
 class PersonService
 {
@@ -13,14 +14,9 @@ public:
     PersonContainer list();
     void del(const int& id);
     PersonContainer find_p(string str, bool &exists);
-    PersonContainer sort_list(const int &sort_after);
+    PersonContainer sort_list(const int &sort_after, const bool& desc);
 private:
     PersonRepo personRepo;
 };
-
-bool byName(const Person& p1, const Person& p2);
-bool byYOB(const Person& p1, const Person& p2);
-bool byYOD(const Person& p1, const Person& p2);
-bool bySex(const Person& p1, const Person& p2);
 
 #endif // PERSONSERVICE_H

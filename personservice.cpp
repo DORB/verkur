@@ -25,7 +25,7 @@ PersonContainer PersonService::find_p(string str, bool& exists)
     PersonContainer tofind = list();
     PersonContainer result;
 
-    for(int i = 0; i < tofind.size(); i++)
+    for(unsigned int i = 0; i < tofind.size(); i++)
     {
         string data = tofind[i].getName();
 
@@ -44,40 +44,12 @@ PersonContainer PersonService::find_p(string str, bool& exists)
     return result;
 }
 
-PersonContainer PersonService::sort_list(const int& sort_after)
+PersonContainer PersonService::sort_list(const int& sort_after, const bool& desc)
 {
-    // cout << "Hæ, þú valdir nr. " << sort_after << endl;
-
     PersonContainer sorted = list();
+    Comparer c = Comparer(sort_after, desc);
 
-    switch(sort_after)
-    {
-    case 1: sort(sorted.begin(), sorted.end(), byName); break;
-    case 2: sort(sorted.begin(), sorted.end(), byYOB); break;
-    case 3: sort(sorted.begin(), sorted.end(), byYOD); break;
-    case 4: sort(sorted.begin(), sorted.end(), bySex); break;
-    default: sort(sorted.begin(), sorted.end(), byName);
-    }
+    sort(sorted.begin(), sorted.end(), c);
 
     return sorted;
-}
-
-bool byName(const Person& p1, const Person& p2)
-{
-    return(p1.getName() < p2.getName());
-}
-
-bool byYOB(const Person& p1, const Person& p2)
-{
-    return(p1.getBY() < p2.getBY());
-}
-
-bool byYOD(const Person& p1, const Person& p2)
-{
-    return(p1.getDY() < p2.getDY());
-}
-
-bool bySex(const Person& p1, const Person& p2)
-{
-    return(p1.getSex() < p2.getSex());
 }

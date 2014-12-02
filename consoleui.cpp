@@ -123,7 +123,6 @@ void ConsoleUI::start()
             // listann heldur hoppi yfir það skref og líka beiðnina um númer og birti
             // bara beint viðkomandi sem á að eyða.
 
-            char nextin;
             bool done = false;
             string id_input;
 
@@ -192,9 +191,38 @@ void ConsoleUI::start()
 
             int sort_after = isValidInput(sort_inp, 5, canSort);
 
+            char nextin;
+            bool desc = false;
+            cin.get(nextin);
+
+            if(nextin == '\n')
+            {
+                // cout << "new line" << endl;
+                cin.putback(nextin);
+                desc = false;
+            }
+            else if(nextin == ' ')
+            {
+
+                // cout << "var d" << endl;
+                cin.get(nextin);
+                if(nextin == 'd')
+                {
+                    desc = true;
+                }
+                cin.ignore(1000, '\n');
+            }
+            else
+            {
+                // cout << "bara hvorugt sko" << endl;
+                cout << nextin << endl;
+                desc = false;
+                cin.ignore(1000, '\n');
+            }
+
             if(canSort)
             {
-                PersonContainer sorted = personService.sort_list(sort_after);
+                PersonContainer sorted = personService.sort_list(sort_after, desc);
                 list(sorted);
             }
             else
@@ -209,12 +237,13 @@ void ConsoleUI::start()
             bool exists = false;
             string search;
 
-            bool done = isDone(search);
+            bool done = isDoneFind(search);
 
             if(!done)
             {
                 cout << "Enter a search string: " << endl;
-                cin >> search;
+                cin.ignore(1000, '\n');
+                getline(cin,search);
             }
 
             PersonContainer found = personService.find_p(search, exists);
@@ -238,6 +267,7 @@ void ConsoleUI::start()
             cout << "The command \'" << inp << "\' was not recognized." << endl;
             cout << "Perhaps you meant one of these?:" << endl;
             cout << "add, del, list, sort, find or quit." << endl;
+            cin.ignore(1000, '\n');
         }
     }
 }
@@ -270,7 +300,7 @@ void list(PersonContainer listed)
             cout << setw(5) << listed[i].getSex()
                  << endl;
         }
-            cout << "+--------------------------END------------------------+" << endl;
+            cout << "+--------------------------END------------------------+\n" << endl;
      }
 }
 
@@ -292,7 +322,7 @@ void list(Person listed)
     cout << setw(5) << listed.getSex()
          << endl;
 
-    cout << "+--------------------------END------------------------+" << endl;
+    cout << "+--------------------------END------------------------+\n" << endl;
 }
 
 int isValidInput(const string& inp, const int& lessThan, bool& isOK)
@@ -325,6 +355,28 @@ bool isDone(string& str)
     {
         cin.putback(nextin);
         cin >> str;
+        done = true;
+    }
+    else
+    {
+        cin.putback(nextin);
+        done = false;
+    }
+
+    return done;
+}
+
+bool isDoneFind(string& str)
+{
+    bool done;
+    char nextin;
+
+    cin.get(nextin);
+
+    if(nextin == ' ')
+    {
+        //cin.putback(nextin);
+        getline(cin, str);
         done = true;
     }
     else
