@@ -132,7 +132,7 @@ void ConsoleUI::start()
         {
             //cout << "This does not do anything yet, please go again." << endl;
 
-            char sort_inp;
+            string sort_inp;
             bool canSort;
 
             cout << "What would you like to sort in the list? (Choose a number)" << endl;
@@ -142,25 +142,15 @@ void ConsoleUI::start()
 
             int sort_after = isValidInput(sort_inp, 5, canSort);
 
-            /*if(canSort)
+            if(canSort)
             {
-                PersonContainer sorted = personService.list();
-
-                switch(sort_inp)
-                {
-                case 1: personService.sort(sorted, 1); break;
-                case 2: sorted.sort(yob); break;
-                case 3: sorted.sort(yod); break;
-                case 4: sorted.sort(sex); break;
-                default: sorted.sort(name);
-                }
-
+                PersonContainer sorted = personService.sort_list(sort_after);
                 list(sorted);
             }
             else
             {
                 cout << "\nThe option does not exist. Give it another shot.\n" << endl;
-            }*/
+            }
         }
         else if(inp == "find")
         {
@@ -248,9 +238,11 @@ void list(Person listed)
     cout << "+--------------------------END------------------------+" << endl;
 }
 
-int isValidInput(const char& inp, const int& lessThan, bool& isOK)
+int isValidInput(const string& inp, const int& lessThan, bool& isOK)
 {
-    int result = inp;
+    int result = atoi(inp.c_str());
+
+    cout << result << endl;
 
     if(result > 0 && result < lessThan)
     {

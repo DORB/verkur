@@ -18,6 +18,6 @@ private:
 
 void list(PersonContainer listed);
 void list(Person listed);
-int isValidInput(const char& inp, const int& lessThan, bool& isOK);
+int isValidInput(const string& inp, const int& lessThan, bool& isOK);
 
 #endif // CONSOLEUI_H
