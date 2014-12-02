@@ -43,6 +43,7 @@ PersonContainer PersonService::find_p(string str, bool& exists)
 
     return result;
 }
+
 /*
 bool byName(const Person& p1, const Person& p2)
 {
@@ -63,4 +64,6 @@ bool bySex(const Person& p1, const Person& p2)
 {
     return(p1.getSex() < p2.getSex());
 }
+
+sort(vector.begin(), vector.end(), byName)
 */

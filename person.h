@@ -11,10 +11,10 @@ public:
     Person();
     Person(string n, int by, int dy, string s);
     friend ostream& operator <<(ostream& out, const Person& p);
-    string getName();
-    int getBY();
-    int getDY();
-    string getSex();
+    string getName() const;
+    int getBY() const;
+    int getDY() const;
+    string getSex() const;
 private:
     string name;
     string sex;

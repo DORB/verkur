@@ -24,22 +24,22 @@ ostream& operator <<(ostream& out, const Person& p)
     return out;
 }
 
-string Person::getName()
+string Person::getName() const
 {
     return name;
 }
 
-int Person::getBY()
+int Person::getBY() const
 {
     return birth_year;
 }
 
-int Person::getDY()
+int Person::getDY() const
 {
     return death_year;
 }
 
-string Person::getSex()
+string Person::getSex() const
 {
     return sex;
 }
