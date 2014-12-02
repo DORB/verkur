@@ -135,7 +135,7 @@ void ConsoleUI::start()
         else if(inp == "find")
         {
             // Finna typuna
-            // cout << "This does not do anything yet, please go again." << endl;
+
             bool exists = false;
             string search;
             cout << "Enter a search string: " << endl;
@@ -148,7 +148,7 @@ void ConsoleUI::start()
             }
             else
             {
-                // cout << search << " found in " << found.size() << " entries:\n" << endl;
+                cout << "\n\'" << search << "\' was found in " << found.size() << " entries:" << endl;
                 list(found);
             }
         }
