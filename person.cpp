@@ -17,12 +17,15 @@ Person::Person(string n, int by, int dy, string s)
     death_year = dy;
 }
 
+// Til að einfalda prentun á Person. Óþarfi, bara notað einu sinni, en ágætt að hafa
 ostream& operator <<(ostream& out, const Person& p)
 {
     out << p.name << ";" << p.birth_year << ";" << p.death_year << ";" << p.sex << ";";
 
     return out;
 }
+
+// Gettarar:
 
 string Person::getName() const
 {
