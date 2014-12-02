@@ -36,8 +36,8 @@ PersonContainer PersonService::find_p(string str, bool& exists)
     {
         string data = tofind[i].getName();
 
-        transform(data.begin(), data.end(), data.begin(),(int (*)(int))tolower);
-        transform(str.begin(), str.end(), str.begin(),(int (*)(int))tolower);
+        transform(data.begin(), data.end(), data.begin(),::tolower);
+        transform(str.begin(), str.end(), str.begin(),::tolower);
 
         size_t found = data.find(str);
 

@@ -54,7 +54,7 @@ void ConsoleUI::start()
             getline(cin,name);
             cout << "Year of birth: ";
             cin >> years[0];
-            cout << "Year of death: ";
+            cout << "Year of death (If alive, write 'alive'): ";
             cin >> years[1];
 
             // Breyta strengjum í int
@@ -68,7 +68,7 @@ void ConsoleUI::start()
                 cout << "Please enter the information joyfully again." << endl;
                 cout << "Year of birth: ";
                 cin >> years[0];
-                cout << "Year of death: ";
+                cout << "Year of death (If alive, write 'alive'): ";
                 cin >> years[1];
 
                 birth_year = atoi(years[0].c_str());
@@ -79,7 +79,7 @@ void ConsoleUI::start()
             cin >> sex;
 
             // breyta Sex í uppercase (M/F)
-            transform(sex.begin(), sex.end(), sex.begin(),(int (*)(int))toupper);
+            transform(sex.begin(), sex.end(), sex.begin(),::toupper);
 
             // Error handling á input á kyni
             while(sex != "M" && sex != "F")
@@ -88,7 +88,7 @@ void ConsoleUI::start()
                 cout << "Sex: ";
                 cin >> sex;
                 // breyta kyninu í uppercase...
-                transform(sex.begin(), sex.end(), sex.begin(),(int (*)(int))toupper);
+                transform(sex.begin(), sex.end(), sex.begin(),::toupper);
             }
 
             bool add_exists = false;
