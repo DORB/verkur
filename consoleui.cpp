@@ -111,8 +111,10 @@ void ConsoleUI::start()
                 if(answer == 'Y' || answer == 'y')
                 {
                     string delName = listed[id-1].getName();
+                    string delSex = listed[id-1].getSex();
                     personService.del(id);
-                    cout << "\n" << delName << " was most gruesomely deleted from the database. Bless." << endl;
+                    cout << "\n" << delName << " was most gruesomely deleted from the database. Bless ";
+                         if(delSex == "F"){ cout << "her." << endl;} else{cout << "him." << endl;}
                 }
                 else
                 {
