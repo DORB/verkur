@@ -211,8 +211,8 @@ void list(PersonContainer listed)
             cout << setw(3) << i+1
                  << setw(37) << listed[i].getName()
                  << setw(5) << listed[i].getBY()
-                 << setw(5) << listed[i].getDY()
-                 << setw(5) << listed[i].getSex()
+                 << setw(5); if(listed[i].getDY() == 0){ cout << "-"; } else { cout << listed[i].getDY(); }
+            cout << setw(5) << listed[i].getSex()
                  << endl;
         }
             cout << "+--------------------------END------------------------+" << endl;
@@ -233,8 +233,8 @@ void list(Person listed)
     cout << setw(3) << ""
          << setw(37) << listed.getName()
          << setw(5) << listed.getBY()
-         << setw(5) << listed.getDY()
-         << setw(5) << listed.getSex()
+         << setw(5); if(listed.getDY() == 0){ cout << "-"; } else { cout << listed.getDY(); }
+    cout << setw(5) << listed.getSex()
          << endl;
 
     cout << "+--------------------------END------------------------+" << endl;
