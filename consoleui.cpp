@@ -96,12 +96,10 @@ void ConsoleUI::start()
             cout << "Enter no. of person you want to delete (confirmation later required): " << endl;
             cin >> id_input;
 
-            // int id = atoi(id_input.c_str());
             bool canDel;
 
-            int id = isValidInput(id_input, listed.size(), canDel);
+            int id = isValidInput(id_input, listed.size()+1, canDel);
 
-            // if(id > 0 && (id - 1) < listed.size())
             if(canDel)
             {
                 list(listed[id-1]);

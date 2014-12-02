@@ -61,12 +61,14 @@ void PersonRepo::add(Person p)
 void PersonRepo::del(const int& id)
 {
     // cout << people.size() << endl;
-    for(int i = (id - 1); i < people.size() - 1; i++)
+    /*for(int i = (id - 1); i < people.size() - 1; i++)
     {
         people[i] = people[i+1];
     }
 
-    people.pop_back();
+    people.pop_back();*/
+
+    people.erase(people.begin()+(id-1));
 
     ofstream outFile ("list.txt");
 
