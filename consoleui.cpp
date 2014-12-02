@@ -12,7 +12,11 @@ void ConsoleUI::start()
     ifstream splash ("splash.txt");
     if(splash.is_open())
     {
-        cout << splash.rdbuf();
+        string currentLine;
+        while(getline(splash, currentLine))
+        {
+            cout << currentLine << endl;
+        }
         splash.close();
     }
 
@@ -39,18 +43,42 @@ void ConsoleUI::start()
             string years[2];
             int birth_year, death_year;
 
-            cout << "Name: " << endl;
+            cout << "Name: ";
             cin.ignore(1000, '\n');
             getline(cin,name);
-            cout << "Year of birth: " << endl;
+            cout << "Year of birth: ";
             cin >> years[0];
-            cout << "Year of death: " << endl;
+            cout << "Year of death: ";
             cin >> years[1];
-            cout << "Sex: " << endl;
-            cin >> sex;
 
             birth_year = atoi(years[0].c_str());
             death_year = atoi(years[1].c_str());
+
+            while(birth_year > death_year && death_year != 0)
+            {
+                cout << "\nWhat a drag. It seems your character has died before being born." << endl;
+                cout << "Please enter the information joyfully again." << endl;
+                cout << "Year of birth: ";
+                cin >> years[0];
+                cout << "Year of death: ";
+                cin >> years[1];
+
+                birth_year = atoi(years[0].c_str());
+                death_year = atoi(years[1].c_str());
+            }
+
+            cout << "Sex: ";
+            cin >> sex;
+
+            transform(sex.begin(), sex.end(), sex.begin(),(int (*)(int))toupper);
+
+            while(sex != "M" && sex != "F")
+            {
+                cout << "Alas, the sex is not right. Must be either M or F. Try again.\n";
+                cout << "Sex: ";
+                cin >> sex;
+                transform(sex.begin(), sex.end(), sex.begin(),(int (*)(int))toupper);
+            }
 
             // Vantar ad bæta vid stadfestingu, birta Person og spyrja yes/no
 
@@ -90,11 +118,24 @@ void ConsoleUI::start()
             // Birta lista yfir skrá með linunumeri og fa svo ad velja numer til ad eyda
 
             PersonContainer listed = personService.list();
-            list(listed);
 
+            // Væri hægt að gera hér að ef notandin sló inn "del 7" þá sýni hann ekki allan
+            // listann heldur hoppi yfir það skref og líka beiðnina um númer og birti
+            // bara beint viðkomandi sem á að eyða.
+
+            char nextin;
+            bool done = false;
             string id_input;
-            cout << "Enter no. of person you want to delete (confirmation later required): " << endl;
-            cin >> id_input;
+
+            done = isDone(id_input);
+
+            if(!done)
+            {
+                list(listed);
+
+                cout << "Enter no. of person you want to delete (confirmation later required): ";
+                cin >> id_input;
+            }
 
             bool canDel;
 
@@ -102,6 +143,7 @@ void ConsoleUI::start()
 
             if(canDel)
             {
+
                 list(listed[id-1]);
 
                 char answer;
@@ -138,11 +180,15 @@ void ConsoleUI::start()
 
             string sort_inp;
             bool canSort;
+            bool done = isDone(sort_inp);
 
-            cout << "What would you like to sort in the list? (Choose a number)" << endl;
-            cout << "(1) Names\n(2) Year of birth\n(3) Year of death\n(4) Sex" << endl;
-            cout << ":";
-            cin >> sort_inp;
+            if(!done)
+            {
+                cout << "What would you like to sort in the list? (Choose a number)" << endl;
+                cout << "(1) Names\n(2) Year of birth\n(3) Year of death\n(4) Sex" << endl;
+                cout << ":";
+                cin >> sort_inp;
+            }
 
             int sort_after = isValidInput(sort_inp, 5, canSort);
 
@@ -162,8 +208,15 @@ void ConsoleUI::start()
 
             bool exists = false;
             string search;
-            cout << "Enter a search string: " << endl;
-            cin >> search;
+
+            bool done = isDone(search);
+
+            if(!done)
+            {
+                cout << "Enter a search string: " << endl;
+                cin >> search;
+            }
+
             PersonContainer found = personService.find_p(search, exists);
 
             if(exists == false)
@@ -195,12 +248,12 @@ void list(PersonContainer listed)
 
     if(size == 0)
     {
-        cout << "No one in database!" << endl;
+        cout << "\nNo one in database!" << endl;
     }
     else
     {
 
-        cout << "+-----------------------------------------------------+" << endl;
+        cout << "\n+-----------------------------------------------------+" << endl;
         cout << setw(3) << "No."
              << setw(37) << "Name"
              << setw(5) << "Born"
@@ -223,7 +276,7 @@ void list(PersonContainer listed)
 
 void list(Person listed)
 {
-    cout << "+-----------------------------------------------------+" << endl;
+    cout << "\n+-----------------------------------------------------+" << endl;
     cout << setw(3) << ""
          << setw(37) << "Name"
          << setw(5) << "Born"
@@ -246,7 +299,7 @@ int isValidInput(const string& inp, const int& lessThan, bool& isOK)
 {
     int result = atoi(inp.c_str());
 
-    cout << result << endl;
+    // cout << result << endl;
 
     if(result > 0 && result < lessThan)
     {
@@ -259,4 +312,26 @@ int isValidInput(const string& inp, const int& lessThan, bool& isOK)
     }
 
     return -1;
+}
+
+bool isDone(string& str)
+{
+    bool done;
+    char nextin;
+
+    cin.get(nextin);
+
+    if(nextin != '\n')
+    {
+        cin.putback(nextin);
+        cin >> str;
+        done = true;
+    }
+    else
+    {
+        cin.putback(nextin);
+        done = false;
+    }
+
+    return done;
 }
