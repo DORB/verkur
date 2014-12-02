@@ -32,7 +32,7 @@ PersonContainer PersonService::find_p(string str, bool& exists)
         transform(data.begin(), data.end(), data.begin(),(int (*)(int))tolower);
         transform(str.begin(), str.end(), str.begin(),(int (*)(int))tolower);
 
-        auto found = data.find(str);
+        size_t found = data.find(str);
 
         if (found != string::npos)
         {
@@ -46,13 +46,13 @@ PersonContainer PersonService::find_p(string str, bool& exists)
 
 PersonContainer PersonService::sort_list(const int& sort_after)
 {
-    cout << "Hæ, þú valdir nr. " << sort_after << endl;
+    // cout << "Hæ, þú valdir nr. " << sort_after << endl;
 
     PersonContainer sorted = list();
 
     switch(sort_after)
     {
-    case 1: sort(sorted.end(), sorted.begin(), byName); break;
+    case 1: sort(sorted.begin(), sorted.end(), byName); break;
     case 2: sort(sorted.begin(), sorted.end(), byYOB); break;
     case 3: sort(sorted.begin(), sorted.end(), byYOD); break;
     case 4: sort(sorted.begin(), sorted.end(), bySex); break;

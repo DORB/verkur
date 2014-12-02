@@ -136,7 +136,7 @@ void ConsoleUI::start()
             bool canSort;
 
             cout << "What would you like to sort in the list? (Choose a number)" << endl;
-            cout << "(1) Names (2) Year of birth (3) Year of death (4) Sex" << endl;
+            cout << "(1) Names\n(2) Year of birth\n(3) Year of death\n(4) Sex" << endl;
             cout << ":";
             cin >> sort_inp;
 
