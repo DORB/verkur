@@ -13,6 +13,12 @@ class ConsoleUI
 public:
     ConsoleUI();
     void start();
+    void verkurLogo();
+    void add();
+    void del();
+    void listi();
+    void sort();
+    void find();
 private:
     PersonService personService;
 };
