@@ -26,5 +26,5 @@ Hópur:
 * Bragi Bergþórsson - 8979876 - bragi14@ru.is
 * Daníel Freyr Sigurðsson
 * Magnús Norðdahl - 6968749 - magnusn06@ru.is
-* Ólafur Kári Sigurbjörnsson
+* Ólafur Kári Sigurbjörnsson - 6903689 - olafurks10@ru.is
 * Rakel Ýr Káradóttir
