@@ -34,7 +34,7 @@ void ConsoleUI::start()
     cout << "The available commands are:" << endl;
 
     // Loopa sem promptar userinn um input, keyrir svo lengi sem ekki er gefið inn 'quit'
-    while(inp != "quit" && inp != "exit")
+    while(inp != "quit" && inp != "exit" && inp != "q" && inp != "bail")
     {
         printComms();
         cout << ":";
@@ -42,7 +42,7 @@ void ConsoleUI::start()
 
         // Add function
 
-        if(inp == "add")
+        if(inp == "add" || inp == "a")
         {
             // Bua til nyja personu
 
@@ -128,7 +128,7 @@ void ConsoleUI::start()
             }
         }
         // del function
-        else if(inp == "del")
+        else if(inp == "del" || inp == "d")
         {
             // Birta lista yfir skrá með linunumeri og fa svo ad velja numer til ad eyda
 
@@ -137,9 +137,13 @@ void ConsoleUI::start()
             bool done = false;
             string id_input;
 
-            // isDone skilar bool breytu, athugar hvort notandi hafi slegið inn skipun á
-            // forminu "del string\n" (true) eða "del\n" (false)
-            done = isDone(id_input);
+            vector<string> params = countParam();
+            if(params.size() != 0)
+            {
+                done = true;
+                id_input = params[0];
+            }
+
 
             // Prompta user um id number ef done er false, annars er skrefinu sleppt
             if(!done)
@@ -187,7 +191,7 @@ void ConsoleUI::start()
         }
 
         // list function
-        else if(inp == "list")
+        else if(inp == "list" || inp == "l")
         {
             // Prumpa út listanum bara í heild sinni
             PersonContainer listed = personService.list();
@@ -195,14 +199,40 @@ void ConsoleUI::start()
         }
 
         // sort function
-        else if(inp == "sort")
+        else if(inp == "sort" || inp == "s")
         {
             string sort_inp;
             bool canSort;
 
-            // isDone skilar bool breytu, athugar hvort notandi hafi slegið inn skipun á
-            // forminu "del string\n" (true) eða "del\n" (false)
-            bool done = isDone(sort_inp);
+            bool done = false;
+            bool desc = false;
+
+            vector<string> params = countParam();
+
+            if(params.size() != 0)
+            {
+                done = true;
+                sort_inp = params[0];
+                if(params.size() > 1)
+                {
+                    if(params[1] == "d")
+                        desc = true;
+                    else
+                        cout << "\'" << params[1] << "\' is not a known parameter for the sort function";
+                }
+                if(params.size() > 2 && params[1] != "d")
+                {
+                    cout << " and only has 2 parameters.";
+                }
+                else if(params[1] == "d")
+                {
+                    cout << "The sort function only has 2 parameters";
+                }
+                else
+                {
+                    cout << "." << endl;
+                }
+            }
 
             // Ef done er false þá er promptað um hvernig userinn vilji raða listanum
             if(!done)
@@ -219,33 +249,6 @@ void ConsoleUI::start()
             // og tekur strenginn id_input og kastar yfir í int og skilar því.
             int sort_after = isValidInput(sort_inp, 5, canSort);
 
-            char nextin;
-            bool desc = false;
-            cin.get(nextin);
-
-            // Athugar hvort 'd' hafi verið skrifað fyrir descending möguleikann
-            if(nextin == '\n')
-            {
-                cin.putback(nextin);
-                desc = false;
-            }
-            else if(nextin == ' ')
-            {
-                cin.get(nextin);
-                if(nextin == 'd')
-                {
-                    desc = true;
-                }
-                // Henda restinni út, þá ógild
-                cin.ignore(1000, '\n');
-            }
-            else
-            {
-                cout << nextin << endl;
-                desc = false;
-                cin.ignore(1000, '\n');
-            }
-
             // Sortum listann á þann hátt sem userinn bað um
             if(canSort)
             {
@@ -259,14 +262,34 @@ void ConsoleUI::start()
         }
 
         // find function
-        else if(inp == "find")
+        else if(inp == "find" || inp == "f")
         {
             bool exists = false;
+            bool done = false;
             string search;
 
-            // sama og isDone, nema sérsniðið að því að leitarstrengurinn sé með bili
-            bool done = isDoneFind(search);
+            // Öllu sem kom á eftir 'find' safnað saman í params vektorinn
+            vector<string> params = countParam();
 
+            // Tékkað hvort einhverjir parametrar voru
+            // Í þessu tilfelli eru parametrarnir strengur og því öllu sem
+            // á eftir 'find' kom safnað saman í strenginn 'search'
+            if(params.size() > 0)
+            {
+                done = true;
+
+                for(unsigned int i = 0; i < params.size(); i++)
+                {
+                    search += params[i];
+                    if(i < params.size() - 1)
+                    {
+                        search += " ";
+                    }
+                }
+            }
+
+            // Ef einhverjir parametrar voru núþegar uppgefnir
+            // þá þarf ekki að biðja um leitarstreng. done = true
             if(!done)
             {
                 cout << "Enter a search string: " << endl;
@@ -291,16 +314,14 @@ void ConsoleUI::start()
         }
         // quit function
         // Hoppað útúr while lykkju og forritið hættir keyrslu
-        else if(inp == "quit" || inp == "exit")
+        else if(inp == "quit" || inp == "exit" || inp == "q" || inp == "bail")
         {
             cout << "\nThank you very much for this program. Please come again.\n" << endl;
         }
         else
         {
             cout << "The command \'" << inp << "\' was not recognized." << endl;
-            /*cout << "Perhaps you meant one of these?:" << endl;
-            cout << "add, del, list, sort, find or quit." << endl;*/
-            cin.ignore(1000, '\n');
+            vector<string> params = countParam();
         }
     }
 }
@@ -381,54 +402,54 @@ int isValidInput(const string& inp, const int& lessThan, bool& isOK)
     return -1;
 }
 
-// isDone skilar bool breytu, athugar hvort notandi hafi slegið inn skipun á
-// forminu "del string\n" (true) eða "del\n" (false)
-bool isDone(string& str)
-{
-    bool done;
-    char nextin;
-
-    cin.get(nextin);
-
-    if(nextin != '\n')
-    {
-        cin.putback(nextin);
-        cin >> str;
-        done = true;
-    }
-    else
-    {
-        cin.putback(nextin);
-        done = false;
-    }
-
-    return done;
-}
-
-// Sama og isDone, nema fyrir leitarstreng með bilum
-bool isDoneFind(string& str)
-{
-    bool done;
-    char nextin;
-
-    cin.get(nextin);
-
-    if(nextin == ' ')
-    {
-        //cin.putback(nextin);
-        getline(cin, str);
-        done = true;
-    }
-    else
-    {
-        cin.putback(nextin);
-        done = false;
-    }
-
-    return done;
-}
-
 void printComms()
 {
     cout << "\n[add] [del] [list] [find] [sort] [quit]" << endl;
+}
+
+// Fall til að taka inn parametra og skila þeim í vektor af strengjum
+vector<string> countParam()
+{
+    char nextin;
+    vector<string> p;
+    string param = "";
+
+    cin.get(nextin);
+
+    if(nextin == ' ' || nextin == '\t')
+    {
+        cin.get(nextin);
+
+        while(nextin != '\n')
+        {
+            param = "";
+
+            while(nextin == ' ' || nextin == '\t')
+            {
+                cin.get(nextin);
+                if(nextin == '\n')
+                {
+                    cin.putback(nextin);
+                    break;
+                }
+            }
+            while(nextin != ' ' && nextin != '\t' && nextin != '\n')
+            {
+                param += nextin;
+                cin.get(nextin);
+                if(nextin == '\n')
+                {
+                    cin.putback(nextin);
+                    break;
+                }
+            }
+            p.push_back(param);
+        }
+    }
+    else
+    {
+        cin.putback(nextin);
+    }
+
+    return p;
 }

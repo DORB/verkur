@@ -23,5 +23,6 @@ int isValidInput(const string& inp, const int& lessThan, bool& isOK);
 bool isDone(string& str);
 bool isDoneFind(string& str);
 void printComms();
+vector<string> countParam();
 
 #endif // CONSOLEUI_H
