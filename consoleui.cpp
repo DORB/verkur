@@ -331,18 +331,18 @@ void ConsoleUI::find()
     // Í þessu tilfelli eru parametrarnir strengur og því öllu sem
     // á eftir 'find' kom safnað saman í strenginn 'search'
     if(params.size() > 0)
-    {
-        done = true;
-
-        for(unsigned int i = 0; i < params.size(); i++)
         {
-            search += params[i];
-            if(i < params.size() - 1)
+            done = true;
+
+            for(unsigned int i = 0; i < params.size(); i++)
             {
-                search += " ";
+                search += params[i];
+                if(i < params.size() - 1)
+                {
+                    search += " ";
+                }
             }
         }
-    }
 
     // Ef einhverjir parametrar voru núþegar uppgefnir
     // þá þarf ekki að biðja um leitarstreng. done = true
