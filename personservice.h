@@ -19,4 +19,7 @@ private:
     PersonRepo personRepo;
 };
 
+string str2upper(string str);
+string str2lower(string str);
+
 #endif // PERSONSERVICE_H
