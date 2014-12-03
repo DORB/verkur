@@ -194,6 +194,16 @@ void ConsoleUI::start()
         else if(inp == "list" || inp == "l")
         {
             // Prumpa út listanum bara í heild sinni
+
+            // Henda út parametrum sem koma á eftir
+            vector<string> params = countParam();
+
+            // Lata vita að list taki ekki við parametrum
+            if(params.size() > 0)
+            {
+                cout << "The function 'list' does not use parameters." << endl;
+            }
+
             PersonContainer listed = personService.list();
             list(listed);
         }
@@ -209,10 +219,11 @@ void ConsoleUI::start()
 
             vector<string> params = countParam();
 
-            if(params.size() != 0)
+            if(params.size() > 0)
             {
                 done = true;
                 sort_inp = params[0];
+
                 if(params.size() > 1)
                 {
                     if(params[1] == "d")
@@ -220,15 +231,16 @@ void ConsoleUI::start()
                     else
                         cout << "\'" << params[1] << "\' is not a known parameter for the sort function";
                 }
+
                 if(params.size() > 2 && params[1] != "d")
                 {
                     cout << " and only has 2 parameters.";
                 }
-                else if(params[1] == "d")
+                else if(params.size() > 2 && params[1] == "d")
                 {
                     cout << "The sort function only has 2 parameters";
                 }
-                else
+                else if(params.size() > 2)
                 {
                     cout << "." << endl;
                 }

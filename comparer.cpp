@@ -2,6 +2,8 @@
 
 Comparer::Comparer()
 {
+    orderCol = 1;
+    desc = false;
 }
 
 // Aðalsmiðurinn, hendir inn dálkinum sem á að nota (1-4) og hvernig röðunin á að vera (asc, desc)
