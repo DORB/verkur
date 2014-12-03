@@ -36,8 +36,8 @@ PersonContainer PersonService::find_p(string str, bool& exists)
     {
         string data = tofind[i].getName();
 
-        transform(data.begin(), data.end(), data.begin(),::tolower);
-        transform(str.begin(), str.end(), str.begin(),::tolower);
+        data = str2lower(data);
+        str = str2lower(str);
 
         size_t found = data.find(str);
 
@@ -61,4 +61,18 @@ PersonContainer PersonService::sort_list(const int& sort_after, const bool& desc
     sort(sorted.begin(), sorted.end(), c);
 
     return sorted;
+}
+
+string str2upper(string str)
+{
+    transform(str.begin(), str.end(), str.begin(),::toupper);
+
+    return str;
+}
+
+string str2lower(string str)
+{
+    transform(str.begin(), str.end(), str.begin(),::tolower);
+
+    return str;
 }

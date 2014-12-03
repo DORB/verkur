@@ -83,7 +83,8 @@ void ConsoleUI::start()
             cin >> sex;
 
             // breyta Sex í uppercase (M/F)
-            transform(sex.begin(), sex.end(), sex.begin(),::toupper);
+            // transform(sex.begin(), sex.end(), sex.begin(),::toupper);
+            sex = str2upper(sex);
 
             // Error handling á input á kyni
             while(sex != "M" && sex != "F")
@@ -92,7 +93,8 @@ void ConsoleUI::start()
                 cout << "Sex: ";
                 cin >> sex;
                 // breyta kyninu í uppercase...
-                transform(sex.begin(), sex.end(), sex.begin(),::toupper);
+                // transform(sex.begin(), sex.end(), sex.begin(),::toupper);
+                sex = str2upper(sex);
             }
 
             bool add_exists = false;

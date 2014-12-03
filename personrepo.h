@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iostream>
 #include <iomanip>
+#include <algorithm>
 #include "person.h"
 using namespace std;
 
