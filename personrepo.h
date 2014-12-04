@@ -21,7 +21,8 @@ class PersonRepo
 public:
     PersonRepo();
     void add(Person p);
-    PersonContainer list();
+    void list(PersonContainer& p);
+    void list(CompContainer& c);
     void del(const int &id);
 private:
     PersonContainer people;

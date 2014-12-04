@@ -196,7 +196,9 @@ void ConsoleUI::del()
 {
     // Birta lista yfir skrá með linunumeri og fa svo ad velja numer til ad eyda
 
-    PersonContainer listed = personService.list();
+    PersonContainer listed;
+    personService.list(listed);
+    //CompContainer listed = personService.list(listed);
 
     bool done = false;
     string id_input;
@@ -268,7 +270,8 @@ void ConsoleUI::list_c()
         cout << "The function 'list' does not use parameters." << endl;
     }
 
-    PersonContainer listed = personService.list();
+    PersonContainer listed;
+    personService.list(listed);
     show(listed);
 }
 

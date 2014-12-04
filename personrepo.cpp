@@ -21,7 +21,7 @@ PersonRepo::PersonRepo()
             string BY, DY;
             int pid;
 
-            pid = query.value("pid").toString().toInt(); // pid
+            pid = query.value("ID").toString().toInt(); // pid
             names[0] = query.value("first_name").toString().toStdString(); // First names
             names[1] = query.value("last_name").toString().toStdString(); // Last name
             nationality = query.value("nationality").toString().toStdString();
@@ -98,7 +98,7 @@ void PersonRepo::del(const int& id)
         if(outFile.is_open())
         {
             // Fyrir hverja línu í people er skrifuð út person (people[i])
-            for(int i = 0; i < people.size(); i++)
+            for(unsigned int i = 0; i < people.size(); i++)
             {
                 // Hér kemur overloadið sér aftur vel
                 outFile << people[i] << endl;
@@ -114,8 +114,13 @@ void PersonRepo::del(const int& id)
 }
 
 // list function
-// Skilar vektornum people
-PersonContainer PersonRepo::list()
+// Skilar vektorum
+void PersonRepo::list(PersonContainer& p)
 {
-    return computers;
+    p = people;
+}
+
+void PersonRepo::list(CompContainer& c)
+{
+    c = computers;
 }

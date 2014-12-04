@@ -11,7 +11,8 @@ class PersonService
 public:
     PersonService();
     void add(Person p);
-    PersonContainer list();
+    void list(PersonContainer& p);
+    void list(CompContainer& c);
     void del(const int& id);
     PersonContainer find_p(string str, bool &exists);
     PersonContainer sort_list(const int &sort_after, const bool& desc);

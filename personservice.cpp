@@ -13,9 +13,14 @@ void PersonService::add(Person p)
 }
 
 // milliliður fyrir list function
-PersonContainer PersonService::list()
+void PersonService::list(PersonContainer& p)
 {
-    return personRepo.list();
+    personRepo.list(p);
+}
+
+void PersonService::list(CompContainer& c)
+{
+    personRepo.list(c);
 }
 
 // milliliður fyrir del function
@@ -29,7 +34,8 @@ void PersonService::del(const int& id)
 // Skilar PersonContainer með leitarniðurstöðunum
 PersonContainer PersonService::find_p(string str, bool& exists)
 {
-    PersonContainer tofind = list();
+    PersonContainer tofind;
+    list(tofind);
     PersonContainer result;
 
     for(unsigned int i = 0; i < tofind.size(); i++)
@@ -55,7 +61,8 @@ PersonContainer PersonService::find_p(string str, bool& exists)
 // Tekur inn leitaraðferðina (sort_after) og bool breytu hvernig a að raða (asc/desc)
 PersonContainer PersonService::sort_list(const int& sort_after, const bool& desc)
 {
-    PersonContainer sorted = list();
+    PersonContainer sorted;
+    list(sorted);
     Comparer c = Comparer(sort_after, desc);
 
     sort(sorted.begin(), sorted.end(), c);
