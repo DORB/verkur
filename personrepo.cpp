@@ -19,7 +19,9 @@ PersonRepo::PersonRepo()
         {
             string names[2], nationality, sex;
             string BY, DY;
+            int pid;
 
+            pid = query.value("pid").toString().toInt(); // pid
             names[0] = query.value("first_name").toString().toStdString(); // First names
             names[1] = query.value("last_name").toString().toStdString(); // Last name
             nationality = query.value("nationality").toString().toStdString();
@@ -30,7 +32,7 @@ PersonRepo::PersonRepo()
             int birth_year = atoi(BY.c_str());
             int death_year = atoi(DY.c_str());
 
-            Person p = Person(names[0], names[1], birth_year, death_year, sex, nationality);
+            Person p = Person(pid, names[0], names[1], birth_year, death_year, sex, nationality);
 
             people.push_back(p);
         }
