@@ -18,7 +18,7 @@ void ConsoleUI::start()
 
     string inp;
 
-    // Loopa sem promptar userinn um input, keyrir svo lengi sem ekki er gefið inn 'quit'
+    // Loopa sem promptar userinn um input, keyrir svo lengi sem ekki er gefið inn 'quit' eða álíka
     while(inp != "quit" && inp != "exit" && inp != "q" && inp != "bail")
     {
         printComms();
@@ -485,6 +485,7 @@ int isValidInput(const string& inp, const int& lessThan, bool& isOK)
     return -1;
 }
 
+// Prenta út mögulegar aðgerðir
 void printComms()
 {
     cout << "\n[add] [del] [list] [find] [sort] [quit]" << endl;
