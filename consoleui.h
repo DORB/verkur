@@ -16,7 +16,7 @@ public:
     void verkurLogo();
     void add();
     void del();
-    void listi();
+    void list_c();
     void sort();
     void find();
 private:

@@ -39,7 +39,7 @@ void ConsoleUI::start()
         // List function
         else if(inp == "list" || inp == "l")
         {
-            listi();
+            list_c();
         }
 
         // Sort function
@@ -96,6 +96,17 @@ void ConsoleUI::add()
     int birth_year, death_year;
 
     // Lesum inn í breyturnar
+    // Allt strengir til að forritið beyglist ekki við
+    // einhverjar kjánalegar innsetningar
+
+    // add() hendir út öllu úr straumnum sem á eftir skipuninni kemur
+    // og biður síðan gagngert aðeins um einn hlut í einu til að
+    // inputtið sé örugglega rétt
+
+    // Nafn getur verið hvað sem er og fyrstu stafir eru viljandi
+    // ekki hækkaðir upp í uppercase
+    // Dæmi: Ludwig van Beethoven, dr. Martin Luther King
+
     cout << "Name: ";
     cin.ignore(1000, '\n');
     getline(cin,name);
@@ -235,7 +246,7 @@ void ConsoleUI::del()
 }
 
 // Implement list function
-void ConsoleUI::listi()
+void ConsoleUI::list_c()
 {
     // Prumpa út listanum bara í heild sinni
 
@@ -257,6 +268,7 @@ void ConsoleUI::sort()
 {
     string sort_inp;
     bool canSort;
+    int sort_after;
 
     bool done = false;
     bool desc = false;
@@ -268,25 +280,31 @@ void ConsoleUI::sort()
         done = true;
         sort_inp = params[0];
 
-        if(params.size() > 1)
-        {
-            if(params[1] == "d")
-                desc = true;
-            else
-                cout << "\'" << params[1] << "\' is not a known parameter for the sort function";
-        }
+        // isValidInput athugar hvort id sé leyfilegt (innan marka), canDel verður þá true
+        // og tekur strenginn id_input og kastar yfir í int og skilar því.
+        sort_after = isValidInput(sort_inp, 5, canSort);
 
-        if(params.size() > 2 && params[1] != "d")
+        if(canSort)
         {
-            cout << " and only has 2 parameters.";
-        }
-        else if(params.size() > 2 && params[1] == "d")
-        {
-            cout << "The sort function only has 2 parameters";
-        }
-        else if(params.size() > 2)
-        {
-            cout << "." << endl;
+            if(params.size() > 1)
+            {
+                if(params[1] == "d")
+                {
+                    desc = true;
+
+                    if(params.size() > 2)
+                        cout << "The sort function only has 2 parameters.";
+                }
+                else
+                {
+                    cout << "\'" << params[1] << "\' is not a known parameter for the sort function";
+
+                    if(params.size() > 2 && params[1] != "d")
+                        cout << " and only has 2 parameters";
+
+                    cout << "." << endl;
+                }
+            }
         }
     }
 
@@ -299,11 +317,27 @@ void ConsoleUI::sort()
         cout << "Append with <space>d for descending (Ex: '3 d')";
         cout << ":";
         cin >> sort_inp;
-    }
 
-    // isValidInput athugar hvort id sé leyfilegt (innan marka), canDel verður þá true
-    // og tekur strenginn id_input og kastar yfir í int og skilar því.
-    int sort_after = isValidInput(sort_inp, 5, canSort);
+        // isValidInput athugar hvort id sé leyfilegt (innan marka), canDel verður þá true
+        // og tekur strenginn id_input og kastar yfir í int og skilar því.
+        sort_after = isValidInput(sort_inp, 5, canSort);
+
+        vector<string> nextparams = countParam();
+
+        if(canSort)
+        {
+            if(nextparams.size() >= 1)
+            {
+                if(nextparams[0] == "d")
+                    desc = true;
+                else
+                {
+                    cout << "\'" << nextparams[0] << "\' is not a paralegal." << endl;
+                    cout << "...uhm sorry. I meant legal parameter." << endl;
+                }
+            }
+        }
+    }
 
     // Sortum listann á þann hátt sem userinn bað um
     if(canSort)
