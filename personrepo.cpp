@@ -21,7 +21,7 @@ PersonRepo::PersonRepo()
             string BY, DY;
             int pid;
 
-            pid = query.value("ID").toString().toInt(); // pid
+            pid = query.value("ID").toInt(); // pid
             names[0] = query.value("first_name").toString().toStdString(); // First names
             names[1] = query.value("last_name").toString().toStdString(); // Last name
             nationality = query.value("nationality").toString().toStdString();
@@ -36,21 +36,27 @@ PersonRepo::PersonRepo()
 
             people.push_back(p);
         }
+    }
 
-        query.exec("SELECT * FROM Computers");
+    if(db.open())
+    {
+        QSqlQuery query2;
 
-        while(query.next())
+        query2.exec("SELECT * FROM Computers");
+
+        while(query2.next())
         {
             string name, year_built_str, type, id_str;
             bool build;
+            int id;
 
-            name = query.value("name").toString().toStdString();
-            year_built_str = query.value("year_built").toString().toStdString();
-            type = query.value("type").toString().toStdString();
-            build = query.value("build").toBool();
+            id = query2.value("ID").toInt();
+            name = query2.value("name").toString().toStdString();
+            year_built_str = query2.value("year_built").toString().toStdString();
+            type = query2.value("type").toString().toStdString();
+            build = query2.value("build").toBool();
 
             int year_built = atoi(year_built_str.c_str());
-            int id = atoi(id_str.c_str());
 
             Computer c = Computer(id, name, type, year_built, build);
 

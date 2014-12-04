@@ -270,7 +270,8 @@ void ConsoleUI::list_c()
         cout << "The function 'list' does not use parameters." << endl;
     }
 
-    PersonContainer listed;
+    // PersonContainer listed;
+    CompContainer listed;
     personService.list(listed);
     show(listed);
 }
@@ -450,6 +451,38 @@ void show(PersonContainer listed)
                  << endl;
         }
             cout << "+--------------------------END------------------------+\n" << endl;
+     }
+}
+
+void show(const CompContainer& listed)
+{
+    int size = listed.size();
+
+    if(size == 0)
+    {
+        cout << "\nNo one in database!" << endl;
+    }
+    else
+    {
+
+        cout << "\n+------------------------------------------------------+" << endl;
+        cout << setw(3) << "ID"
+             << setw(27) << "Name"
+             << setw(15) << "Type"
+             << setw(5) << "Year"
+             << setw(6) << "Built"
+             << endl;
+        cout << "+------------------------------------------------------+" << endl;
+        for(int i = 0; i < size; i++)
+        {
+            cout << setw(3) << listed[i].getID()
+                 << setw(27) << listed[i].getName()
+                 << setw(15) << listed[i].getType()
+                 << setw(5)  << listed[i].getBuildYear();
+            cout << setw(6) << listed[i].getBuild()
+                 << endl;
+        }
+            cout << "+---------------------------END------------------------+\n" << endl;
      }
 }
 

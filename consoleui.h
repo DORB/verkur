@@ -25,6 +25,7 @@ private:
 
 void show(PersonContainer listed);
 void show(Person listed);
+void show(const CompContainer& listed);
 int isValidInput(const string& inp, const int& lessThan, bool& isOK);
 bool isDone(string& str);
 bool isDoneFind(string& str);
