@@ -31,4 +31,5 @@ HEADERS += \
 
 OTHER_FILES += \
     README.md \
-    splash.txt
+    splash.txt \
+    todo.md
