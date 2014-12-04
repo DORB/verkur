@@ -1,0 +1,45 @@
+Verkur 1.0
+==========
+Manual
+
+The idea of Verkur is to maintain a list of people which
+you can add to, delete from, sort and search. The changes
+will be saved to a text file stored along the program.
+
+The available commands are thus:
+
+'add':  Add a person to the list.
+		User will be prompted for
+        the addition.
+
+'del':  Delete a person from the list.
+		User will be prompted which person to delete. If the
+		number of the person to be deleted is already known,
+		user can also use the syntax 'del number', for example
+		'del 5' to delete person with the number 5 in the list.
+
+'list': Shows the list. No other options.
+
+'find': Finds a person in the list.
+		User will be prompted for a search string. Otherwise
+		it is also possible to give a parameter straight
+		after 'find', for example 'find search string' would
+		search for the string 'search string' and show
+		the persons with names containing the search string.
+
+'sort': Sorts the list.
+		Options are:
+		(1) By names
+		(2) By Year of Birth
+		(3) By Year of Death
+		(4) By Sex
+		User will be prompted for a way to order the list.
+		Otherwise it is also possible to give parameters
+		straight after 'sort', for example 'sort 3'.
+		Appending a 'd' will show the list in descending order.
+		For example: 'sort 3 d' will show the list, ordered
+		by year of death in a descending order.
+
+'quit': Quits the program.
+
+'help': Shows this manual.
