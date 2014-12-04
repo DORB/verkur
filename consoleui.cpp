@@ -63,6 +63,7 @@ void ConsoleUI::start()
         else
         {
             cout << "The command \'" << inp << "\' was not recognized." << endl;
+            cout << "And here I thought I knew everything. Dang." << endl;
             vector<string> params = countParam();
         }
     }
@@ -312,7 +313,12 @@ void ConsoleUI::sort()
     if(!done)
     {
         cout << "What would you like to sort in the list? (Choose a number)" << endl;
-        cout << "(1) Names\n(2) Year of birth\n(3) Year of death\n(4) Sex" << endl;
+        cout << "(1) Names\n"
+             << "(2) Year of birth\n"
+             << "(3) Year of death\n"
+             << "(4) Sex"
+             << endl;
+
         // d fyrir descending
         cout << "Append with <space>d for descending (Ex: '3 d')";
         cout << ":";
@@ -382,7 +388,7 @@ void ConsoleUI::find()
     // þá þarf ekki að biðja um leitarstreng. done = true
     if(!done)
     {
-        cout << "Enter a search string: " << endl;
+        cout << "Enter a search string: ";
         cin.ignore(1000, '\n');
         getline(cin,search);
     }
