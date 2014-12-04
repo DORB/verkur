@@ -15,11 +15,13 @@ PersonRepo::PersonRepo()
 
     while(query.next())
     {
+        cout << "Hæ" << endl;
+
         string names[2], nationality, sex;
         string BY, DY;
 
-        names[0] = query.value("firstname").toString().toStdString(); // First names
-        names[1] = query.value("lastname").toString().toStdString(); // Last name
+        names[0] = query.value("first_name").toString().toStdString(); // First names
+        names[1] = query.value("last_name").toString().toStdString(); // Last name
         nationality = query.value("nationality").toString().toStdString();
         sex = query.value("sex").toString().toStdString();
         BY = query.value("birth_year").toString().toStdString();
@@ -27,6 +29,10 @@ PersonRepo::PersonRepo()
 
         int birth_year = atoi(BY.c_str());
         int death_year = atoi(DY.c_str());
+
+        Person p = Person(names[0], names[1], birth_year, death_year, sex, nationality);
+
+        people.push_back(p);
     }
 
 
