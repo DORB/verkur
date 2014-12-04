@@ -2,6 +2,7 @@
 
 Person::Person()
 {
+    pid = 0;
     first_name = "";
     last_name = "";
     sex = '\0';
@@ -10,8 +11,9 @@ Person::Person()
     nationality = "";
 }
 
-Person::Person(string fn, string ln, int by, int dy, string s, string n)
+Person::Person(int id, string fn, string ln, int by, int dy, string s, string n)
 {
+    pid = id;
     first_name = fn;
     last_name = ln;
     sex = s;
@@ -23,13 +25,16 @@ Person::Person(string fn, string ln, int by, int dy, string s, string n)
 // Til að einfalda prentun á Person. Óþarfi, bara notað einu sinni, en ágætt að hafa
 ostream& operator <<(ostream& out, const Person& p)
 {
-    out << p.first_name << ";" << p.birth_year << ";" << p.death_year << ";" << p.sex << ";";
+    out << p.pid << ";" << p.first_name << ";" << p.birth_year << ";" << p.death_year << ";" << p.sex << ";";
 
     return out;
 }
 
 // Gettarar:
-
+int Person::getID() const
+{
+    return pid;
+}
 string Person::getFName() const
 {
     return first_name;

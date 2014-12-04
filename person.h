@@ -9,14 +9,16 @@ class Person
 {
 public:
     Person();
-    Person(string fn, string ln, int by, int dy, string s, string n);
+    Person(int id, string fn, string ln, int by, int dy, string s, string n);
     friend ostream& operator <<(ostream& out, const Person& p);
+    int getID() const;
     string getFName() const;
     string getLName() const;
     int getBY() const;
     int getDY() const;
     string getSex() const;
 private:
+    int pid;
     string first_name;
     string last_name;
     string sex;

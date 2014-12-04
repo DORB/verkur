@@ -91,6 +91,7 @@ void ConsoleUI::add()
     // Bua til nyja personu
 
     // Fylla inn:
+    int pid;
     string first_name, last_name;
     string sex;
     string nationality;
@@ -171,7 +172,7 @@ void ConsoleUI::add()
     // Sýna notanda færsluna sem á að bæta við
     if(add_answer != 'n' && add_answer != 'N')
     {
-        show(Person(first_name, last_name, birth_year, death_year, sex, nationality));
+        show(Person(pid, first_name, last_name, birth_year, death_year, sex, nationality));
         cout << "Does this seem about right? (y/n) ";
         cin >> add_answer;
     }
@@ -179,7 +180,7 @@ void ConsoleUI::add()
     // Adda viðkomandi og senda skilaboð um að það hafi tekist, eða ef ekki
     if(add_answer == 'y' || add_answer == 'Y')
     {
-        personService.add(Person(first_name, last_name, birth_year, death_year, sex, nationality));
+        personService.add(Person(pid, first_name, last_name, birth_year, death_year, sex, nationality));
 
         cout << "\nThank you for this wonderful addition to the database." << endl;
     }
