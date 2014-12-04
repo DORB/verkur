@@ -20,14 +20,18 @@ SOURCES += main.cpp \
     consoleui.cpp \
     personservice.cpp \
     personrepo.cpp \
-    comparer.cpp
+    comparer.cpp \
+    comprepo.cpp \
+    computer.cpp
 
 HEADERS += \
     person.h \
     consoleui.h \
     personservice.h \
     personrepo.h \
-    comparer.h
+    comparer.h \
+    comprepo.h \
+    computer.h
 
 OTHER_FILES += \
     README.md \
