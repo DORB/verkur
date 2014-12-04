@@ -1,5 +1,9 @@
 #include "personrepo.h"
 
+QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+QString dbName = "verkur.sqlite";
+db.setDatabaseName(dbName);
+
 // Repository smiður. Tekur inn það sem er skrifað í list.txt, býr til persónur
 // og populatear vektor með þessum persónum
 PersonRepo::PersonRepo()

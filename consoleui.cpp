@@ -165,7 +165,7 @@ void ConsoleUI::add()
     // Sýna notanda færsluna sem á að bæta við
     if(add_answer != 'n' && add_answer != 'N')
     {
-        list(Person(name, birth_year, death_year, sex));
+        show(Person(name, birth_year, death_year, sex));
         cout << "Does this seem about right? (y/n) ";
         cin >> add_answer;
     }
@@ -205,7 +205,7 @@ void ConsoleUI::del()
     if(!done)
     {
         // Prentaður út listi til að sjá númer
-        list(listed);
+        show(listed);
 
         cout << "Enter no. of person you want to delete (confirmation later required): ";
         cin >> id_input;
@@ -220,7 +220,7 @@ void ConsoleUI::del()
     if(canDel)
     {
         // Birtum persónu sem user ætlar að fjarlægja úr listanum
-        list(listed[id-1]);
+        show(listed[id-1]);
 
         char answer;
         cout << "Are you most definitely sure you want to delete this person permanently? (y/n) ";
@@ -261,7 +261,7 @@ void ConsoleUI::list_c()
     }
 
     PersonContainer listed = personService.list();
-    list(listed);
+    show(listed);
 }
 
 // Implement sort function
@@ -349,7 +349,7 @@ void ConsoleUI::sort()
     if(canSort)
     {
         PersonContainer sorted = personService.sort_list(sort_after, desc);
-        list(sorted);
+        show(sorted);
     }
     else
     {
@@ -405,12 +405,12 @@ void ConsoleUI::find()
     else
     {
         cout << "\n\'" << search << "\' was found in " << found.size() << " entries:" << endl;
-        list(found);
+        show(found);
     }
 }
 
 // Fall sem prentar út lista eftir vektor sem er gefinn með mörgum persónum í
-void list(PersonContainer listed)
+void show(PersonContainer listed)
 {
     int size = listed.size();
 
@@ -443,7 +443,7 @@ void list(PersonContainer listed)
 }
 
 // Fall sem prentar út einstakling
-void list(Person listed)
+void show(Person listed)
 {
     cout << "\n+-----------------------------------------------------+" << endl;
     cout << setw(3) << ""
