@@ -34,7 +34,7 @@ PersonContainer PersonService::find_p(string str, bool& exists)
 
     for(unsigned int i = 0; i < tofind.size(); i++)
     {
-        string data = tofind[i].getName();
+        string data = tofind[i].getFName();
 
         data = str2lower(data);
         str = str2lower(str);

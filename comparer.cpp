@@ -18,7 +18,7 @@ bool Comparer::operator()(const Person p1, const Person p2)
 {
     // 1 = eftir nafni
     if(orderCol == 1)
-        return (desc? p1.getName() > p2.getName() : p1.getName() < p2.getName());
+        return (desc? p1.getFName() > p2.getFName() : p1.getFName() < p2.getFName());
     // 2 = eftir fæðingarári
     else if(orderCol == 2)
         return (desc? p1.getBY() > p2.getBY() : p1.getBY() < p2.getBY());

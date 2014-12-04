@@ -91,8 +91,9 @@ void ConsoleUI::add()
     // Bua til nyja personu
 
     // Fylla inn:
-    string name;
+    string first_name, last_name;
     string sex;
+    string nationality;
     string years[2];
     int birth_year, death_year;
 
@@ -108,9 +109,11 @@ void ConsoleUI::add()
     // ekki hækkaðir upp í uppercase
     // Dæmi: Ludwig van Beethoven, dr. Martin Luther King
 
-    cout << "Name: ";
+    cout << "First Name: ";
     cin.ignore(1000, '\n');
-    getline(cin,name);
+    getline(cin, first_name);
+    cout << "Last Name: ";
+    getline(cin, last_name);
     cout << "Year of birth: ";
     cin >> years[0];
     cout << "Year of death (If alive, write 'alive'): ";
@@ -150,9 +153,12 @@ void ConsoleUI::add()
         sex = str2upper(sex);
     }
 
+    cout << "Nationality: ";
+    getline(cin, nationality);
+
     bool add_exists = false;
     char add_answer = 'y';
-    PersonContainer found = personService.find_p(name, add_exists);
+    PersonContainer found = personService.find_p(first_name, add_exists);
 
     // Spyrjum notanda hvort hann vilji bæta við manneskju sem hefur verið bætt við áður
     if(add_exists)
@@ -165,7 +171,7 @@ void ConsoleUI::add()
     // Sýna notanda færsluna sem á að bæta við
     if(add_answer != 'n' && add_answer != 'N')
     {
-        show(Person(name, birth_year, death_year, sex));
+        show(Person(first_name, last_name, birth_year, death_year, sex, nationality));
         cout << "Does this seem about right? (y/n) ";
         cin >> add_answer;
     }
@@ -173,7 +179,7 @@ void ConsoleUI::add()
     // Adda viðkomandi og senda skilaboð um að það hafi tekist, eða ef ekki
     if(add_answer == 'y' || add_answer == 'Y')
     {
-        personService.add(Person(name, birth_year, death_year, sex));
+        personService.add(Person(first_name, last_name, birth_year, death_year, sex, nationality));
 
         cout << "\nThank you for this wonderful addition to the database." << endl;
     }
@@ -229,7 +235,7 @@ void ConsoleUI::del()
         // Eyðum út persónu eftir staðfestingu
         if(answer == 'Y' || answer == 'y')
         {
-            string delName = listed[id-1].getName();
+            string delName = listed[id-1].getFName();
             string delSex = listed[id-1].getSex();
             personService.del(id);
             cout << "\n" << delName << " was most gruesomely deleted from the database. Bless ";
@@ -432,7 +438,7 @@ void show(PersonContainer listed)
         for(int i = 0; i < size; i++)
         {
             cout << setw(3) << i+1
-                 << setw(37) << listed[i].getName()
+                 << setw(37) << listed[i].getFName() << " " << listed[i].getLName()
                  << setw(5) << listed[i].getBY()
                  << setw(5); if(listed[i].getDY() == 0){ cout << "-"; } else { cout << listed[i].getDY(); }
             cout << setw(5) << listed[i].getSex()
@@ -455,7 +461,7 @@ void show(Person listed)
     cout << "+-----------------------------------------------------+" << endl;
 
     cout << setw(3) << ""
-         << setw(37) << listed.getName()
+         << setw(37) << listed.getFName() << " " << listed.getLName()
          << setw(5) << listed.getBY()
          << setw(5); if(listed.getDY() == 0){ cout << "-"; } else { cout << listed.getDY(); }
     cout << setw(5) << listed.getSex()

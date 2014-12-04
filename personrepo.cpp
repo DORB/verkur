@@ -9,44 +9,27 @@ PersonRepo::PersonRepo()
     QString dbName = "verkur.sqlite";
     db.setDatabaseName(dbName);
 
-    try
+    QSqlQuery query;
+
+    query.exec("SELECT * FROM Programmers");
+
+    while(query.next())
     {
-        ifstream inFile("list.txt");
+        string names[2], nationality, sex;
+        string BY, DY;
 
-        if(inFile.is_open())
-        {
-             while(!inFile.eof()) // End of file
-             {
-                 string line[4], name, sex;
-                 int birth_year, death_year;
+        names[0] = query.value("firstname").toString().toStdString(); // First names
+        names[1] = query.value("lastname").toString().toStdString(); // Last name
+        nationality = query.value("nationality").toString().toStdString();
+        sex = query.value("sex").toString().toStdString();
+        BY = query.value("birth_year").toString().toStdString();
+        DY = query.value("death_year").toString().toStdString();
 
-                 // Tekur hverja línu fyrir sig inn og splittar henni í line[i] eftir ';' delimiter
-                 for(int i = 0; i < 4; i++)
-                 {
-                    getline(inFile, line[i], ';');
-                 }
-                 inFile.ignore();
-
-                 // setur inn í venjulegu breyturnar til hagræðingar
-                 name = line[0];
-                 birth_year = atoi(line[1].c_str());
-                 death_year = atoi(line[2].c_str());
-                 sex = line[3];
-
-                 // Bý til persónu og pusha henni inn í vektorinn people
-                 Person p = Person(name, birth_year, death_year, sex);
-                 people.push_back(p);
-             }
-             // hendir út síðustu færslu í vektornum (new line í lok fæls)
-             people.pop_back();
-        }
-
-        inFile.close();
+        int birth_year = atoi(BY.c_str());
+        int death_year = atoi(DY.c_str());
     }
-    catch(...)
-    {
-        cout << "OMG. Reading from database failed." << endl;
-    }
+
+
 }
 
 // add function

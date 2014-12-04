@@ -2,34 +2,42 @@
 
 Person::Person()
 {
-    name = "";
+    first_name = "";
+    last_name = "";
     sex = '\0';
     birth_year = 0;
     death_year = 0;
-
+    nationality = "";
 }
 
-Person::Person(string n, int by, int dy, string s)
+Person::Person(string fn, string ln, int by, int dy, string s, string n)
 {
-    name = n;
+    first_name = fn;
+    last_name = ln;
     sex = s;
     birth_year = by;
     death_year = dy;
+    nationality = n;
 }
 
 // Til að einfalda prentun á Person. Óþarfi, bara notað einu sinni, en ágætt að hafa
 ostream& operator <<(ostream& out, const Person& p)
 {
-    out << p.name << ";" << p.birth_year << ";" << p.death_year << ";" << p.sex << ";";
+    out << p.first_name << ";" << p.birth_year << ";" << p.death_year << ";" << p.sex << ";";
 
     return out;
 }
 
 // Gettarar:
 
-string Person::getName() const
+string Person::getFName() const
 {
-    return name;
+    return first_name;
+}
+
+string Person::getLName() const
+{
+    return last_name;
 }
 
 int Person::getBY() const

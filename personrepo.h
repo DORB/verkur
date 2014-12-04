@@ -7,6 +7,7 @@
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
+#include <cstdlib>
 #include <QtSql>
 #include "person.h"
 using namespace std;
