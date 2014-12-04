@@ -438,7 +438,7 @@ void show(PersonContainer listed)
         for(int i = 0; i < size; i++)
         {
             cout << setw(3) << i+1
-                 << setw(37) << listed[i].getFName() << " " << listed[i].getLName()
+                 << setw(37) << listed[i].getFName() + " " + listed[i].getLName()
                  << setw(5) << listed[i].getBY()
                  << setw(5); if(listed[i].getDY() == 0){ cout << "-"; } else { cout << listed[i].getDY(); }
             cout << setw(5) << listed[i].getSex()
