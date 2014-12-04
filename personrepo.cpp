@@ -9,31 +9,33 @@ PersonRepo::PersonRepo()
     QString dbName = "verkur.sqlite";
     db.setDatabaseName(dbName);
 
-    QSqlQuery query;
-
-    query.exec("SELECT * FROM Programmers");
-
-    while(query.next())
+    if(db.open())
     {
-        cout << "Hæ" << endl;
+        QSqlQuery query;
 
-        string names[2], nationality, sex;
-        string BY, DY;
+        query.exec("SELECT * FROM Programmers");
 
-        names[0] = query.value("first_name").toString().toStdString(); // First names
-        names[1] = query.value("last_name").toString().toStdString(); // Last name
-        nationality = query.value("nationality").toString().toStdString();
-        sex = query.value("sex").toString().toStdString();
-        BY = query.value("birth_year").toString().toStdString();
-        DY = query.value("death_year").toString().toStdString();
+        while(query.next())
+        {
+            string names[2], nationality, sex;
+            string BY, DY;
 
-        int birth_year = atoi(BY.c_str());
-        int death_year = atoi(DY.c_str());
+            names[0] = query.value("first_name").toString().toStdString(); // First names
+            names[1] = query.value("last_name").toString().toStdString(); // Last name
+            nationality = query.value("nationality").toString().toStdString();
+            sex = query.value("sex").toString().toStdString();
+            BY = query.value("birth_year").toString().toStdString();
+            DY = query.value("death_year").toString().toStdString();
 
-        Person p = Person(names[0], names[1], birth_year, death_year, sex, nationality);
+            int birth_year = atoi(BY.c_str());
+            int death_year = atoi(DY.c_str());
 
-        people.push_back(p);
+            Person p = Person(names[0], names[1], birth_year, death_year, sex, nationality);
+
+            people.push_back(p);
+        }
     }
+    db.close();
 
 
 }
