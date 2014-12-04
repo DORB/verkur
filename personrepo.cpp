@@ -34,6 +34,26 @@ PersonRepo::PersonRepo()
 
             people.push_back(p);
         }
+
+        query.exec("SELECT * FROM Computers");
+
+        while(query.next())
+        {
+            string name, year_built_str, type, id_str;
+            bool build;
+
+            name = query.value("name").toString().toStdString();
+            year_built_str = query.value("year_built").toString().toStdString();
+            type = query.value("type").toString().toStdString();
+            build = query.value("build").toBool();
+
+            int year_built = atoi(year_built_str.c_str());
+            int id = atoi(id_str.c_str());
+
+            Computer c = Computer(id, name, type, year_built, build);
+
+            computers.push_back(c);
+        }
     }
     db.close();
 
@@ -95,5 +115,5 @@ void PersonRepo::del(const int& id)
 // Skilar vektornum people
 PersonContainer PersonRepo::list()
 {
-    return people;
+    return computers;
 }

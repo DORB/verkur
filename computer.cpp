@@ -2,24 +2,15 @@
 
 Computer::Computer()
 {
-    ID = 0;
-    first_name = "";
-    last_name = "";
-    birth_year = 0;
-    death_year = 0;
-    sex = '\0';
-    nationality = "";
 }
 
-Computer::Computer(int id, string fn, string ln, int by, int dy, char s, string n)
+Computer::Computer(int id, string n, string t, int yb, bool b)
 {
     ID = id;
-    first_name = fn;
-    last_name = ln;
-    birth_year = by;
-    death_year = dy;
-    sex = s;
-    nationality = n;
+    name = n;
+    type = t;
+    year_built = yb;
+    build = b;
 }
 
 int Computer::getID() const
@@ -27,34 +18,22 @@ int Computer::getID() const
     return ID;
 }
 
-string Computer::getFirstname() const
+string Computer::getName() const
 {
-    return first_name;
+    return name;
 }
 
-string Computer::getLastname() const
+string Computer::getType() const
 {
-    return last_name;
+    return type;
 }
 
-int Computer::getBirthyear() const
+int Computer::getBuildYear() const
 {
-    return birth_year;
+    return year_built;
 }
 
-int Computer::getDeathyear() const
+bool Computer::getBuild() const
 {
-    return death_year;
-}
-
-
-char Computer::getSex() const
-{
-    return sex;
-}
-
-
-string Computer::getNationality() const
-{
-    return nationality;
+    return build;
 }

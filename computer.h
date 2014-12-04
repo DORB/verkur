@@ -8,22 +8,18 @@ class Computer
 {
 public:
     Computer();
-    Computer(int id, string fn, string ln, int by, int dy, char s, string n);
+    Computer(int id, string name, string type, int year_built, bool build);
     int getID() const;
-    string getFirstname() const;
-    string getLastname() const;
-    int getBirthyear() const;
-    int getDeathyear() const;
-    char getSex() const;
-    string getNationality() const;
+    string getName() const;
+    string getType() const;
+    int getBuildYear() const;
+    bool getBuild() const;
 private:
     int ID;
-    string first_name;
-    string last_name;
-    int birth_year;
-    int death_year;
-    char sex;
-    string nationality;
+    string name;
+    string type;
+    int year_built;
+    bool build;
 };
 
 #endif // COMPUTER_H

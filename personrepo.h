@@ -10,9 +10,11 @@
 #include <cstdlib>
 #include <QtSql>
 #include "person.h"
+#include "computer.h"
 using namespace std;
 
 typedef vector<Person> PersonContainer;
+typedef vector<Computer> CompContainer;
 
 class PersonRepo
 {
@@ -23,6 +25,7 @@ public:
     void del(const int &id);
 private:
     PersonContainer people;
+    CompContainer computers;
 };
 
 #endif // PERSONREPO_H

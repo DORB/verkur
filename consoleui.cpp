@@ -158,7 +158,8 @@ void ConsoleUI::add()
 
     bool add_exists = false;
     char add_answer = 'y';
-    PersonContainer found = personService.find_p(first_name, add_exists);
+    string whole_name = first_name + " " + last_name;
+    PersonContainer found = personService.find_p(whole_name, add_exists);
 
     // Spyrjum notanda hvort hann vilji bæta við manneskju sem hefur verið bætt við áður
     if(add_exists)
