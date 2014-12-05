@@ -6,7 +6,7 @@ Computer::Computer()
 
 Computer::Computer(int id, string n, string t, int yb, bool b)
 {
-    ID = id;
+    cid = id;
     name = n;
     type = t;
     year_built = yb;
@@ -15,7 +15,7 @@ Computer::Computer(int id, string n, string t, int yb, bool b)
 
 int Computer::getID() const
 {
-    return ID;
+    return cid;
 }
 
 string Computer::getName() const

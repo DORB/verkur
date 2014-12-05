@@ -3,7 +3,6 @@
 // User Interface
 ConsoleUI::ConsoleUI()
 {
-    personService = PersonService();
 }
 
 // Fall sem keyrir user interfaceið, notað í main falli - forritið sjálft

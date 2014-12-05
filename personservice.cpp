@@ -3,7 +3,6 @@
 // Smiðurinn, byr til repository
 PersonService::PersonService()
 {
-    personRepo = PersonRepo();
 }
 
 // milliliður fyrir add function

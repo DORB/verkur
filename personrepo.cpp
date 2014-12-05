@@ -4,9 +4,6 @@
 // og populatear vektor með þessum persónum
 PersonRepo::PersonRepo()
 {
-    // AF HVERJU FER ÞESSI SMIÐUR FJORUM SINNUM I GANG???
-    // db.close();
-    // db = QSqlDatabase();
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("verkur.sqlite");
 
@@ -61,7 +58,7 @@ PersonRepo::PersonRepo()
             computers.push_back(c);
         }
     }
-    // db.close();
+
     QString connection;
     connection = db.connectionName();
 
@@ -124,7 +121,6 @@ void PersonRepo::add(const Computer& c)
         cout << "Problem with writing to database." << endl;
     }
 
-    // db.close();
     QString connection;
     connection = db.connectionName();
 
