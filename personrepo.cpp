@@ -4,9 +4,6 @@
 // og populatear vektor með þessum persónum
 PersonRepo::PersonRepo()
 {
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("verkur.sqlite");
-
     if(db.open())
     {
         QSqlQuery query;
@@ -31,6 +28,8 @@ PersonRepo::PersonRepo()
 
             people.push_back(p);
         }
+
+        db.close();
     }
 
     if(db.open())
@@ -57,21 +56,13 @@ PersonRepo::PersonRepo()
 
             computers.push_back(c);
         }
+        db.close();
     }
-
-    QString connection;
-    connection = db.connectionName();
-
-    db = QSqlDatabase();
-    db.removeDatabase(connection);
 }
 
 // add function
 void PersonRepo::add(Person p)
 {
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("verkur.sqlite");
-
     if(db.open())
     {
         QSqlQuery query;
@@ -90,19 +81,11 @@ void PersonRepo::add(Person p)
         cout << "Problem with writing to database." << endl;
     }
 
-    // db.close();
-    QString connection;
-    connection = db.connectionName();
-
-    db = QSqlDatabase();
-    db.removeDatabase(connection);
+    db.close();
 }
 
 void PersonRepo::add(const Computer& c)
 {
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("verkur.sqlite");
-
     if(db.open())
     {
         QSqlQuery query;
@@ -121,11 +104,7 @@ void PersonRepo::add(const Computer& c)
         cout << "Problem with writing to database." << endl;
     }
 
-    QString connection;
-    connection = db.connectionName();
-
-    db = QSqlDatabase();
-    db.removeDatabase(connection);
+    db.close();
 }
 
 void PersonRepo::del(const int& id)

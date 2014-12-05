@@ -22,7 +22,8 @@ SOURCES += main.cpp \
     personrepo.cpp \
     comparer.cpp \
     comprepo.cpp \
-    computer.cpp
+    computer.cpp \
+    database.cpp
 
 HEADERS += \
     person.h \
@@ -31,7 +32,8 @@ HEADERS += \
     personrepo.h \
     comparer.h \
     comprepo.h \
-    computer.h
+    computer.h \
+    database.h
 
 OTHER_FILES += \
     README.md \

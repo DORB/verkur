@@ -12,6 +12,7 @@
 #include <sstream>
 #include "person.h"
 #include "computer.h"
+#include "database.h"
 using namespace std;
 
 typedef vector<Person> PersonContainer;
@@ -29,7 +30,7 @@ public:
 private:
     PersonContainer people;
     CompContainer computers;
-    QSqlDatabase db;
+    Database db;
 };
 
 string int2str(const int& a);
