@@ -13,7 +13,10 @@ void ConsoleUI::start()
     verkurLogo();
 
     cout << "OMG. Welcome to this awesome program.\n" << endl;
-    cout << "The program contains a list for you to maintain." << endl;
+    cout << "The program contains two databases." << endl;
+    cout << "One is a database of Programmers and the other one of Computers." << endl;
+    cout << "It is possible to check out if the two are married." << endl;
+    cout << endl;
     cout << "The available commands are:" << endl;
 
     string inp;
@@ -91,7 +94,7 @@ void ConsoleUI::add()
     // Bua til nyja personu
 
     // Fylla inn:
-    int pid;
+    int pid = 0;
     string first_name, last_name;
     string sex;
     string nationality;
@@ -526,8 +529,8 @@ void show(const CompContainer& listed)
                  << setw(27) << listed[i].getName()
                  << setw(15) << listed[i].getType()
                  << setw(5)  << listed[i].getBuildYear();
-            cout << setw(6) << listed[i].getBuild()
-                 << endl;
+            cout << setw(6); (listed[i].getBuild())? cout << "Yes" : cout << "No";
+            cout << endl;
         }
             cout << "+---------------------------END------------------------+\n" << endl;
      }
