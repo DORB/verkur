@@ -482,27 +482,21 @@ void show(PersonContainer listed)
     else
     {
 
-        cout << "\n+-----------------------------------------------------+" << endl;
+        cout << "\n+-----------------------------------------------------------------------+" << endl;
         cout << setw(3) << "No."
              << setw(37) << "Name"
+             << setw(18) << "Nationality"
              << setw(5) << "Born"
              << setw(5) << "Dead"
              << setw(5) << "Sex"
              << endl;
-        cout << "+-----------------------------------------------------+" << endl;
+        cout << "+-----------------------------------------------------------------------+" << endl;
         for(int i = 0; i < size; i++)
         {
+            cout << setw(3) << i+1;
             cout << listed[i];
         }
-//        {
-//            cout << setw(3) << i+1
-//                 << setw(37) << listed[i].getFName() + " " + listed[i].getLName()
-//                 << setw(5) << listed[i].getBY()
-//                 << setw(5); if(listed[i].getDY() == 0){ cout << "-"; } else { cout << listed[i].getDY(); }
-//            cout << setw(5) << listed[i].getSex()
-//                 << endl;
-//        }
-           cout << "+--------------------------END------------------------+\n" << endl;
+        cout << "+-----------------------------------END---------------------------------+\n" << endl;
      }
 }
 
@@ -517,49 +511,38 @@ void show(const CompContainer& listed)
     else
     {
 
-        cout << "\n+------------------------------------------------------+" << endl;
-        cout << setw(3) << "ID"
+        cout << "\n+---------------------------------------------------------+" << endl;
+        cout << setw(3) << "No."
              << setw(27) << "Name"
              << setw(15) << "Type"
              << setw(5) << "Year"
              << setw(6) << "Built"
              << endl;
-        cout << "+------------------------------------------------------+" << endl;
+        cout << "+---------------------------------------------------------+" << endl;
         for(int i = 0; i < size; i++)
         {
+            cout << setw(3) << i+1;
             cout << listed[i];
-//            cout << setw(3) << listed[i].getID()
-//                 << setw(27) << listed[i].getName()
-//                 << setw(15) << listed[i].getType()
-//                 << setw(5)  << listed[i].getBuildYear();
-//            cout << setw(6); (listed[i].getBuild())? cout << "Yes" : cout << "No";
-//            cout << endl;
         }
-            cout << "+---------------------------END------------------------+\n" << endl;
+            cout << "+----------------------------END-----------------------+\n" << endl;
      }
 }
 
 // Fall sem prentar út einstakling
 void show(Person listed)
 {
-    cout << "\n+-----------------------------------------------------+" << endl;
+    cout << "\n+-----------------------------------------------------------------------+" << endl;
     cout << setw(3) << ""
          << setw(37) << "Name"
+         << setw(18) << "Nationality"
          << setw(5) << "Born"
          << setw(5) << "Dead"
          << setw(5) << "Sex"
          << endl;
-    cout << "+-----------------------------------------------------+" << endl;
-
-    cout << listed;
-//    cout << setw(3) << ""
-//         << setw(37) << listed.getFName() << " " << listed.getLName()
-//         << setw(5) << listed.getBY()
-//         << setw(5); if(listed.getDY() == 0){ cout << "-"; } else { cout << listed.getDY(); }
-//    cout << setw(5) << listed.getSex()
-//         << endl;
-
-     cout << "+--------------------------END------------------------+\n" << endl;
+    cout << "+-----------------------------------------------------------------------+" << endl;
+    cout << setw(3) << ""
+         << listed;
+     cout << "+-----------------------------------END---------------------------------+\n" << endl;
 }
 
 // isValidInput athugar hvort id sé leyfilegt (innan marka), isOK verður þá true
