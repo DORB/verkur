@@ -108,53 +108,62 @@ void PersonRepo::add(const Computer& c)
     db.close();
 }
 
-//void PersonRepo::del(Person& p, const int& id)
+void PersonRepo::del(const int& id)
 //{
+//    bool ret = false;
 //    if(db.open())
 //    {
 //        QSqlQuery query;
-//        string remove,bla;
-//        //bla = int2str(id);
-
-//        remove = query.prepare("DELETE FROM Programmers WHERE ID =?");
-//        query.addBindValue(id);
-
-//        QString qremove = QString::fromStdString(remove);
-
-//        query.exec(qremove);
-//        people.erase(p);
+//        ret = query.exec(QString("DELETE FROM Programmers WHERE ID=%1").arg(id));
 //    }
-//    db.close();
+//    return ret;
 //}
-
-
-void PersonRepo::del(const int& id)
 {
-    // Eytt út úr vektornum
-    people.erase(people.begin()+(id-1));
-
-    // Skrifa vektorinn inn yfir list.txt á standard forminu
-    ofstream outFile ("list.txt");
-
-    try
+    cout << "hihi" << endl;
+    if(db.open())
     {
-        if(outFile.is_open())
-        {
-            // Fyrir hverja línu í people er skrifuð út person (people[i])
-            for(unsigned int i = 0; i < people.size(); i++)
-            {
-                // Hér kemur overloadið sér aftur vel
-                outFile << people[i] << endl;
-            }
-        }
+        QSqlQuery query;
+        string remove,bla;
 
-        outFile.close();
+        remove = query.prepare("DELETE FROM Programmers WHERE ID =?");
+        query.boundValue(id);
+
+        cout << "HALLO" << endl;
+        QString qremove = QString::fromStdString(remove);
+
+        query.exec(qremove);
     }
-    catch (...)
-    {
-        cout << "OMG. Writing to database failed." << endl;
-    }
+    db.close();
 }
+
+
+//void PersonRepo::del(const int& id)
+//{
+//    // Eytt út úr vektornum
+//    people.erase(people.begin()+(id-1));
+
+//    // Skrifa vektorinn inn yfir list.txt á standard forminu
+//    ofstream outFile ("list.txt");
+
+//    try
+//    {
+//        if(outFile.is_open())
+//        {
+//            // Fyrir hverja línu í people er skrifuð út person (people[i])
+//            for(unsigned int i = 0; i < people.size(); i++)
+//            {
+//                // Hér kemur overloadið sér aftur vel
+//                outFile << people[i] << endl;
+//            }
+//        }
+
+//        outFile.close();
+//    }
+//    catch (...)
+//    {
+//        cout << "OMG. Writing to database failed." << endl;
+//    }
+//}
 
 // list function
 // Skilar vektorum
