@@ -78,18 +78,8 @@ void PersonRepo::add(Person p)
         QSqlQuery query;
         string insert;
 
-        insert =  "INSERT INTO \"main\".\"Programmers\" (\"first_name\",\"last_name\",\"birth_year\",\"death_year\",\"sex\",\"nationality\") VALUES (?1,?2,?3,?4,?5,?6)\n";
-        insert += "Parameters:\n";
-        insert += "param 1 (text): " + p.getFName();
-        insert += "\n";
-        insert += "param 2 (text): " + p.getLName();
-        insert += "\n";
-        insert += "param 3 (integer): " + int2str(p.getBY());
-        insert += "\n";
-        insert += "param 4 (integer): " + int2str(p.getDY());
-        insert += "\n";
-        insert += "param 5 (text): " + p.getSex() + "\n";
-        insert += "param 6 (text): " + p.getNationality();
+        insert =  "INSERT INTO \"main\".\"Programmers\" (\"first_name\",\"last_name\",\"birth_year\",\"death_year\",\"sex\",\"nationality\") ";
+        insert += "VALUES (\"" + p.getFName()+ "\", \"" + p.getLName() + "\", \"" + int2str(p.getBY()) + "\", \"" + int2str(p.getDY()) +"\", \"" + p.getSex() + "\", \"" + p.getNationality() + "\")";
 
         cout << insert << endl;
 
