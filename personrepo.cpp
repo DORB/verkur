@@ -20,9 +20,9 @@ PersonRepo::PersonRepo()
         {
             string names[2], nationality, sex;
             int birth_year, death_year;
-            int pid;
+            int p_id;
 
-            pid = query.value("ID").toInt(); // pid
+            p_id = query.value("ID").toInt(); // p_id
             names[0] = query.value("first_name").toString().toStdString(); // First names
             names[1] = query.value("last_name").toString().toStdString(); // Last name
             nationality = query.value("nationality").toString().toStdString();
@@ -30,7 +30,7 @@ PersonRepo::PersonRepo()
             birth_year = query.value("birth_year").toInt();
             death_year = query.value("death_year").toInt();
 
-            Person p = Person(pid, names[0], names[1], birth_year, death_year, sex, nationality);
+            Person p = Person(p_id, names[0], names[1], birth_year, death_year, sex, nationality);
 
             people.push_back(p);
         }
@@ -44,19 +44,19 @@ PersonRepo::PersonRepo()
 
         while(query2.next())
         {
-            string name, year_built_str, type, id_str;
+            string name, type, id_str;
             bool build;
-            int id;
+            int c_id, year_built;
 
-            id = query2.value("ID").toInt();
+            c_id = query2.value("ID").toInt();
             name = query2.value("name").toString().toStdString();
-            year_built_str = query2.value("year_built").toString().toStdString();
+            year_built = query2.value("year_built").toInt();
             type = query2.value("type").toString().toStdString();
             build = query2.value("build").toBool();
 
-            int year_built = atoi(year_built_str.c_str());
+            // int year_built = atoi(year_built_str.c_str());
 
-            Computer c = Computer(id, name, type, year_built, build);
+            Computer c = Computer(c_id, name, type, year_built, build);
 
             computers.push_back(c);
         }
