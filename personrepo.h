@@ -22,11 +22,11 @@ class PersonRepo
 {
 public:
     PersonRepo();
-    void add(Person p);
+    void add(const Person& p);
     void list(PersonContainer& p);
     void list(CompContainer& c);
     void add(const Computer &c);
-    void del(const int &id);
+    void del(const Person& p, const int &id);
 private:
     PersonContainer people;
     CompContainer computers;

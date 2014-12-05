@@ -23,9 +23,9 @@ void PersonService::list(CompContainer& c)
 }
 
 // milliliður fyrir del function
-void PersonService::del(const int& id)
+void PersonService::del(const Person& p, const int& id)
 {
-    personRepo.del(id);
+    personRepo.del(p, id);
 }
 
 // Leitarfall

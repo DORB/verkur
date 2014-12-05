@@ -62,7 +62,7 @@ PersonRepo::PersonRepo()
 }
 
 // add function
-void PersonRepo::add(Person p)
+void PersonRepo::add(const Person& p)
 {
     if(db.open())
     {
@@ -108,7 +108,7 @@ void PersonRepo::add(const Computer& c)
     db.close();
 }
 
-void PersonRepo::del(const int& id)
+void PersonRepo::del(const Person& p, const int& id)
 //{
 //    bool ret = false;
 //    if(db.open())
@@ -118,21 +118,39 @@ void PersonRepo::del(const int& id)
 //    }
 //    return ret;
 //}
+//{
+//    cout << "hihi" << endl;
+//    if(db.open())
+//    {
+//        QSqlQuery query;
+//        string remove,bla;
+
+//        remove = query.prepare("DELETE FROM Programmers WHERE ID =?");
+//        query.boundValue(id);
+
+//        cout << "HALLO" << endl;
+//        QString qremove = QString::fromStdString(remove);
+
+//        query.exec(qremove);
+//    }
+//    db.close();
+//}
+
 {
-    cout << "hihi" << endl;
     if(db.open())
     {
         QSqlQuery query;
-        string remove,bla;
 
-        remove = query.prepare("DELETE FROM Programmers WHERE ID =?");
-        query.boundValue(id);
+        int pid = p.getID();
 
-        cout << "HALLO" << endl;
-        QString qremove = QString::fromStdString(remove);
+        string str_prepare = "DELETE FROM Programmers WHERE ID = " + int2str(pid);
 
-        query.exec(qremove);
+        QString query_str = QString::fromStdString(str_prepare);
+
+        query.exec(query_str);
+        people.erase(people.begin()+(id-1));
     }
+
     db.close();
 }
 
