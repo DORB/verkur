@@ -59,3 +59,8 @@ string Person::getSex() const
 {
     return sex;
 }
+
+string Person::getNationality() const
+{
+    return nationality;
+}

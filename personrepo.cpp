@@ -18,7 +18,7 @@ PersonRepo::PersonRepo()
         while(query.next())
         {
             string names[2], nationality, sex;
-            string BY, DY;
+            int birth_year, death_year;
             int pid;
 
             pid = query.value("ID").toInt(); // pid
@@ -26,11 +26,8 @@ PersonRepo::PersonRepo()
             names[1] = query.value("last_name").toString().toStdString(); // Last name
             nationality = query.value("nationality").toString().toStdString();
             sex = query.value("sex").toString().toStdString();
-            BY = query.value("birth_year").toString().toStdString();
-            DY = query.value("death_year").toString().toStdString();
-
-            int birth_year = atoi(BY.c_str());
-            int death_year = atoi(DY.c_str());
+            birth_year = query.value("birth_year").toInt();
+            death_year = query.value("death_year").toInt();
 
             Person p = Person(pid, names[0], names[1], birth_year, death_year, sex, nationality);
 
@@ -71,24 +68,42 @@ PersonRepo::PersonRepo()
 // add function
 void PersonRepo::add(Person p)
 {
-    ofstream outFile ("list.txt", ios::app);
+    QSqlDatabase add_db;
+    add_db = QSqlDatabase::addDatabase("QSQLITE");
+    QString dbName = "verkur.sqlite";
+    add_db.setDatabaseName(dbName);
 
-    try
+    if(add_db.open())
     {
-        if(outFile.is_open())
-        {
-            // Hér kemur overloadið sér vel, skrifað inn í fælinn
-            outFile << p << endl;
-            // Bætt við vektorinn
-            people.push_back(p);
-        }
+        QSqlQuery query;
+        string insert;
 
-        outFile.close();
+        insert =  "INSERT INTO \"main\".\"Programmers\" (\"first_name\",\"last_name\",\"birth_year\",\"death_year\",\"sex\",\"nationality\") VALUES (?1,?2,?3,?4,?5,?6)\n";
+        insert += "Parameters:\n";
+        insert += "param 1 (text): " + p.getFName();
+        insert += "\n";
+        insert += "param 2 (text): " + p.getLName();
+        insert += "\n";
+        insert += "param 3 (integer): " + int2str(p.getBY());
+        insert += "\n";
+        insert += "param 4 (integer): " + int2str(p.getDY());
+        insert += "\n";
+        insert += "param 5 (text): " + p.getSex() + "\n";
+        insert += "param 6 (text): " + p.getNationality();
+
+        cout << insert << endl;
+
+        // QString qinsert = QString::fromStdString(insert);
+
+        // query.exec(qinsert);
+        // people.push_back(p);
     }
-    catch (...)
+    else
     {
-        cout << "OMG. Writing to database failed." << endl;
+        cout << "Problem with writing to database." << endl;
     }
+
+    add_db.close();
 }
 
 void PersonRepo::del(const int& id)
@@ -129,4 +144,14 @@ void PersonRepo::list(PersonContainer& p)
 void PersonRepo::list(CompContainer& c)
 {
     c = computers;
+}
+
+string int2str(const int& a)
+{
+    stringstream ss;
+    ss << a;
+    string str;
+    ss >> str;
+
+    return str;
 }

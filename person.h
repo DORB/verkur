@@ -17,6 +17,7 @@ public:
     int getBY() const;
     int getDY() const;
     string getSex() const;
+    string getNationality() const;
 private:
     int pid;
     string first_name;

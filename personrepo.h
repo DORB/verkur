@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <QtSql>
+#include <sstream>
 #include "person.h"
 #include "computer.h"
 using namespace std;
@@ -28,5 +29,7 @@ private:
     PersonContainer people;
     CompContainer computers;
 };
+
+string int2str(const int& a);
 
 #endif // PERSONREPO_H

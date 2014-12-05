@@ -155,6 +155,7 @@ void ConsoleUI::add()
     }
 
     cout << "Nationality: ";
+    cin.ignore(1000, '\n');
     getline(cin, nationality);
 
     bool add_exists = false;
@@ -168,6 +169,7 @@ void ConsoleUI::add()
         cout << "A person with exactly the same name already exists.\n"
              << "Are you sure you want to add him/her anyway? (y/n) ";
         cin >> add_answer;
+        cin.ignore(1000, '\n');
     }
 
     // Sýna notanda færsluna sem á að bæta við
@@ -176,6 +178,7 @@ void ConsoleUI::add()
         show(Person(pid, first_name, last_name, birth_year, death_year, sex, nationality));
         cout << "Does this seem about right? (y/n) ";
         cin >> add_answer;
+        cin.ignore(1000, '\n');
     }
 
     // Adda viðkomandi og senda skilaboð um að það hafi tekist, eða ef ekki
@@ -261,19 +264,63 @@ void ConsoleUI::list_c()
 {
     // Prumpa út listanum bara í heild sinni
 
-    // Henda út parametrum sem koma á eftir
+    // Gá hvort eitthvað var í straumnum á eftir 'list' skipuninni
     vector<string> params = countParam();
 
-    // Lata vita að list taki ekki við parametrum
-    if(params.size() > 0)
+    // Tilgreina tóma containera svo þýðandinn fríki ekki út
+    PersonContainer p;
+    CompContainer c;
+    string param;
+
+    // Tékka á parametrum, soltið ruglingslegur kóði...
+    if(params.size() == 0)
     {
-        cout << "The function 'list' does not use parameters." << endl;
+        // Taka inn parameterinn
+        cout << " Choose 'c' for a listing of Computers or " <<
+        "'p' for a listing of Persons: ";
+        cin >> param;
+
+        // Taka inn restina. Þetta er bara til að hreinsa út strauminn og vita hvort
+        // er að reyna að pumpa inn einhverjum óþarfa parametrum og láta
+        // þá vita að það sé ekki í boði
+        vector<string> nparams = countParam();
+
+        // Bæta valinu inn í params og taka restina af
+        // straumnum inn í params því kóðinn að neðan tékka
+        params.push_back(param);
+        for(unsigned int i = 0; i < nparams.size(); i++)
+            params.push_back(nparams[i]);
     }
 
-    // PersonContainer listed;
-    CompContainer listed;
-    personService.list(listed);
-    show(listed);
+
+    // Geymi það að populata vektorana þangað til ég veit hvorn ég á að fylla
+    // svona til að spara pláss. Hef hálfgerða óbeit á því að vera alltaf
+    // að fylla þetta svona. Ha.
+    // show fallið er svo overloadað til að taka annað hvort við PersonContainer
+    // eða CompContainer. Þá lítur þetta allt frekar þægilega út og ekkert
+    // aukalegt að muna
+    if(params[0] == "p")
+    {
+        personService.list(p);
+        show(p);
+    }
+    else if(params[0] == "c")
+    {
+        personService.list(c);
+        show(c);
+    }
+
+    // Error handling með smá attitude
+    else
+    {
+        cout << "The function 'list' does not use these funny parameters of yours." << endl;
+    }
+
+    if(params.size() > 1)
+    {
+        cout << "Perhaps try to tone down your use of parameters a little bit." << endl;
+    }
+
 }
 
 // Implement sort function
