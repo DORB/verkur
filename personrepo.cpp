@@ -109,33 +109,6 @@ void PersonRepo::add(const Computer& c)
 }
 
 void PersonRepo::del(const Person& p, const int& id)
-//{
-//    bool ret = false;
-//    if(db.open())
-//    {
-//        QSqlQuery query;
-//        ret = query.exec(QString("DELETE FROM Programmers WHERE ID=%1").arg(id));
-//    }
-//    return ret;
-//}
-//{
-//    cout << "hihi" << endl;
-//    if(db.open())
-//    {
-//        QSqlQuery query;
-//        string remove,bla;
-
-//        remove = query.prepare("DELETE FROM Programmers WHERE ID =?");
-//        query.boundValue(id);
-
-//        cout << "HALLO" << endl;
-//        QString qremove = QString::fromStdString(remove);
-
-//        query.exec(qremove);
-//    }
-//    db.close();
-//}
-
 {
     if(db.open())
     {
@@ -154,34 +127,25 @@ void PersonRepo::del(const Person& p, const int& id)
     db.close();
 }
 
+void PersonRepo::del(const Computer& c, const int& id)
+{
+    if(db.open())
+    {
+        QSqlQuery query;
 
-//void PersonRepo::del(const int& id)
-//{
-//    // Eytt út úr vektornum
-//    people.erase(people.begin()+(id-1));
+        int cid = c.getID();
 
-//    // Skrifa vektorinn inn yfir list.txt á standard forminu
-//    ofstream outFile ("list.txt");
+        string str_prepare = "DELETE FROM Programmers WHERE ID = " + int2str(cid);
 
-//    try
-//    {
-//        if(outFile.is_open())
-//        {
-//            // Fyrir hverja línu í people er skrifuð út person (people[i])
-//            for(unsigned int i = 0; i < people.size(); i++)
-//            {
-//                // Hér kemur overloadið sér aftur vel
-//                outFile << people[i] << endl;
-//            }
-//        }
+        QString query_str = QString::fromStdString(str_prepare);
 
-//        outFile.close();
-//    }
-//    catch (...)
-//    {
-//        cout << "OMG. Writing to database failed." << endl;
-//    }
-//}
+        query.exec(query_str);
+        computers.erase(computers.begin()+(id-1));
+    }
+
+    db.close();
+}
+
 
 // list function
 // Skilar vektorum

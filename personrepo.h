@@ -27,6 +27,7 @@ public:
     void list(CompContainer& c);
     void add(const Computer &c);
     void del(const Person& p, const int &id);
+    void del(const Computer &c, const int &id);
 private:
     PersonContainer people;
     CompContainer computers;
