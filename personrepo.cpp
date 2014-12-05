@@ -4,10 +4,11 @@
 // og populatear vektor með þessum persónum
 PersonRepo::PersonRepo()
 {
-    QSqlDatabase db;
+    // AF HVERJU FER ÞESSI SMIÐUR FJORUM SINNUM I GANG???
+
     db = QSqlDatabase::addDatabase("QSQLITE");
-    QString dbName = "verkur.sqlite";
-    db.setDatabaseName(dbName);
+    // QString dbName = "verkur.sqlite";
+    db.setDatabaseName("verkur.sqlite");
 
     if(db.open())
     {
@@ -68,12 +69,7 @@ PersonRepo::PersonRepo()
 // add function
 void PersonRepo::add(Person p)
 {
-    QSqlDatabase add_db;
-    add_db = QSqlDatabase::addDatabase("QSQLITE");
-    QString dbName = "verkur.sqlite";
-    add_db.setDatabaseName(dbName);
-
-    if(add_db.open())
+    if(db.open())
     {
         QSqlQuery query;
         string insert;
@@ -81,19 +77,40 @@ void PersonRepo::add(Person p)
         insert =  "INSERT INTO \"main\".\"Programmers\" (\"first_name\",\"last_name\",\"birth_year\",\"death_year\",\"sex\",\"nationality\") ";
         insert += "VALUES (\"" + p.getFName()+ "\", \"" + p.getLName() + "\", \"" + int2str(p.getBY()) + "\", \"" + int2str(p.getDY()) +"\", \"" + p.getSex() + "\", \"" + p.getNationality() + "\")";
 
-        cout << insert << endl;
+        QString qinsert = QString::fromStdString(insert);
 
-        // QString qinsert = QString::fromStdString(insert);
-
-        // query.exec(qinsert);
-        // people.push_back(p);
+        query.exec(qinsert);
+        people.push_back(p);
     }
     else
     {
         cout << "Problem with writing to database." << endl;
     }
 
-    add_db.close();
+    db.close();
+}
+
+void PersonRepo::add(const Computer& c)
+{
+    if(db.open())
+    {
+        QSqlQuery query;
+        string insert;
+
+        insert =  "INSERT INTO \"main\".\"Computers\" (\"name\",\"year_built\",\"type\",\"build\") ";
+        insert += "VALUES (\"" + c.getName()+ "\", \"" + int2str(c.getBuildYear()) + "\", \"" + c.getType() + "\")";
+
+        QString qinsert = QString::fromStdString(insert);
+
+        query.exec(qinsert);
+        computers.push_back(c);
+    }
+    else
+    {
+        cout << "Problem with writing to database." << endl;
+    }
+
+    db.close();
 }
 
 void PersonRepo::del(const int& id)

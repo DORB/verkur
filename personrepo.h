@@ -25,9 +25,11 @@ public:
     void list(PersonContainer& p);
     void list(CompContainer& c);
     void del(const int &id);
+    void add(const Computer &c);
 private:
     PersonContainer people;
     CompContainer computers;
+    QSqlDatabase db;
 };
 
 string int2str(const int& a);
