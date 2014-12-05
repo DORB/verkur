@@ -1,6 +1,8 @@
 #ifndef COMPUTER_H
 #define COMPUTER_H
 #include <string>
+#include <fstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -14,6 +16,7 @@ public:
     string getType() const;
     int getBuildYear() const;
     bool getBuild() const;
+    friend ostream& operator <<(ostream& out, const Computer& listed);
 private:
     int cid;
     string name;

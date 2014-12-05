@@ -1,4 +1,5 @@
 #include "personrepo.h"
+#include <QString>
 
 // Repository smiður. Tekur inn það sem er skrifað í list.txt, býr til persónur
 // og populatear vektor með þessum persónum
@@ -106,6 +107,26 @@ void PersonRepo::add(const Computer& c)
 
     db.close();
 }
+
+//void PersonRepo::del(Person& p, const int& id)
+//{
+//    if(db.open())
+//    {
+//        QSqlQuery query;
+//        string remove,bla;
+//        //bla = int2str(id);
+
+//        remove = query.prepare("DELETE FROM Programmers WHERE ID =?");
+//        query.addBindValue(id);
+
+//        QString qremove = QString::fromStdString(remove);
+
+//        query.exec(qremove);
+//        people.erase(p);
+//    }
+//    db.close();
+//}
+
 
 void PersonRepo::del(const int& id)
 {

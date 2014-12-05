@@ -492,14 +492,17 @@ void show(PersonContainer listed)
         cout << "+-----------------------------------------------------+" << endl;
         for(int i = 0; i < size; i++)
         {
-            cout << setw(3) << i+1
-                 << setw(37) << listed[i].getFName() + " " + listed[i].getLName()
-                 << setw(5) << listed[i].getBY()
-                 << setw(5); if(listed[i].getDY() == 0){ cout << "-"; } else { cout << listed[i].getDY(); }
-            cout << setw(5) << listed[i].getSex()
-                 << endl;
+            cout << listed[i];
         }
-            cout << "+--------------------------END------------------------+\n" << endl;
+//        {
+//            cout << setw(3) << i+1
+//                 << setw(37) << listed[i].getFName() + " " + listed[i].getLName()
+//                 << setw(5) << listed[i].getBY()
+//                 << setw(5); if(listed[i].getDY() == 0){ cout << "-"; } else { cout << listed[i].getDY(); }
+//            cout << setw(5) << listed[i].getSex()
+//                 << endl;
+//        }
+           cout << "+--------------------------END------------------------+\n" << endl;
      }
 }
 
@@ -524,12 +527,13 @@ void show(const CompContainer& listed)
         cout << "+------------------------------------------------------+" << endl;
         for(int i = 0; i < size; i++)
         {
-            cout << setw(3) << listed[i].getID()
-                 << setw(27) << listed[i].getName()
-                 << setw(15) << listed[i].getType()
-                 << setw(5)  << listed[i].getBuildYear();
-            cout << setw(6); (listed[i].getBuild())? cout << "Yes" : cout << "No";
-            cout << endl;
+            cout << listed[i];
+//            cout << setw(3) << listed[i].getID()
+//                 << setw(27) << listed[i].getName()
+//                 << setw(15) << listed[i].getType()
+//                 << setw(5)  << listed[i].getBuildYear();
+//            cout << setw(6); (listed[i].getBuild())? cout << "Yes" : cout << "No";
+//            cout << endl;
         }
             cout << "+---------------------------END------------------------+\n" << endl;
      }
@@ -547,14 +551,15 @@ void show(Person listed)
          << endl;
     cout << "+-----------------------------------------------------+" << endl;
 
-    cout << setw(3) << ""
-         << setw(37) << listed.getFName() << " " << listed.getLName()
-         << setw(5) << listed.getBY()
-         << setw(5); if(listed.getDY() == 0){ cout << "-"; } else { cout << listed.getDY(); }
-    cout << setw(5) << listed.getSex()
-         << endl;
+    cout << listed;
+//    cout << setw(3) << ""
+//         << setw(37) << listed.getFName() << " " << listed.getLName()
+//         << setw(5) << listed.getBY()
+//         << setw(5); if(listed.getDY() == 0){ cout << "-"; } else { cout << listed.getDY(); }
+//    cout << setw(5) << listed.getSex()
+//         << endl;
 
-    cout << "+--------------------------END------------------------+\n" << endl;
+     cout << "+--------------------------END------------------------+\n" << endl;
 }
 
 // isValidInput athugar hvort id sé leyfilegt (innan marka), isOK verður þá true
