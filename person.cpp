@@ -24,8 +24,9 @@ Person::Person(int id, string fn, string ln, int by, int dy, string s, string n)
 
 ostream& operator <<(ostream& out, const Person& listed)
 {
-        out << setw(3) << listed.getID()+1
-             << setw(37) << listed.getFName() + " " + listed.getLName()
+        // out << setw(3) << listed.getID()+1
+        out  << setw(37) << listed.getFName() + " " + listed.getLName()
+             << setw(18) << listed.getNationality()
              << setw(5) << listed.getBY()
              << setw(5); if(listed.getDY() == 0){ out << "-"; } else { out << listed.getDY(); }
         out << setw(5) << listed.getSex()
@@ -33,20 +34,6 @@ ostream& operator <<(ostream& out, const Person& listed)
 
     return out;
 }
-//            cout << setw(3) << i+1
-//                 << setw(37) << listed[i].getFName() + " " + listed[i].getLName()
-//                 << setw(5) << listed[i].getBY()
-//                 << setw(5); if(listed[i].getDY() == 0){ cout << "-"; } else { cout << listed[i].getDY(); }
-//            cout << setw(5) << listed[i].getSex()
-//                 << endl;
-
-// Til að einfalda prentun á Person. Óþarfi, bara notað einu sinni, en ágætt að hafa
-//ostream& operator <<(ostream& out, const Person& p)
-//{
-//    out << p.pid << ";" << p.first_name << ";" << p.birth_year << ";" << p.death_year << ";" << p.sex << ";";
-
-//    return out;
-//}
 
 // Gettarar:
 int Person::getID() const

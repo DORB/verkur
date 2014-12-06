@@ -162,8 +162,9 @@ void ConsoleUI::add()
 
     bool add_exists = false;
     char add_answer = 'y';
-    string whole_name = first_name + " " + last_name;
-    PersonContainer found = service.find_p(whole_name, add_exists);
+    string whole_name = first_name + " " + last_name;          
+    PersonContainer found, temp;
+    found = service.find_p(whole_name, temp, add_exists);
 
     // Spyrjum notanda hvort hann vilji bæta við manneskju sem hefur verið bætt við áður
     if(add_exists)
@@ -197,7 +198,7 @@ void ConsoleUI::add()
 }
 
 // Implement del function
-void ConsoleUI::del()
+/*void ConsoleUI::del()
 {
     // Birta lista yfir skrá með linunumeri og fa svo ad velja numer til ad eyda
 
@@ -259,6 +260,193 @@ void ConsoleUI::del()
     {
         cout << "\nThe input was not valid. Sorry (with a swedish accent)." << endl;
     }
+}*/
+
+void ConsoleUI::del()
+{
+    vector<string> params = countParam();
+    string param;
+
+    PersonContainer p;
+    CompContainer c;
+    int listsize = 0;
+    bool canDel = false;
+
+    if(params.size() == 0 || params.size() > 0 && params[0] != "p" && params[0] != "c")
+    {
+       // Taka inn parameterinn
+       params.clear();
+       cout << "Type 'c' to delete from the Computers database " << endl;
+       cout << "or 'p' to delete from the Programmers database: ";
+       cin >> param;
+       params.push_back(param);
+       vector<string> del = countParam();
+    }
+
+    if(params[0] == "p" || params[0] == "c")
+    {
+        // Eyða öllum parametrum nema 'p' eða 'c' til að rugla ekki öllu upp sem a eftir kemur
+        // params.size() = 1 eftir þessa skipun
+        trimParam(params, 1);
+
+        // Nú hér kemur svo hvað gerist ef 'p' var valið
+        if(params[0] == "p")
+        {
+            cout << "Type 'list' to see the list or 'search' to search for someone specific: ";
+            cin >> param;
+            params.push_back(param);
+            countParam(params);
+            trimParam(params, 2);
+
+            if(params[1] == "search" || params[1] == "s")
+            {
+                bool search_successful = false;
+                bool searched_once = false;
+
+                cout << "Enter search string: ";
+                cin.ignore(1000, '\n');
+                getline(cin, param);
+                params.push_back(param);
+                cout << "\nYour search string is: \'" << params[2] << "\'";
+                service.search(params[2], p, search_successful);
+                listsize = p.size();
+                show(p);
+
+                if(listsize == 1)
+                {
+                    do
+                    {
+                        trimParam(params, 3);
+                        cout << "Is this the correct Programmer to delete? (y/n) ";
+                        cin >> param;
+                        params.push_back(param);
+                        countParam(params);
+                        trimParam(params, 4);
+
+                        if(params[3] == "y" || params[3] == "Y")
+                        {
+                            service.del(p[0]);
+                            cout << "\nIt wasn't beautiful, but necessary." << endl;
+                        }
+                        else if(params[3] == "n" || params[3] == "N")
+                        {
+                            search_successful = true;
+                            cout << "\nNothing was deleted. Godspeed." << endl;
+                        }
+                    } while(params[3] != "y" && params[3] != "Y" && params[3] != "n" && params[3] != "N");
+                }
+                else if(listsize > 1)
+                {
+                    do
+                    {
+                        trimParam(params, 3);
+                        cout << "Type the no. of the Programmer to delete: ";
+                        cin >> param;
+                        params.push_back(param);
+                        countParam(params);
+                        trimParam(params, 4);
+
+                        isValidInput(param, listsize + 1, canDel);
+
+                        if(canDel)
+                        {
+                            show(p[atoi(params[3].c_str())-1]);
+                            do
+                            {
+                                trimParam(params, 4);
+                                cout << "\nHeavens, not " << p[atoi(params[3].c_str())-1].getFName() << "?? Are you absolutely sure? (y/n) ";
+                                cin >> param;
+                                params.push_back(param);
+                                countParam(params);
+                                trimParam(params, 5);
+                            } while(params[4] != "y" && params[4] != "Y" && params[4] != "n" && params[4] != "N");
+
+                            if(params[4] == "y" || params[4] == "Y")
+                            {
+                                service.del(p[atoi(params[3].c_str())-1]);
+                                cout << "\nGood-bye, you poor soul." << endl;
+                            }
+                            else
+                            {
+                                cout << "\nNothing was deleted. Godspeed." << endl;
+                            }
+                        }
+
+                    } while(!canDel);
+                }
+                else
+                {
+                    cout << "But I will not give up. Never.\n" << endl;
+                    cout << "Perhaps if you would add '" << params[2] << "' do the database, it" << endl;
+                    cout << "would be easier for me to find this person and delete." << endl;
+                }
+            }
+            else if(params[1] == "list" || params[1] == "l")
+            {
+                service.list(p);
+                listsize = p.size();
+                show(p);
+
+                do
+                {
+                    trimParam(params, 2);
+                    cout << "Enter no. of person you want to delete (confirmation later required): ";
+                    cin >> param;
+                    params.push_back(param);
+                    countParam(params);
+                    trimParam(params, 3);
+
+                    isValidInput(params[2], listsize + 1, canDel);
+                } while(!canDel);
+
+                if(canDel)
+                {
+                    show(p[atoi(params[2].c_str())-1]);
+
+                    cout << "\nWe're talking " << p[atoi(params[2].c_str())-1].getFName() << " here. Is this correct? (y/n) ";
+                    cin >> param;
+                    params.push_back(param);
+                    countParam(params);
+                    trimParam(params, 4);
+
+                    while(params[3] != "y" && params[3] != "Y" && params[3] != "n" && params[3] != "N")
+                    {
+                        trimParam(params, 3);
+                        cout << "\nAnswer the question please: (y/n) ";
+                        cin >> param;
+                        params.push_back(param);
+                        countParam(params);
+                        trimParam(params, 4);
+                    }
+
+                    if(params[3] == "y" || params[3] == "Y")
+                    {
+                        service.del(p[atoi(params[2].c_str())-1]);
+                        cout << "\nWow, that was weird. 'Tis over with." << endl;
+                    }
+                    else
+                    {
+                        cout << "\nThank heavens, you've seen the light!" << endl;
+                    }
+                }
+            }
+            else
+            {
+                cout << "\nYour choice was most pitifully incorrect. Shame on you." << endl;
+            }
+        }
+        else if(params[0] == "c")
+        {
+            service.list(c);
+            listsize = c.size();
+            show(c);
+        }
+    }
+    else
+    {
+        cout << "\nWhat a curious choice, young apprentice. I believe I do not know this parameter." << endl;
+    }
+
 }
 
 // Implement list function
@@ -278,8 +466,8 @@ void ConsoleUI::list_c()
     if(params.size() == 0)
     {
         // Taka inn parameterinn
-        cout << " Choose 'c' for a listing of Computers or " <<
-        "'p' for a listing of Persons: ";
+        cout << "Type 'c' for a listing of Computers or " <<
+        "'p' for a listing of Programmers: ";
         cin >> param;
 
         // Taka inn restina. Þetta er bara til að hreinsa út strauminn og vita hvort
@@ -457,7 +645,8 @@ void ConsoleUI::find()
     // Búum til breytu af taginu PersonContainer og setjum þar leitarniðurstöðurnar
     // gildi bool breytunnar exists að ofan breytist eftir því hvort leitarstrengurinn
     // fannst eða ekki
-    PersonContainer found = service.find_p(search, exists);
+    PersonContainer found, temp;
+    found = service.find_p(search, temp, exists);
 
     if(exists == false)
     {
@@ -465,13 +654,14 @@ void ConsoleUI::find()
     }
     else
     {
-        cout << "\n\'" << search << "\' was found in " << found.size() << " entries:" << endl;
+        cout << "\nI admire your search skills." << endl;
+        cout << "\'" << search << "\' was found in " << found.size() << " entries:" << endl;
         show(found);
     }
 }
 
 // Fall sem prentar út lista eftir vektor sem er gefinn með mörgum persónum í
-void show(PersonContainer listed)
+void ConsoleUI::show(PersonContainer listed)
 {
     int size = listed.size();
 
@@ -482,31 +672,25 @@ void show(PersonContainer listed)
     else
     {
 
-        cout << "\n+-----------------------------------------------------+" << endl;
+        cout << "\n+-----------------------------------------------------------------------+" << endl;
         cout << setw(3) << "No."
              << setw(37) << "Name"
+             << setw(18) << "Nationality"
              << setw(5) << "Born"
              << setw(5) << "Dead"
              << setw(5) << "Sex"
              << endl;
-        cout << "+-----------------------------------------------------+" << endl;
+        cout << "+-----------------------------------------------------------------------+" << endl;
         for(int i = 0; i < size; i++)
         {
+            cout << setw(3) << i+1;
             cout << listed[i];
         }
-//        {
-//            cout << setw(3) << i+1
-//                 << setw(37) << listed[i].getFName() + " " + listed[i].getLName()
-//                 << setw(5) << listed[i].getBY()
-//                 << setw(5); if(listed[i].getDY() == 0){ cout << "-"; } else { cout << listed[i].getDY(); }
-//            cout << setw(5) << listed[i].getSex()
-//                 << endl;
-//        }
-           cout << "+--------------------------END------------------------+\n" << endl;
+        cout << "+-----------------------------------END---------------------------------+\n" << endl;
      }
 }
 
-void show(const CompContainer& listed)
+void ConsoleUI::show(const CompContainer& listed)
 {
     int size = listed.size();
 
@@ -518,7 +702,7 @@ void show(const CompContainer& listed)
     {
 
         cout << "\n+------------------------------------------------------+" << endl;
-        cout << setw(3) << "ID"
+        cout << setw(3) << "No."
              << setw(27) << "Name"
              << setw(15) << "Type"
              << setw(5) << "Year"
@@ -527,44 +711,33 @@ void show(const CompContainer& listed)
         cout << "+------------------------------------------------------+" << endl;
         for(int i = 0; i < size; i++)
         {
+            cout << setw(3) << i+1;
             cout << listed[i];
-//            cout << setw(3) << listed[i].getID()
-//                 << setw(27) << listed[i].getName()
-//                 << setw(15) << listed[i].getType()
-//                 << setw(5)  << listed[i].getBuildYear();
-//            cout << setw(6); (listed[i].getBuild())? cout << "Yes" : cout << "No";
-//            cout << endl;
         }
-            cout << "+---------------------------END------------------------+\n" << endl;
+        cout << "+----------------------------END-----------------------+\n" << endl;
      }
 }
 
 // Fall sem prentar út einstakling
-void show(Person listed)
+void ConsoleUI::show(Person listed)
 {
-    cout << "\n+-----------------------------------------------------+" << endl;
+    cout << "\n+-----------------------------------------------------------------------+" << endl;
     cout << setw(3) << ""
          << setw(37) << "Name"
+         << setw(18) << "Nationality"
          << setw(5) << "Born"
          << setw(5) << "Dead"
          << setw(5) << "Sex"
          << endl;
-    cout << "+-----------------------------------------------------+" << endl;
-
-    cout << listed;
-//    cout << setw(3) << ""
-//         << setw(37) << listed.getFName() << " " << listed.getLName()
-//         << setw(5) << listed.getBY()
-//         << setw(5); if(listed.getDY() == 0){ cout << "-"; } else { cout << listed.getDY(); }
-//    cout << setw(5) << listed.getSex()
-//         << endl;
-
-     cout << "+--------------------------END------------------------+\n" << endl;
+    cout << "+-----------------------------------------------------------------------+" << endl;
+    cout << setw(3) << ""
+         << listed;
+    cout << "+-----------------------------------END---------------------------------+\n" << endl;
 }
 
 // isValidInput athugar hvort id sé leyfilegt (innan marka), isOK verður þá true
 // og tekur strenginn inp og kastar yfir í int og skilar því.
-int isValidInput(const string& inp, const int& lessThan, bool& isOK)
+int ConsoleUI::isValidInput(const string& inp, const int& lessThan, bool& isOK)
 {
     int result = atoi(inp.c_str());
 
@@ -584,13 +757,13 @@ int isValidInput(const string& inp, const int& lessThan, bool& isOK)
 }
 
 // Prenta út mögulegar aðgerðir
-void printComms()
+void ConsoleUI::printComms()
 {
     cout << "\n[add] [del] [list] [find] [sort] [quit]" << endl;
 }
 
 // Fall til að taka inn parametra og skila þeim í vektor af strengjum
-vector<string> countParam()
+vector<string> ConsoleUI::countParam()
 {
     char nextin;
     vector<string> p;
@@ -634,4 +807,27 @@ vector<string> countParam()
     }
 
     return p;
+}
+
+void ConsoleUI::countParam(vector<string>& result)
+{
+    vector<string> params = countParam();
+
+    for(unsigned int i = 0; i < params.size(); i++)
+        result.push_back(params[i]);
+}
+
+void ConsoleUI::trimParam(vector<string>& result, const int& keep)
+{
+    result.erase(result.begin() + keep, result.begin() + result.size());
+}
+
+void ConsoleUI::emptyContainer(PersonContainer& result)
+{
+    result.erase(result.begin(), result.begin() + result.size());
+}
+
+void ConsoleUI::emptyContainer(CompContainer& result)
+{
+    result.erase(result.begin(), result.begin() + result.size());
 }

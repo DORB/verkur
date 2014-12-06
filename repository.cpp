@@ -108,7 +108,6 @@ void Repository::add(const Computer& c)
     db.close();
 }
 
-void Repository::del(const Person& p, const int& id)
 //{
 //    bool ret = false;
 //    if(db.open())
@@ -136,6 +135,8 @@ void Repository::del(const Person& p, const int& id)
 //    db.close();
 //}
 
+
+void Repository::del(const Person& p)
 {
     if(db.open())
     {
@@ -148,12 +149,34 @@ void Repository::del(const Person& p, const int& id)
         QString query_str = QString::fromStdString(str_prepare);
 
         query.exec(query_str);
-        people.erase(people.begin()+(id-1));
+        // people.clear();
     }
 
     db.close();
+
+    list(people);
 }
 
+void Repository::del(const Computer& c)
+{
+    if(db.open())
+    {
+        QSqlQuery query;
+
+        int cid = c.getID();
+
+        string str_prepare = "DELETE FROM Computers WHERE ID = " + int2str(cid);
+
+        QString query_str = QString::fromStdString(str_prepare);
+
+        query.exec(query_str);
+        // computers.clear();
+    }
+
+    db.close();
+
+    list(computers);
+}
 
 //void Repository::del(const int& id)
 //{
@@ -187,12 +210,16 @@ void Repository::del(const Person& p, const int& id)
 // Skilar vektorum
 void Repository::list(PersonContainer& p)
 {
-    p = people;
+    Repository temp;
+
+    p = temp.people;
 }
 
 void Repository::list(CompContainer& c)
 {
-    c = computers;
+    Repository temp;
+
+    c = temp.computers;
 }
 
 string int2str(const int& a)

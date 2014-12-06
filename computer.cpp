@@ -15,8 +15,8 @@ Computer::Computer(int id, string n, string t, int yb, bool b)
 
 ostream& operator <<(ostream& out, const Computer& listed)
 {
-    out << setw(3) << listed.getID()
-         << setw(27) << listed.getName()
+    // out << setw(3) << listed.getID()
+    out  << setw(27) << listed.getName()
          << setw(15) << listed.getType()
          << setw(5)  << listed.getBuildYear();
     out << setw(6); (listed.getBuild())? out << "Yes" : out << "No";
