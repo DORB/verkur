@@ -273,6 +273,7 @@ void ConsoleUI::del()
     int listsize = 0;
     bool canDel = false;
 
+    // Ef ekkert var valið a eftir 'del' eða það var hvorki 'p' ne 'c'
     if(params.size() == 0 || params.size() > 0 && params[0] != "p" && params[0] != "c")
     {
        // Taka inn parameterinn
@@ -284,6 +285,7 @@ void ConsoleUI::del()
        vector<string> del = countParam();
     }
 
+    // Ef 'p' eða 'c' var valið
     if(params[0] == "p" || params[0] == "c")
     {
         // Eyða öllum parametrum nema 'p' eða 'c' til að rugla ekki öllu upp sem a eftir kemur
@@ -299,6 +301,7 @@ void ConsoleUI::del()
             countParam(params);
             trimParam(params, 2);
 
+            // Fyrir del með leit
             if(params[1] == "search" || params[1] == "s")
             {
                 bool search_successful = false;
@@ -313,6 +316,7 @@ void ConsoleUI::del()
                 listsize = p.size();
                 show(p);
 
+                // Ef bara einn er i listanum þarf bara staðfestingu
                 if(listsize == 1)
                 {
                     do
@@ -324,7 +328,7 @@ void ConsoleUI::del()
                         countParam(params);
                         trimParam(params, 4);
 
-                        if(params[3] == "y" || params[3] == "Y")
+                        if(params[3] == "y")
                         {
                             personService.del(p[0]);
                             cout << "\nIt wasn't beautiful, but necessary." << endl;
@@ -334,12 +338,15 @@ void ConsoleUI::del()
                             search_successful = true;
                             cout << "\nNothing was deleted. Godspeed." << endl;
                         }
-                    } while(params[3] != "y" && params[3] != "Y" && params[3] != "n" && params[3] != "N");
+                    } while(params[3] != "y" && params[3] != "n");
                 }
+
+                // Ef fleiri eru i listanum er beðið um numerið a honum (i vektornum)
                 else if(listsize > 1)
                 {
                     do
                     {
+                        // Fa inn numerið a personu til að dela
                         trimParam(params, 3);
                         cout << "Type the no. of the Programmer to delete: ";
                         cin >> param;
@@ -349,6 +356,7 @@ void ConsoleUI::del()
 
                         isValidInput(param, listsize + 1, canDel);
 
+                        // Ef valið var innan rettra marka
                         if(canDel)
                         {
                             show(p[atoi(params[3].c_str())-1]);
@@ -360,9 +368,9 @@ void ConsoleUI::del()
                                 params.push_back(param);
                                 countParam(params);
                                 trimParam(params, 5);
-                            } while(params[4] != "y" && params[4] != "Y" && params[4] != "n" && params[4] != "N");
+                            } while(params[4] != "y" && params[4] != "n");
 
-                            if(params[4] == "y" || params[4] == "Y")
+                            if(params[4] == "y")
                             {
                                 personService.del(p[atoi(params[3].c_str())-1]);
                                 cout << "\nGood-bye, you poor soul." << endl;
@@ -443,6 +451,8 @@ void ConsoleUI::del()
             show(c);
         }
     }
+
+    // Ef vitlaust var skrifað inn fyrir 'p' eða 'c'
     else
     {
         cout << "\nWhat a curious choice, young apprentice. I believe I do not know this parameter." << endl;
@@ -799,7 +809,7 @@ vector<string> ConsoleUI::countParam()
                     break;
                 }
             }
-            p.push_back(param);
+            p.push_back(str2lower(param));
         }
     }
     else
