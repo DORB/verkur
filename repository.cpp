@@ -1,9 +1,9 @@
-#include "personrepo.h"
+#include "repository.h"
 #include <QString>
 
 // Repository smiður. Tekur inn það sem er skrifað í list.txt, býr til persónur
 // og populatear vektor með þessum persónum
-PersonRepo::PersonRepo()
+Repository::Repository()
 {
     if(db.open())
     {
@@ -62,7 +62,7 @@ PersonRepo::PersonRepo()
 }
 
 // add function
-void PersonRepo::add(const Person& p)
+void Repository::add(const Person& p)
 {
     if(db.open())
     {
@@ -85,7 +85,7 @@ void PersonRepo::add(const Person& p)
     db.close();
 }
 
-void PersonRepo::add(const Computer& c)
+void Repository::add(const Computer& c)
 {
     if(db.open())
     {
@@ -108,7 +108,7 @@ void PersonRepo::add(const Computer& c)
     db.close();
 }
 
-void PersonRepo::del(const Person& p, const int& id)
+void Repository::del(const Person& p, const int& id)
 //{
 //    bool ret = false;
 //    if(db.open())
@@ -155,7 +155,7 @@ void PersonRepo::del(const Person& p, const int& id)
 }
 
 
-//void PersonRepo::del(const int& id)
+//void Repository::del(const int& id)
 //{
 //    // Eytt út úr vektornum
 //    people.erase(people.begin()+(id-1));
@@ -185,12 +185,12 @@ void PersonRepo::del(const Person& p, const int& id)
 
 // list function
 // Skilar vektorum
-void PersonRepo::list(PersonContainer& p)
+void Repository::list(PersonContainer& p)
 {
     p = people;
 }
 
-void PersonRepo::list(CompContainer& c)
+void Repository::list(CompContainer& c)
 {
     c = computers;
 }

@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
-#include "personservice.h"
+#include "service.h"
 using namespace std;
 
 class ConsoleUI
@@ -20,7 +20,7 @@ public:
     void sort();
     void find();
 private:
-    PersonService personService;
+    Service service;
 };
 
 void show(PersonContainer listed);

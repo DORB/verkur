@@ -18,10 +18,10 @@ using namespace std;
 typedef vector<Person> PersonContainer;
 typedef vector<Computer> CompContainer;
 
-class PersonRepo
+class Repository
 {
 public:
-    PersonRepo();
+    Repository();
     void add(const Person& p);
     void list(PersonContainer& p);
     void list(CompContainer& c);

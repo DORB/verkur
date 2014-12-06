@@ -163,7 +163,7 @@ void ConsoleUI::add()
     bool add_exists = false;
     char add_answer = 'y';
     string whole_name = first_name + " " + last_name;
-    PersonContainer found = personService.find_p(whole_name, add_exists);
+    PersonContainer found = service.find_p(whole_name, add_exists);
 
     // Spyrjum notanda hvort hann vilji bæta við manneskju sem hefur verið bætt við áður
     if(add_exists)
@@ -186,7 +186,7 @@ void ConsoleUI::add()
     // Adda viðkomandi og senda skilaboð um að það hafi tekist, eða ef ekki
     if(add_answer == 'y' || add_answer == 'Y')
     {
-        personService.add(Person(pid, first_name, last_name, birth_year, death_year, sex, nationality));
+        service.add(Person(pid, first_name, last_name, birth_year, death_year, sex, nationality));
 
         cout << "\nThank you for this wonderful addition to the database." << endl;
     }
@@ -202,7 +202,7 @@ void ConsoleUI::del()
     // Birta lista yfir skrá með linunumeri og fa svo ad velja numer til ad eyda
 
     PersonContainer listed;
-    personService.list(listed);
+    service.list(listed);
     //CompContainer listed = personService.list(listed);
 
     bool done = false;
@@ -246,7 +246,7 @@ void ConsoleUI::del()
         {
             string delName = listed[id-1].getFName();
             string delSex = listed[id-1].getSex();
-            personService.del(listed[id-1], id);
+            service.del(listed[id-1], id);
             cout << "\n" << delName << " was most gruesomely deleted from the database. Bless ";
                  if(delSex == "F"){ cout << "her." << endl;} else{cout << "him." << endl;}
         }
@@ -303,12 +303,12 @@ void ConsoleUI::list_c()
     // aukalegt að muna
     if(params[0] == "p")
     {
-        personService.list(p);
+        service.list(p);
         show(p);
     }
     else if(params[0] == "c")
     {
-        personService.list(c);
+        service.list(c);
         show(c);
     }
 
@@ -409,7 +409,7 @@ void ConsoleUI::sort()
     // Sortum listann á þann hátt sem userinn bað um
     if(canSort)
     {
-        PersonContainer sorted = personService.sort_list(sort_after, desc);
+        PersonContainer sorted = service.sort_list(sort_after, desc);
         show(sorted);
     }
     else
@@ -457,7 +457,7 @@ void ConsoleUI::find()
     // Búum til breytu af taginu PersonContainer og setjum þar leitarniðurstöðurnar
     // gildi bool breytunnar exists að ofan breytist eftir því hvort leitarstrengurinn
     // fannst eða ekki
-    PersonContainer found = personService.find_p(search, exists);
+    PersonContainer found = service.find_p(search, exists);
 
     if(exists == false)
     {
