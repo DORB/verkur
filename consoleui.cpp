@@ -642,7 +642,8 @@ void ConsoleUI::find()
     // Búum til breytu af taginu PersonContainer og setjum þar leitarniðurstöðurnar
     // gildi bool breytunnar exists að ofan breytist eftir því hvort leitarstrengurinn
     // fannst eða ekki
-    PersonContainer found = personService.find_p(search, found, exists);
+    PersonContainer found, temp;
+    found = personService.find_p(search, temp, exists);
 
     if(exists == false)
     {
