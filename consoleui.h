@@ -6,6 +6,7 @@
 #include <string>
 #include <algorithm>
 #include "personservice.h"
+#include "personrepo.h"
 using namespace std;
 
 class ConsoleUI
@@ -31,5 +32,7 @@ bool isDone(string& str);
 bool isDoneFind(string& str);
 void printComms();
 vector<string> countParam();
+void countParam(vector<string>& result);
+void trimParam(vector<string>& result, const int& keep);
 
 #endif // CONSOLEUI_H

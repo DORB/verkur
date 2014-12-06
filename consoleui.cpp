@@ -197,7 +197,7 @@ void ConsoleUI::add()
 }
 
 // Implement del function
-void ConsoleUI::del()
+/*void ConsoleUI::del()
 {
     // Birta lista yfir skrá með linunumeri og fa svo ad velja numer til ad eyda
 
@@ -259,6 +259,78 @@ void ConsoleUI::del()
     {
         cout << "\nThe input was not valid. Sorry (with a swedish accent)." << endl;
     }
+}*/
+
+void ConsoleUI::del()
+{
+    vector<string> params = countParam();
+    string param;
+
+    PersonContainer p;
+    CompContainer c;
+    int listsize;
+
+    if(params.size() == 0)
+    {
+       // Taka inn parameterinn
+       cout << "Type 'c' to delete from the Computers database ";
+       cout << "or 'p' to delete from the Programmers database: ";
+       cin >> param;
+       params.push_back(param);
+       vector<string> del = countParam();
+    }
+
+    if(params[0] == "p" || params[0] == "c")
+    {
+        // Eyða öllum parametrum nema 'p' eða 'c' til að rugla ekki öllu upp sem a eftir kemur
+        // params.size() = 1 eftir þessa skipun
+        trimParam(params, 1);
+
+        // Nú hér kemur svo hvað gerist ef 'p' var valið
+        if(params[0] == "p")
+        {
+            personService.list(p);
+            listsize = p.size();
+            show(p);
+        }
+        else if(params[0] == "c")
+        {
+            personService.list(c);
+            listsize = c.size();
+            show(c);
+        }
+
+        cout << "Please select the No. of which entry you would like to delete: ";
+        cin >> param;
+        params.push_back(param);
+        countParam(params);
+        trimParam(params, 2);
+
+        bool canDel;
+        isValidInput(params[1], listsize + 1, canDel);
+
+        if(canDel)
+        {
+            cout << "You wanted to delete entry no. " << params[1] << " from " << params[0] << endl;
+            cout << "but I haven't yet implemented that awesome feature. You see, I was" << endl;
+            cout << "thinking maybe we would implement a search function instead of showing the" << endl;
+            cout << "list and finding the id number. If the search finds one person there comes a" << endl;
+            cout << "simple yes/no dialog but otherwise you get the choice of choosing from the" << endl;
+            cout << "ID numbers shown along (which are only the number of the vector Person/Comp" << endl;
+            cout << "but of course within each Person/Comp is the real ID as a member variable." << endl;
+            cout << "So choosing the number would send exactly that Person/Comp to deletion." << endl;
+        }
+        else
+        {
+            cout << "I wouldn't delete that if I were you. Just leave it." << endl;
+        }
+
+    }
+    else
+    {
+        cout << "What a curious choice, young apprentice. I believe I do not know this parameter." << endl;
+    }
+
 }
 
 // Implement list function
@@ -278,8 +350,8 @@ void ConsoleUI::list_c()
     if(params.size() == 0)
     {
         // Taka inn parameterinn
-        cout << " Choose 'c' for a listing of Computers or " <<
-        "'p' for a listing of Persons: ";
+        cout << "Type 'c' for a listing of Computers or " <<
+        "'p' for a listing of Programmers: ";
         cin >> param;
 
         // Taka inn restina. Þetta er bara til að hreinsa út strauminn og vita hvort
@@ -542,7 +614,7 @@ void show(Person listed)
     cout << "+-----------------------------------------------------------------------+" << endl;
     cout << setw(3) << ""
          << listed;
-     cout << "+-----------------------------------END---------------------------------+\n" << endl;
+    cout << "+-----------------------------------END---------------------------------+\n" << endl;
 }
 
 // isValidInput athugar hvort id sé leyfilegt (innan marka), isOK verður þá true
@@ -617,4 +689,17 @@ vector<string> countParam()
     }
 
     return p;
+}
+
+void countParam(vector<string>& result)
+{
+    vector<string> params = countParam();
+
+    for(unsigned int i = 0; i < params.size(); i++)
+        result.push_back(params[i]);
+}
+
+void trimParam(vector<string>& result, const int& keep)
+{
+    result.erase(result.begin() + keep, result.begin() + result.size());
 }
