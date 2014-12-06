@@ -44,7 +44,7 @@ PersonContainer PersonService::find_p(string str, const PersonContainer& p, bool
 
     for(unsigned int i = 0; i < tofind.size(); i++)
     {
-        string data = tofind[i].getFName() + " " + tofind[i].getLName();
+        string data = tofind[i].getFName() + " " + tofind[i].getLName() + " " + int2str(tofind[i].getBY()) + " " + int2str(tofind[i].getDY()) + " " + tofind[i].getNationality();
 
         data = str2lower(data);
         str = str2lower(str);

@@ -273,10 +273,11 @@ void ConsoleUI::del()
     int listsize = 0;
     bool canDel = false;
 
-    if(params.size() == 0)
+    if(params.size() == 0 || params.size() > 0 && params[0] != "p" && params[0] != "c")
     {
        // Taka inn parameterinn
-       cout << "Type 'c' to delete from the Computers database ";
+       params.clear();
+       cout << "Type 'c' to delete from the Computers database " << endl;
        cout << "or 'p' to delete from the Programmers database: ";
        cin >> param;
        params.push_back(param);
@@ -326,6 +327,7 @@ void ConsoleUI::del()
                         if(params[3] == "y" || params[3] == "Y")
                         {
                             personService.del(p[0]);
+                            cout << "\nIt wasn't beautiful, but necessary." << endl;
                         }
                         else if(params[3] == "n" || params[3] == "N")
                         {
@@ -363,7 +365,7 @@ void ConsoleUI::del()
                             if(params[4] == "y" || params[4] == "Y")
                             {
                                 personService.del(p[atoi(params[3].c_str())-1]);
-                                cout << "Good-bye, you poor soul." << endl;
+                                cout << "\nGood-bye, you poor soul." << endl;
                             }
                             else
                             {
@@ -375,7 +377,9 @@ void ConsoleUI::del()
                 }
                 else
                 {
-                    cout << "The search was unsuccessful. But I will not give up. Never." << endl;
+                    cout << "But I will not give up. Never.\n" << endl;
+                    cout << "Perhaps if you would add '" << params[2] << "' do the database, it" << endl;
+                    cout << "would be easier for me to find this person and delete." << endl;
                 }
             }
             else if(params[1] == "list" || params[1] == "l")
@@ -429,7 +433,7 @@ void ConsoleUI::del()
             }
             else
             {
-                cout << "Your choice was most pitifully incorrect. Shame on you." << endl;
+                cout << "\nYour choice was most pitifully incorrect. Shame on you." << endl;
             }
         }
         else if(params[0] == "c")
@@ -441,7 +445,7 @@ void ConsoleUI::del()
     }
     else
     {
-        cout << "What a curious choice, young apprentice. I believe I do not know this parameter." << endl;
+        cout << "\nWhat a curious choice, young apprentice. I believe I do not know this parameter." << endl;
     }
 
 }
@@ -651,13 +655,14 @@ void ConsoleUI::find()
     }
     else
     {
-        cout << "\n\'" << search << "\' was found in " << found.size() << " entries:" << endl;
+        cout << "\nI admire your search skills." << endl;
+        cout << "\'" << search << "\' was found in " << found.size() << " entries:" << endl;
         show(found);
     }
 }
 
 // Fall sem prentar út lista eftir vektor sem er gefinn með mörgum persónum í
-void show(PersonContainer listed)
+void ConsoleUI::show(PersonContainer listed)
 {
     int size = listed.size();
 
@@ -686,7 +691,7 @@ void show(PersonContainer listed)
      }
 }
 
-void show(const CompContainer& listed)
+void ConsoleUI::show(const CompContainer& listed)
 {
     int size = listed.size();
 
@@ -715,7 +720,7 @@ void show(const CompContainer& listed)
 }
 
 // Fall sem prentar út einstakling
-void show(Person listed)
+void ConsoleUI::show(Person listed)
 {
     cout << "\n+-----------------------------------------------------------------------+" << endl;
     cout << setw(3) << ""
@@ -733,7 +738,7 @@ void show(Person listed)
 
 // isValidInput athugar hvort id sé leyfilegt (innan marka), isOK verður þá true
 // og tekur strenginn inp og kastar yfir í int og skilar því.
-int isValidInput(const string& inp, const int& lessThan, bool& isOK)
+int ConsoleUI::isValidInput(const string& inp, const int& lessThan, bool& isOK)
 {
     int result = atoi(inp.c_str());
 
@@ -753,13 +758,13 @@ int isValidInput(const string& inp, const int& lessThan, bool& isOK)
 }
 
 // Prenta út mögulegar aðgerðir
-void printComms()
+void ConsoleUI::printComms()
 {
     cout << "\n[add] [del] [list] [find] [sort] [quit]" << endl;
 }
 
 // Fall til að taka inn parametra og skila þeim í vektor af strengjum
-vector<string> countParam()
+vector<string> ConsoleUI::countParam()
 {
     char nextin;
     vector<string> p;
@@ -805,7 +810,7 @@ vector<string> countParam()
     return p;
 }
 
-void countParam(vector<string>& result)
+void ConsoleUI::countParam(vector<string>& result)
 {
     vector<string> params = countParam();
 
@@ -813,17 +818,17 @@ void countParam(vector<string>& result)
         result.push_back(params[i]);
 }
 
-void trimParam(vector<string>& result, const int& keep)
+void ConsoleUI::trimParam(vector<string>& result, const int& keep)
 {
     result.erase(result.begin() + keep, result.begin() + result.size());
 }
 
-void emptyContainer(PersonContainer& result)
+void ConsoleUI::emptyContainer(PersonContainer& result)
 {
     result.erase(result.begin(), result.begin() + result.size());
 }
 
-void emptyContainer(CompContainer& result)
+void ConsoleUI::emptyContainer(CompContainer& result)
 {
     result.erase(result.begin(), result.begin() + result.size());
 }
