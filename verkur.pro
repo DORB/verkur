@@ -18,22 +18,20 @@ TEMPLATE = app
 SOURCES += main.cpp \
     person.cpp \
     consoleui.cpp \
-    personservice.cpp \
-    personrepo.cpp \
     comparer.cpp \
-    comprepo.cpp \
     computer.cpp \
-    database.cpp
+    database.cpp \
+    service.cpp \
+    repository.cpp
 
 HEADERS += \
     person.h \
     consoleui.h \
-    personservice.h \
-    personrepo.h \
     comparer.h \
-    comprepo.h \
     computer.h \
-    database.h
+    database.h \
+    service.h \
+    repository.h
 
 OTHER_FILES += \
     README.md \

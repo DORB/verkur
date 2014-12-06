@@ -5,8 +5,7 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
-#include "personservice.h"
-#include "personrepo.h"
+#include "service.h"
 using namespace std;
 
 class ConsoleUI
@@ -31,7 +30,7 @@ public:
     void emptyContainer(PersonContainer& result);
     void emptyContainer(CompContainer& result);
 private:
-    PersonService personService;
+    Service service;
 };
 
 #endif // CONSOLEUI_H

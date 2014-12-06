@@ -1,9 +1,9 @@
-#include "personrepo.h"
+#include "repository.h"
 #include <QString>
 
 // Repository smiður. Tekur inn það sem er skrifað í list.txt, býr til persónur
 // og populatear vektor með þessum persónum
-PersonRepo::PersonRepo()
+Repository::Repository()
 {
     if(db.open())
     {
@@ -62,7 +62,7 @@ PersonRepo::PersonRepo()
 }
 
 // add function
-void PersonRepo::add(const Person& p)
+void Repository::add(const Person& p)
 {
     if(db.open())
     {
@@ -85,7 +85,7 @@ void PersonRepo::add(const Person& p)
     db.close();
 }
 
-void PersonRepo::add(const Computer& c)
+void Repository::add(const Computer& c)
 {
     if(db.open())
     {
@@ -108,7 +108,35 @@ void PersonRepo::add(const Computer& c)
     db.close();
 }
 
-void PersonRepo::del(const Person& p)
+//{
+//    bool ret = false;
+//    if(db.open())
+//    {
+//        QSqlQuery query;
+//        ret = query.exec(QString("DELETE FROM Programmers WHERE ID=%1").arg(id));
+//    }
+//    return ret;
+//}
+//{
+//    cout << "hihi" << endl;
+//    if(db.open())
+//    {
+//        QSqlQuery query;
+//        string remove,bla;
+
+//        remove = query.prepare("DELETE FROM Programmers WHERE ID =?");
+//        query.boundValue(id);
+
+//        cout << "HALLO" << endl;
+//        QString qremove = QString::fromStdString(remove);
+
+//        query.exec(qremove);
+//    }
+//    db.close();
+//}
+
+
+void Repository::del(const Person& p)
 {
     if(db.open())
     {
@@ -129,7 +157,7 @@ void PersonRepo::del(const Person& p)
     list(people);
 }
 
-void PersonRepo::del(const Computer& c)
+void Repository::del(const Computer& c)
 {
     if(db.open())
     {
@@ -150,19 +178,46 @@ void PersonRepo::del(const Computer& c)
     list(computers);
 }
 
+//void Repository::del(const int& id)
+//{
+//    // Eytt út úr vektornum
+//    people.erase(people.begin()+(id-1));
+
+//    // Skrifa vektorinn inn yfir list.txt á standard forminu
+//    ofstream outFile ("list.txt");
+
+//    try
+//    {
+//        if(outFile.is_open())
+//        {
+//            // Fyrir hverja línu í people er skrifuð út person (people[i])
+//            for(unsigned int i = 0; i < people.size(); i++)
+//            {
+//                // Hér kemur overloadið sér aftur vel
+//                outFile << people[i] << endl;
+//            }
+//        }
+
+//        outFile.close();
+//    }
+//    catch (...)
+//    {
+//        cout << "OMG. Writing to database failed." << endl;
+//    }
+//}
 
 // list function
 // Skilar vektorum
-void PersonRepo::list(PersonContainer& p)
+void Repository::list(PersonContainer& p)
 {
-    PersonRepo temp;
+    Repository temp;
 
     p = temp.people;
 }
 
-void PersonRepo::list(CompContainer& c)
+void Repository::list(CompContainer& c)
 {
-    PersonRepo temp;
+    Repository temp;
 
     c = temp.computers;
 }

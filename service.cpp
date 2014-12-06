@@ -1,38 +1,51 @@
-#include "personservice.h"
+#include "service.h"
 
 // Smiðurinn, byr til repository
-PersonService::PersonService()
+Service::Service()
 {
 }
 
 // milliliður fyrir add function
-void PersonService::add(const Person& p)
+void Service::add(const Person& p)
 {
-    personRepo.add(p);
+    repository.add(p);
 }
 
 // milliliður fyrir list function
-void PersonService::list(PersonContainer& p)
+void Service::list(PersonContainer& p)
 {
-    personRepo.list(p);
+    repository.list(p);
 }
 
-void PersonService::list(CompContainer& c)
+void Service::list(CompContainer& c)
 {
-    personRepo.list(c);
+    repository.list(c);
 }
 
 // milliliður fyrir del function
-void PersonService::del(const Person& p)
+void Service::del(const Person& p)
 {
-    personRepo.del(p);
+    repository.del(p);
 }
 
 // Leitarfall
 // Breytir gildi a exists i true gildi ef niðurstaða var ur leitinni, annars false
 // Skilar PersonContainer með leitarniðurstöðunum
-PersonContainer PersonService::find_p(string str, const PersonContainer& p, bool& exists)
+PersonContainer Service::find_p(string str,const PersonContainer& p, bool& exists)
 {
+//{
+//    if(db.open());
+//    {
+//        QSqlQuery query;
+
+//        string str_prepare = "SELECT * FROM Programmers WHERE first_name LIKE \"first_name\"" + str;
+
+//        QString query_str = QString::fromStdString(str_prepare);
+
+//        query.exec(query_str);
+//    }
+//    db.close();
+//}
     PersonContainer tofind;
 
     if(p.size() == 0)
@@ -61,15 +74,15 @@ PersonContainer PersonService::find_p(string str, const PersonContainer& p, bool
     return result;
 }
 
-void PersonService::search(const string& search_str, PersonContainer& p, bool& successful)
+void Service::search(const string& search_str, PersonContainer& p, bool& successful)
 {
-    personRepo.list(p);
+    repository.list(p);
     p = find_p(search_str, p, successful);
 }
 
 // Sort fallið
 // Tekur inn leitaraðferðina (sort_after) og bool breytu hvernig a að raða (asc/desc)
-PersonContainer PersonService::sort_list(const int& sort_after, const bool& desc)
+PersonContainer Service::sort_list(const int& sort_after, const bool& desc)
 {
     PersonContainer sorted;
     list(sorted);
