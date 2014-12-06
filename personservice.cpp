@@ -6,7 +6,7 @@ PersonService::PersonService()
 }
 
 // milliliður fyrir add function
-void PersonService::add(Person p)
+void PersonService::add(const Person& p)
 {
     personRepo.add(p);
 }
@@ -23,23 +23,28 @@ void PersonService::list(CompContainer& c)
 }
 
 // milliliður fyrir del function
-void PersonService::del(const Person& p, const int& id)
+void PersonService::del(const Person& p)
 {
-    personRepo.del(p, id);
+    personRepo.del(p);
 }
 
 // Leitarfall
 // Breytir gildi a exists i true gildi ef niðurstaða var ur leitinni, annars false
 // Skilar PersonContainer með leitarniðurstöðunum
-PersonContainer PersonService::find_p(string str, bool& exists)
+PersonContainer PersonService::find_p(string str, const PersonContainer& p, bool& exists)
 {
     PersonContainer tofind;
-    list(tofind);
+
+    if(p.size() == 0)
+        list(tofind);
+    else
+        tofind = p;
+
     PersonContainer result;
 
     for(unsigned int i = 0; i < tofind.size(); i++)
     {
-        string data = tofind[i].getFName();
+        string data = tofind[i].getFName() + " " + tofind[i].getLName();
 
         data = str2lower(data);
         str = str2lower(str);
@@ -54,6 +59,12 @@ PersonContainer PersonService::find_p(string str, bool& exists)
     }
 
     return result;
+}
+
+void PersonService::search(const string& search_str, PersonContainer& p, bool& successful)
+{
+    personRepo.list(p);
+    p = find_p(search_str, p, successful);
 }
 
 // Sort fallið

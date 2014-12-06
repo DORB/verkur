@@ -163,7 +163,9 @@ void ConsoleUI::add()
     bool add_exists = false;
     char add_answer = 'y';
     string whole_name = first_name + " " + last_name;
-    PersonContainer found = personService.find_p(whole_name, add_exists);
+
+    PersonContainer found, temp;
+    found = personService.find_p(whole_name, temp, add_exists);
 
     // Spyrjum notanda hvort hann vilji bæta við manneskju sem hefur verið bætt við áður
     if(add_exists)
@@ -268,7 +270,8 @@ void ConsoleUI::del()
 
     PersonContainer p;
     CompContainer c;
-    int listsize;
+    int listsize = 0;
+    bool canDel = false;
 
     if(params.size() == 0)
     {
@@ -289,9 +292,145 @@ void ConsoleUI::del()
         // Nú hér kemur svo hvað gerist ef 'p' var valið
         if(params[0] == "p")
         {
-            personService.list(p);
-            listsize = p.size();
-            show(p);
+            cout << "Type 'list' to see the list or 'search' to search for someone specific: ";
+            cin >> param;
+            params.push_back(param);
+            countParam(params);
+            trimParam(params, 2);
+
+            if(params[1] == "search" || params[1] == "s")
+            {
+                bool search_successful = false;
+                bool searched_once = false;
+
+                cout << "Enter search string: ";
+                cin.ignore(1000, '\n');
+                getline(cin, param);
+                params.push_back(param);
+                cout << "\nYour search string is: \'" << params[2] << "\'";
+                personService.search(params[2], p, search_successful);
+                listsize = p.size();
+                show(p);
+
+                if(listsize == 1)
+                {
+                    do
+                    {
+                        trimParam(params, 3);
+                        cout << "Is this the correct Programmer to delete? (y/n) ";
+                        cin >> param;
+                        params.push_back(param);
+                        countParam(params);
+                        trimParam(params, 4);
+
+                        if(params[3] == "y" || params[3] == "Y")
+                        {
+                            personService.del(p[0]);
+                        }
+                        else if(params[3] == "n" || params[3] == "N")
+                        {
+                            search_successful = true;
+                            cout << "\nNothing was deleted. Godspeed." << endl;
+                        }
+                    } while(params[3] != "y" && params[3] != "Y" && params[3] != "n" && params[3] != "N");
+                }
+                else if(listsize > 1)
+                {
+                    do
+                    {
+                        trimParam(params, 3);
+                        cout << "Type the no. of the Programmer to delete: ";
+                        cin >> param;
+                        params.push_back(param);
+                        countParam(params);
+                        trimParam(params, 4);
+
+                        isValidInput(param, listsize + 1, canDel);
+
+                        if(canDel)
+                        {
+                            show(p[atoi(params[3].c_str())-1]);
+                            do
+                            {
+                                trimParam(params, 4);
+                                cout << "\nHeavens, not " << p[atoi(params[3].c_str())-1].getFName() << "?? Are you absolutely sure? (y/n) ";
+                                cin >> param;
+                                params.push_back(param);
+                                countParam(params);
+                                trimParam(params, 5);
+                            } while(params[4] != "y" && params[4] != "Y" && params[4] != "n" && params[4] != "N");
+
+                            if(params[4] == "y" || params[4] == "Y")
+                            {
+                                personService.del(p[atoi(params[3].c_str())-1]);
+                                cout << "Good-bye, you poor soul." << endl;
+                            }
+                            else
+                            {
+                                cout << "\nNothing was deleted. Godspeed." << endl;
+                            }
+                        }
+
+                    } while(!canDel);
+                }
+                else
+                {
+                    cout << "The search was unsuccessful. But I will not give up. Never." << endl;
+                }
+            }
+            else if(params[1] == "list" || params[1] == "l")
+            {
+                personService.list(p);
+                listsize = p.size();
+                show(p);
+
+                do
+                {
+                    trimParam(params, 2);
+                    cout << "Enter no. of person you want to delete (confirmation later required): ";
+                    cin >> param;
+                    params.push_back(param);
+                    countParam(params);
+                    trimParam(params, 3);
+
+                    isValidInput(params[2], listsize + 1, canDel);
+                } while(!canDel);
+
+                if(canDel)
+                {
+                    show(p[atoi(params[2].c_str())-1]);
+
+                    cout << "\nWe're talking " << p[atoi(params[2].c_str())-1].getFName() << " here. Is this correct? (y/n) ";
+                    cin >> param;
+                    params.push_back(param);
+                    countParam(params);
+                    trimParam(params, 4);
+
+                    while(params[3] != "y" && params[3] != "Y" && params[3] != "n" && params[3] != "N")
+                    {
+                        trimParam(params, 3);
+                        cout << "\nAnswer the question please: (y/n) ";
+                        cin >> param;
+                        params.push_back(param);
+                        countParam(params);
+                        trimParam(params, 4);
+                    }
+
+                    if(params[3] == "y" || params[3] == "Y")
+                    {
+                        personService.del(p[atoi(params[2].c_str())-1]);
+                        cout << "\nWow, that was weird. 'Tis over with." << endl;
+                    }
+                    else
+                    {
+                        cout << "\nThank heavens, you've seen the light!" << endl;
+                    }
+                }
+            }
+            else
+            {
+                cout << "Your choice was most pitifully incorrect. Shame on you." << endl;
+            }
         }
         else if(params[0] == "c")
         {
@@ -299,32 +438,6 @@ void ConsoleUI::del()
             listsize = c.size();
             show(c);
         }
-
-        cout << "Please select the No. of which entry you would like to delete: ";
-        cin >> param;
-        params.push_back(param);
-        countParam(params);
-        trimParam(params, 2);
-
-        bool canDel;
-        isValidInput(params[1], listsize + 1, canDel);
-
-        if(canDel)
-        {
-            cout << "You wanted to delete entry no. " << params[1] << " from " << params[0] << endl;
-            cout << "but I haven't yet implemented that awesome feature. You see, I was" << endl;
-            cout << "thinking maybe we would implement a search function instead of showing the" << endl;
-            cout << "list and finding the id number. If the search finds one person there comes a" << endl;
-            cout << "simple yes/no dialog but otherwise you get the choice of choosing from the" << endl;
-            cout << "ID numbers shown along (which are only the number of the vector Person/Comp" << endl;
-            cout << "but of course within each Person/Comp is the real ID as a member variable." << endl;
-            cout << "So choosing the number would send exactly that Person/Comp to deletion." << endl;
-        }
-        else
-        {
-            cout << "I wouldn't delete that if I were you. Just leave it." << endl;
-        }
-
     }
     else
     {
@@ -529,7 +642,7 @@ void ConsoleUI::find()
     // Búum til breytu af taginu PersonContainer og setjum þar leitarniðurstöðurnar
     // gildi bool breytunnar exists að ofan breytist eftir því hvort leitarstrengurinn
     // fannst eða ekki
-    PersonContainer found = personService.find_p(search, exists);
+    PersonContainer found = personService.find_p(search, found, exists);
 
     if(exists == false)
     {
@@ -702,4 +815,14 @@ void countParam(vector<string>& result)
 void trimParam(vector<string>& result, const int& keep)
 {
     result.erase(result.begin() + keep, result.begin() + result.size());
+}
+
+void emptyContainer(PersonContainer& result)
+{
+    result.erase(result.begin(), result.begin() + result.size());
+}
+
+void emptyContainer(CompContainer& result)
+{
+    result.erase(result.begin(), result.begin() + result.size());
 }

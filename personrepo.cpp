@@ -108,7 +108,7 @@ void PersonRepo::add(const Computer& c)
     db.close();
 }
 
-void PersonRepo::del(const Person& p, const int& id)
+void PersonRepo::del(const Person& p)
 {
     if(db.open())
     {
@@ -121,13 +121,15 @@ void PersonRepo::del(const Person& p, const int& id)
         QString query_str = QString::fromStdString(str_prepare);
 
         query.exec(query_str);
-        people.erase(people.begin()+(id-1));
+        // people.clear();
     }
 
     db.close();
+
+    list(people);
 }
 
-void PersonRepo::del(const Computer& c, const int& id)
+void PersonRepo::del(const Computer& c)
 {
     if(db.open())
     {
@@ -135,15 +137,17 @@ void PersonRepo::del(const Computer& c, const int& id)
 
         int cid = c.getID();
 
-        string str_prepare = "DELETE FROM Programmers WHERE ID = " + int2str(cid);
+        string str_prepare = "DELETE FROM Computers WHERE ID = " + int2str(cid);
 
         QString query_str = QString::fromStdString(str_prepare);
 
         query.exec(query_str);
-        computers.erase(computers.begin()+(id-1));
+        // computers.clear();
     }
 
     db.close();
+
+    list(computers);
 }
 
 
@@ -151,12 +155,16 @@ void PersonRepo::del(const Computer& c, const int& id)
 // Skilar vektorum
 void PersonRepo::list(PersonContainer& p)
 {
-    p = people;
+    PersonRepo temp;
+
+    p = temp.people;
 }
 
 void PersonRepo::list(CompContainer& c)
 {
-    c = computers;
+    PersonRepo temp;
+
+    c = temp.computers;
 }
 
 string int2str(const int& a)
