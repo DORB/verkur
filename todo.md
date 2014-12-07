@@ -8,9 +8,9 @@
 
 ## 5/12
 
-* Laga << overloadið fyrir Person og Computer þannig að það skrifist út á sama formi og þegar show() skipunin er notuð
-* Klasi fyrir database
-* Tékka á del function, alveg eins og add
+* ~~Laga << overloadið fyrir Person og Computer þannig að það skrifist út á sama formi og þegar show() skipunin er notuð~~
+* ~~Klasi fyrir database~~
+* ~~Tékka á del function, alveg eins og add~~
 
 ## 7/12 - Það sem eftir er að gera
 
