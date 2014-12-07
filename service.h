@@ -18,6 +18,9 @@ public:
     PersonContainer find_p(string str, const PersonContainer& p, bool& exists);
     PersonContainer sort_list(const int &sort_after, const bool& desc);
     void search(const string &search_str, PersonContainer& p, bool& successful);
+    CompContainer find_p(string str, const CompContainer &c, bool &exists);
+    void search(const string &search_str, CompContainer &c, bool &successful);
+    void del(const Computer &c);
 private:
     Repository repository;
     Database db;

@@ -29,6 +29,7 @@ public:
     void trimParam(vector<string>& result, const int& keep);
     void emptyContainer(PersonContainer& result);
     void emptyContainer(CompContainer& result);
+    void show(const Computer &listed);
 private:
     Service service;
 };

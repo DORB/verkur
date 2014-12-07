@@ -98,6 +98,8 @@ void ConsoleUI::add()
     string sex;
     string nationality;
     string years[2];
+    string type;
+    int built;
     int birth_year, death_year;
 
     // Lesum inn í breyturnar
@@ -198,69 +200,6 @@ void ConsoleUI::add()
 }
 
 // Implement del function
-/*void ConsoleUI::del()
-{
-    // Birta lista yfir skrá með linunumeri og fa svo ad velja numer til ad eyda
-
-    PersonContainer listed;
-    service.list(listed);
-    //CompContainer listed = personService.list(listed);
-
-    bool done = false;
-    string id_input;
-
-    vector<string> params = countParam();
-    if(params.size() != 0)
-    {
-        done = true;
-        id_input = params[0];
-    }
-
-
-    // Prompta user um id number ef done er false, annars er skrefinu sleppt
-    if(!done)
-    {
-        // Prentaður út listi til að sjá númer
-        show(listed);
-
-        cout << "Enter no. of person you want to delete (confirmation later required): ";
-        cin >> id_input;
-    }
-
-    bool canDel;
-
-    // isValidInput athugar hvort id sé leyfilegt (innan marka), canDel verður þá true
-    // og tekur strenginn id_input og kastar yfir í int og skilar því.
-    int id = isValidInput(id_input, listed.size()+1, canDel);
-
-    if(canDel)
-    {
-        // Birtum persónu sem user ætlar að fjarlægja úr listanum
-        show(listed[id-1]);
-
-        char answer;
-        cout << "Are you most definitely sure you want to delete this person permanently? (y/n) ";
-        cin >> answer;
-
-        // Eyðum út persónu eftir staðfestingu
-        if(answer == 'Y' || answer == 'y')
-        {
-            string delName = listed[id-1].getFName();
-            string delSex = listed[id-1].getSex();
-            service.del(listed[id-1], id);
-            cout << "\n" << delName << " was most gruesomely deleted from the database. Bless ";
-                 if(delSex == "F"){ cout << "her." << endl;} else{cout << "him." << endl;}
-        }
-        else
-        {
-            cout << "\nNothing was deleted. Godspeed." << endl;
-        }
-    }
-    else
-    {
-        cout << "\nThe input was not valid. Sorry (with a swedish accent)." << endl;
-    }
-}*/
 
 void ConsoleUI::del()
 {
@@ -269,11 +208,14 @@ void ConsoleUI::del()
 
     PersonContainer p;
     CompContainer c;
+
     int listsize = 0;
     bool canDel = false;
+    bool isPerson = true;
+
 
     // Ef ekkert var valið a eftir 'del' eða það var hvorki 'p' ne 'c'
-    if(params.size() == 0 || params.size() > 0 && params[0] != "p" && params[0] != "c")
+    while(params.size() == 0 || (params[0] != "p" && params[0] != "c"))
     {
        // Taka inn parameterinn
        params.clear();
@@ -281,173 +223,209 @@ void ConsoleUI::del()
        cout << "or 'p' to delete from the Programmers database: ";
        cin >> param;
        params.push_back(param);
+       trimParam(params, 1);
        vector<string> del = countParam();
     }
 
-    // Ef 'p' eða 'c' var valið
-    if(params[0] == "p" || params[0] == "c")
+    if(params[0] == "p")
+        isPerson = true;
+    else
+        isPerson = false;
+
+    do
     {
-        // Eyða öllum parametrum nema 'p' eða 'c' til að rugla ekki öllu upp sem a eftir kemur
-        // params.size() = 1 eftir þessa skipun
         trimParam(params, 1);
+        cout << "Type 'list' to see the list or 'search' to search for someone specific: ";
+        cin >> param;
 
-        // Nú hér kemur svo hvað gerist ef 'p' var valið
-        if(params[0] == "p")
+        if(param == "list")
+            param = "l";
+        else if(param == "search")
+            param = "s";
+
+        params.push_back(param);
+        countParam(params);
+        trimParam(params, 2);
+    } while(params[1] != "s" && params[1] != "l");
+
+    // Fyrir del með leit
+    if(params[1] == "s")
+    {
+        bool search_successful = false;
+
+        cout << "Enter search string: ";
+        cin.ignore(1000, '\n');
+        getline(cin, param);
+        params.push_back(param);
+        cout << "\nYour search string is: \'" << params[2] << "\'";
+        if(isPerson)
         {
-            cout << "Type 'list' to see the list or 'search' to search for someone specific: ";
-            cin >> param;
-            params.push_back(param);
-            countParam(params);
-            trimParam(params, 2);
+            service.search(params[2], p, search_successful);
+            listsize = p.size();
+            show(p);
+        }
+        else
+        {
+            service.search(params[2], c, search_successful);
+            listsize = c.size();
+            show(c);
+        }
 
-            // Fyrir del með leit
-            if(params[1] == "search" || params[1] == "s")
+        // Ef bara einn er i listanum þarf bara staðfestingu
+        if(listsize == 1)
+        {
+            do
             {
-                bool search_successful = false;
-                bool searched_once = false;
-
-                cout << "Enter search string: ";
-                cin.ignore(1000, '\n');
-                getline(cin, param);
+                trimParam(params, 3);
+                cout << "Is this the correct Programmer to delete? (y/n) ";
+                cin >> param;
                 params.push_back(param);
-                cout << "\nYour search string is: \'" << params[2] << "\'";
-                service.search(params[2], p, search_successful);
-                listsize = p.size();
-                show(p);
+                countParam(params);
+                trimParam(params, 4);
 
-                // Ef bara einn er i listanum þarf bara staðfestingu
-                if(listsize == 1)
+                if(params[3] == "y")
                 {
-                    do
-                    {
-                        trimParam(params, 3);
-                        cout << "Is this the correct Programmer to delete? (y/n) ";
-                        cin >> param;
-                        params.push_back(param);
-                        countParam(params);
-                        trimParam(params, 4);
-
-                        if(params[3] == "y")
-                        {
-                            service.del(p[0]);
-                            cout << "\nIt wasn't beautiful, but necessary." << endl;
-                        }
-                        else if(params[3] == "n" || params[3] == "N")
-                        {
-                            search_successful = true;
-                            cout << "\nNothing was deleted. Godspeed." << endl;
-                        }
-                    } while(params[3] != "y" && params[3] != "n");
+                    if(isPerson)
+                        service.del(p[0]);
+                    else
+                        service.del(c[0]);
+                    cout << "\nIt wasn't beautiful, but necessary." << endl;
                 }
-
-                // Ef fleiri eru i listanum er beðið um numerið a honum (i vektornum)
-                else if(listsize > 1)
+                else if(params[3] == "n" || params[3] == "N")
                 {
-                    do
-                    {
-                        // Fa inn numerið a personu til að dela
-                        trimParam(params, 3);
-                        cout << "Type the no. of the Programmer to delete: ";
-                        cin >> param;
-                        params.push_back(param);
-                        countParam(params);
-                        trimParam(params, 4);
-
-                        isValidInput(param, listsize + 1, canDel);
-
-                        // Ef valið var innan rettra marka
-                        if(canDel)
-                        {
-                            show(p[atoi(params[3].c_str())-1]);
-                            do
-                            {
-                                trimParam(params, 4);
-                                cout << "\nHeavens, not " << p[atoi(params[3].c_str())-1].getFName() << "?? Are you absolutely sure? (y/n) ";
-                                cin >> param;
-                                params.push_back(param);
-                                countParam(params);
-                                trimParam(params, 5);
-                            } while(params[4] != "y" && params[4] != "n");
-
-                            if(params[4] == "y")
-                            {
-                                service.del(p[atoi(params[3].c_str())-1]);
-                                cout << "\nGood-bye, you poor soul." << endl;
-                            }
-                            else
-                            {
-                                cout << "\nNothing was deleted. Godspeed." << endl;
-                            }
-                        }
-
-                    } while(!canDel);
+                    search_successful = true;
+                    cout << "\nNothing was deleted. Godspeed." << endl;
                 }
-                else
-                {
-                    cout << "But I will not give up. Never.\n" << endl;
-                    cout << "Perhaps if you would add '" << params[2] << "' do the database, it" << endl;
-                    cout << "would be easier for me to find this person and delete." << endl;
-                }
-            }
-            else if(params[1] == "list" || params[1] == "l")
+            } while(params[3] != "y" && params[3] != "n");
+        }
+
+        // Ef fleiri eru i listanum er beðið um numerið a honum (i vektornum)
+        else if(listsize > 1)
+        {
+            do
             {
-                service.list(p);
-                listsize = p.size();
-                show(p);
+                // Fa inn numerið a personu til að dela
+                trimParam(params, 3);
+                cout << "Type the no. of the Programmer to delete: ";
+                cin >> param;
+                params.push_back(param);
+                countParam(params);
+                trimParam(params, 4);
 
-                do
-                {
-                    trimParam(params, 2);
-                    cout << "Enter no. of person you want to delete (confirmation later required): ";
-                    cin >> param;
-                    params.push_back(param);
-                    countParam(params);
-                    trimParam(params, 3);
+                isValidInput(param, listsize + 1, canDel);
 
-                    isValidInput(params[2], listsize + 1, canDel);
-                } while(!canDel);
-
+                // Ef valið var innan rettra marka
                 if(canDel)
                 {
-                    show(p[atoi(params[2].c_str())-1]);
+                    if(isPerson)
+                        show(p[atoi(params[3].c_str())-1]);
+                    else
+                        show(c[atoi(params[3].c_str())-1]);
 
-                    cout << "\nWe're talking " << p[atoi(params[2].c_str())-1].getFName() << " here. Is this correct? (y/n) ";
-                    cin >> param;
-                    params.push_back(param);
-                    countParam(params);
-                    trimParam(params, 4);
-
-                    while(params[3] != "y" && params[3] != "Y" && params[3] != "n" && params[3] != "N")
+                    do
                     {
-                        trimParam(params, 3);
-                        cout << "\nAnswer the question please: (y/n) ";
+                        trimParam(params, 4);
+                        if(isPerson)
+                            cout << "\nHeavens, not " << p[atoi(params[3].c_str())-1].getFName() << "?? Are you absolutely sure? (y/n) ";
+                        else
+                            cout << "\nHeavens, not " << c[atoi(params[3].c_str())-1].getName() << "?? Are you absolutely sure? (y/n) ";
                         cin >> param;
                         params.push_back(param);
                         countParam(params);
-                        trimParam(params, 4);
-                    }
+                        trimParam(params, 5);
+                    } while(params[4] != "y" && params[4] != "n");
 
-                    if(params[3] == "y" || params[3] == "Y")
+                    if(params[4] == "y")
                     {
-                        service.del(p[atoi(params[2].c_str())-1]);
-                        cout << "\nWow, that was weird. 'Tis over with." << endl;
+                        if(isPerson)
+                            service.del(p[atoi(params[3].c_str())-1]);
+                        else
+                            service.del(c[atoi(params[3].c_str())-1]);
+                        cout << "\nGood-bye, you poor soul." << endl;
                     }
                     else
                     {
-                        cout << "\nThank heavens, you've seen the light!" << endl;
+                        cout << "\nNothing was deleted. Godspeed." << endl;
                     }
                 }
-            }
-            else
-            {
-                cout << "\nYour choice was most pitifully incorrect. Shame on you." << endl;
-            }
+
+            } while(!canDel);
         }
-        else if(params[0] == "c")
+        else
+        {
+            cout << "But I will not give up. Never.\n" << endl;
+            cout << "Perhaps if you would add '" << params[2] << "' do the database, it" << endl;
+            cout << "would be easier for me to find this person and delete." << endl;
+        }
+    }
+    else if(params[1] == "list" || params[1] == "l")
+    {
+        if(isPerson)
+        {
+            service.list(p);
+            listsize = p.size();
+            show(p);
+        }
+        else
         {
             service.list(c);
             listsize = c.size();
             show(c);
+        }
+
+        do
+        {
+            trimParam(params, 2);
+            cout << "Enter no. of person you want to delete (confirmation later required): ";
+            cin >> param;
+            params.push_back(param);
+            countParam(params);
+            trimParam(params, 3);
+
+            isValidInput(params[2], listsize + 1, canDel);
+        } while(!canDel);
+
+        if(canDel)
+        {
+            if(isPerson)
+            {
+                show(p[atoi(params[2].c_str())-1]);
+                cout << "\nWe're talking " << p[atoi(params[2].c_str())-1].getFName() << " here. Is this correct? (y/n) ";
+            }
+            else
+            {
+                show(c[atoi(params[2].c_str())-1]);
+                cout << "\nWe're talking " << c[atoi(params[2].c_str())-1].getName() << " here. Is this correct? (y/n) ";
+            }
+
+            cin >> param;
+            params.push_back(param);
+            countParam(params);
+            trimParam(params, 4);
+
+            while(params[3] != "y" && params[3] != "n")
+            {
+                trimParam(params, 3);
+                cout << "\nAnswer the question please: (y/n) ";
+                cin >> param;
+                params.push_back(param);
+                countParam(params);
+                trimParam(params, 4);
+            }
+
+            if(params[3] == "y" || params[3] == "Y")
+            {
+                if(isPerson)
+                    service.del(p[atoi(params[2].c_str())-1]);
+                else
+                    service.del(c[atoi(params[2].c_str())-1]);
+
+                cout << "\nWow, that was weird. 'Tis over with." << endl;
+            }
+            else
+            {
+                cout << "\nThank heavens, you've seen the light!" << endl;
+            }
         }
     }
 
@@ -743,6 +721,21 @@ void ConsoleUI::show(Person listed)
     cout << setw(3) << ""
          << listed;
     cout << "+-----------------------------------END---------------------------------+\n" << endl;
+}
+
+void ConsoleUI::show(const Computer& listed)
+{
+    cout << "\n+------------------------------------------------------+" << endl;
+    cout << setw(3) << "No."
+         << setw(27) << "Name"
+         << setw(15) << "Type"
+         << setw(5) << "Year"
+         << setw(6) << "Built"
+         << endl;
+    cout << "+------------------------------------------------------+" << endl;
+    cout << setw(3) << ""
+         << listed;
+    cout << "+----------------------------END-----------------------+\n" << endl;
 }
 
 // isValidInput athugar hvort id sé leyfilegt (innan marka), isOK verður þá true
