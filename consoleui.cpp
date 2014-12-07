@@ -520,8 +520,8 @@ void ConsoleUI::list_c()
     if(params.size() == 0)
     {
         // Taka inn parameterinn
-        cout << "Type 'c' for a listing of Computers or " <<
-        "'p' for a listing of Programmers: ";
+        cout << "Type 'c' for a listing of Computers or" << endl;
+        cout << "'p' for a listing of Programmers: ";
         cin >> param;
 
         // Taka inn restina. Þetta er bara til að hreinsa út strauminn og vita hvort
@@ -674,8 +674,8 @@ void ConsoleUI::find()
     while(params.size() == 0 || (params[0] != "p" && params[0] != "c"))
     {
         // Taka inn parameterinn
-        cout << "Type 'c' to delete from the Computers database " << endl;
-        cout << "or 'p' to delete from the Programmers database: ";
+        cout << "Type 'c' to search the Computers database " << endl;
+        cout << "or 'p' to search the Programmers database: ";
         cin >> param;
 
         if(params.size() == 0)
