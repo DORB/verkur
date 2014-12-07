@@ -17,8 +17,8 @@ Kerfið skal geta gert allt það sem hægt var í fyrsta verkefninu.
 * Þegar listi er birtur notandanum þá fær hann að ráða hvernig honum er raðað.
 * Notandi þarf að geta leitað að tölvu.
 * **Notandi þarf að geta tengt saman tölvur og persónur**
-  * Hver persóna getur verið tengd mörgum tölvum
-  * Hver tölva getur verið tengt mörgum persónum
+  * **Hver persóna getur verið tengd mörgum tölvum**
+  * **Hver tölva getur verið tengt mörgum persónum**
 Þá eru gerðar eftirfarandi kröfur að auki:
 * Nota skal lagskipta högun við útfærslu kerfisins.
 * Kóðinn skal hýstur með Git (GitHub, Bitbucket, etc.), nota skal Git í gegnum allt ferlið.
