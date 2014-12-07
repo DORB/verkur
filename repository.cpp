@@ -156,34 +156,6 @@ void Repository::del(const Computer& c)
     list(computers);
 }
 
-//void Repository::del(const int& id)
-//{
-//    // Eytt út úr vektornum
-//    people.erase(people.begin()+(id-1));
-
-//    // Skrifa vektorinn inn yfir list.txt á standard forminu
-//    ofstream outFile ("list.txt");
-
-//    try
-//    {
-//        if(outFile.is_open())
-//        {
-//            // Fyrir hverja línu í people er skrifuð út person (people[i])
-//            for(unsigned int i = 0; i < people.size(); i++)
-//            {
-//                // Hér kemur overloadið sér aftur vel
-//                outFile << people[i] << endl;
-//            }
-//        }
-
-//        outFile.close();
-//    }
-//    catch (...)
-//    {
-//        cout << "OMG. Writing to database failed." << endl;
-//    }
-//}
-
 // list function
 // Skilar vektorum
 void Repository::list(PersonContainer& p)

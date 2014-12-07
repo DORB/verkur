@@ -343,7 +343,7 @@ void ConsoleUI::del()
             do
             {
                 trimParam(params, 3);
-                cout << "Is this the correct Programmer to delete? (y/n) ";
+                cout << "Is this the correct entry to delete? (y/n) ";
                 cin >> param;
                 params.push_back(param);
                 countParam(params);
@@ -372,7 +372,7 @@ void ConsoleUI::del()
             {
                 // Fa inn numerið a personu til að dela
                 trimParam(params, 3);
-                cout << "Type the no. of the Programmer to delete: ";
+                cout << "Type the no. of the entry to delete: ";
                 cin >> param;
                 params.push_back(param);
                 countParam(params);
@@ -442,7 +442,7 @@ void ConsoleUI::del()
         do
         {
             trimParam(params, 2);
-            cout << "Enter no. of person you want to delete (confirmation later required): ";
+            cout << "Enter no. of the entry you want to delete (confirmation later required): ";
             cin >> param;
             params.push_back(param);
             countParam(params);
