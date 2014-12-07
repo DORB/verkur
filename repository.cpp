@@ -91,9 +91,15 @@ void Repository::add(const Computer& c)
     {
         QSqlQuery query;
         string insert;
+        string built;
+
+        if(c.getBuild())
+            built = "1";
+        else
+            built = "0";
 
         insert =  "INSERT INTO \"main\".\"Computers\" (\"name\",\"year_built\",\"type\",\"build\") ";
-        insert += "VALUES (\"" + c.getName()+ "\", \"" + int2str(c.getBuildYear()) + "\", \"" + c.getType() + "\")";
+        insert += "VALUES (\"" + c.getName()+ "\", \"" + int2str(c.getBuildYear()) + "\", \"" + c.getType() + "\", \"" + built + "\")";
 
         QString qinsert = QString::fromStdString(insert);
 
@@ -107,34 +113,6 @@ void Repository::add(const Computer& c)
 
     db.close();
 }
-
-//{
-//    bool ret = false;
-//    if(db.open())
-//    {
-//        QSqlQuery query;
-//        ret = query.exec(QString("DELETE FROM Programmers WHERE ID=%1").arg(id));
-//    }
-//    return ret;
-//}
-//{
-//    cout << "hihi" << endl;
-//    if(db.open())
-//    {
-//        QSqlQuery query;
-//        string remove,bla;
-
-//        remove = query.prepare("DELETE FROM Programmers WHERE ID =?");
-//        query.boundValue(id);
-
-//        cout << "HALLO" << endl;
-//        QString qremove = QString::fromStdString(remove);
-
-//        query.exec(qremove);
-//    }
-//    db.close();
-//}
-
 
 void Repository::del(const Person& p)
 {

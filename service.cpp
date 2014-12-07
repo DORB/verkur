@@ -11,6 +11,11 @@ void Service::add(const Person& p)
     repository.add(p);
 }
 
+void Service::add(const Computer& c)
+{
+    repository.add(c);
+}
+
 // milliliður fyrir list function
 void Service::list(PersonContainer& p)
 {

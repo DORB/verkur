@@ -91,15 +91,37 @@ void ConsoleUI::verkurLogo()
 void ConsoleUI::add()
 {
     // Bua til nyja personu
+    vector<string> params = countParam();
+    string param;
+    bool isPerson = true;
+
+    // Ef ekkert var valið a eftir 'add' eða það var hvorki 'p' ne 'c'
+    while(params.size() == 0 || (params[0] != "p" && params[0] != "c"))
+    {
+       // Taka inn parameterinn
+       params.clear();
+       cout << "Type 'c' to add to the Computers database " << endl;
+       cout << "or 'p' to add to the Programmers database: ";
+       cin >> param;
+       params.push_back(param);
+       trimParam(params, 1);
+       vector<string> del = countParam();
+    }
+
+    if(params[0] == "p")
+        isPerson = true;
+    else
+        isPerson = false;
 
     // Fylla inn:
     int pid = 0;
-    string first_name, last_name;
+    string first_name, last_name, name;
     string sex;
     string nationality;
     string years[2];
     string type;
-    int built;
+    int build_year;
+    bool built;
     int birth_year, death_year;
 
     // Lesum inn í breyturnar
@@ -114,59 +136,96 @@ void ConsoleUI::add()
     // ekki hækkaðir upp í uppercase
     // Dæmi: Ludwig van Beethoven, dr. Martin Luther King
 
-    cout << "First Name: ";
-    cin.ignore(1000, '\n');
-    getline(cin, first_name);
-    cout << "Last Name: ";
-    getline(cin, last_name);
-    cout << "Year of birth: ";
-    cin >> years[0];
-    cout << "Year of death (If alive, write 'alive'): ";
-    cin >> years[1];
-
-    // Breyta strengjum í int
-    birth_year = atoi(years[0].c_str());
-    death_year = atoi(years[1].c_str());
-
-    // Error handling á user input á birth og death year
-    while(birth_year > death_year && death_year != 0)
+    if(isPerson)
     {
-        cout << "\nWhat a drag. It seems your character has died before being born." << endl;
-        cout << "Please enter the information joyfully again." << endl;
+        cout << "First Name: ";
+        cin.ignore(1000, '\n');
+        getline(cin, first_name);
+        cout << "Last Name: ";
+        getline(cin, last_name);
         cout << "Year of birth: ";
         cin >> years[0];
         cout << "Year of death (If alive, write 'alive'): ";
         cin >> years[1];
 
+        // Breyta strengjum í int
         birth_year = atoi(years[0].c_str());
         death_year = atoi(years[1].c_str());
-    }
 
-    cout << "Sex: ";
-    cin >> sex;
+        // Error handling á user input á birth og death year
+        while(birth_year > death_year && death_year != 0)
+        {
+            cout << "\nWhat a drag. It seems your character has died before being born." << endl;
+            cout << "Please enter the information joyfully again." << endl;
+            cout << "Year of birth: ";
+            cin >> years[0];
+            cout << "Year of death (If alive, write 'alive'): ";
+            cin >> years[1];
 
-    // breyta Sex í uppercase (M/F)
-    sex = str2upper(sex);
+            birth_year = atoi(years[0].c_str());
+            death_year = atoi(years[1].c_str());
+        }
 
-    // Error handling á input á kyni
-    while(sex != "M" && sex != "F")
-    {
-        cout << "Alas, the sex is not right. Must be either M or F. Try again.\n";
         cout << "Sex: ";
         cin >> sex;
-        // breyta kyninu í uppercase...
-        sex = str2upper(sex);
-    }
 
-    cout << "Nationality: ";
-    cin.ignore(1000, '\n');
-    getline(cin, nationality);
+        // breyta Sex í uppercase (M/F)
+        sex = str2upper(sex);
+
+        // Error handling á input á kyni
+        while(sex != "M" && sex != "F")
+        {
+            cout << "Alas, the sex is not right. Must be either M or F. Try again.\n";
+            cout << "Sex: ";
+            cin >> sex;
+            // breyta kyninu í uppercase...
+            sex = str2upper(sex);
+        }
+
+        cout << "Nationality: ";
+        cin.ignore(1000, '\n');
+        getline(cin, nationality);
+    }
+    // Ef fyrir tölvu
+    else
+    {
+        cout << "Name: ";
+        cin.ignore(1000, '\n');
+        getline(cin, name);
+        cout << "Type: ";
+        getline(cin, type);
+        cout << "Build Year: ";
+        cin >> years[0];
+        cin.ignore(1000, '\n');
+        do
+        {
+            cout << "Was it built? (y/n) ";
+            cin >> param;
+            param = str2lower(param);
+            if(param == "y")
+                built = true;
+            else
+                built = false;
+        } while(param != "y" && param != "n");
+
+        build_year = atoi(years[0].c_str());
+
+    }
 
     bool add_exists = false;
     char add_answer = 'y';
-    string whole_name = first_name + " " + last_name;          
+    string whole_name;
+    if(isPerson)
+        whole_name = first_name + " " + last_name;
+    else
+        whole_name = name;
+
     PersonContainer found, temp;
-    found = service.find_p(whole_name, temp, add_exists);
+    CompContainer c_found, c_temp;
+    if(isPerson)
+        found = service.find_p(whole_name, temp, add_exists);
+    else
+        c_found = service.find_p(whole_name, c_temp, add_exists);
 
     // Spyrjum notanda hvort hann vilji bæta við manneskju sem hefur verið bætt við áður
     if(add_exists)
@@ -180,7 +239,11 @@ void ConsoleUI::add()
     // Sýna notanda færsluna sem á að bæta við
     if(add_answer != 'n' && add_answer != 'N')
     {
-        show(Person(pid, first_name, last_name, birth_year, death_year, sex, nationality));
+        if(isPerson)
+            show(Person(pid, first_name, last_name, birth_year, death_year, sex, nationality));
+        else
+            show(Computer(0, name, type, build_year, built));
+
         cout << "Does this seem about right? (y/n) ";
         cin >> add_answer;
         cin.ignore(1000, '\n');
@@ -189,7 +252,10 @@ void ConsoleUI::add()
     // Adda viðkomandi og senda skilaboð um að það hafi tekist, eða ef ekki
     if(add_answer == 'y' || add_answer == 'Y')
     {
-        service.add(Person(pid, first_name, last_name, birth_year, death_year, sex, nationality));
+        if(isPerson)
+            service.add(Person(pid, first_name, last_name, birth_year, death_year, sex, nationality));
+        else
+            service.add(Computer(pid, name, type, build_year, built));
 
         cout << "\nThank you for this wonderful addition to the database." << endl;
     }
@@ -599,19 +665,38 @@ void ConsoleUI::find()
 {
     bool exists = false;
     bool done = false;
-    string search;
+    string search, param;
+    bool isPerson = true;
 
     // Öllu sem kom á eftir 'find' safnað saman í params vektorinn
     vector<string> params = countParam();
 
+    while(params.size() == 0 || (params[0] != "p" && params[0] != "c"))
+    {
+        // Taka inn parameterinn
+        cout << "Type 'c' to delete from the Computers database " << endl;
+        cout << "or 'p' to delete from the Programmers database: ";
+        cin >> param;
+
+        if(params.size() == 0)
+            params.push_back(param);
+        else
+            params[0] = str2lower(param);
+    }
+
+    if(params[0] == "p")
+        isPerson = true;
+    else if(params[0] == "c")
+        isPerson = false;
+
     // Tékkað hvort einhverjir parametrar voru
     // Í þessu tilfelli eru parametrarnir strengur og því öllu sem
     // á eftir 'find' kom safnað saman í strenginn 'search'
-    if(params.size() > 0)
+    if(params.size() > 1 && (params[0] == "p" || params[0] == "c"))
         {
             done = true;
 
-            for(unsigned int i = 0; i < params.size(); i++)
+            for(unsigned int i = 1; i < params.size(); i++)
             {
                 search += params[i];
                 if(i < params.size() - 1)
@@ -633,8 +718,13 @@ void ConsoleUI::find()
     // Búum til breytu af taginu PersonContainer og setjum þar leitarniðurstöðurnar
     // gildi bool breytunnar exists að ofan breytist eftir því hvort leitarstrengurinn
     // fannst eða ekki
-    PersonContainer found, temp;
-    found = service.find_p(search, temp, exists);
+    PersonContainer p_found, p_temp;
+    CompContainer c_found, c_temp;
+
+    if(isPerson)
+        p_found = service.find_p(search, p_temp, exists);
+    else
+        c_found = service.find_p(search, c_temp, exists);
 
     if(exists == false)
     {
@@ -643,8 +733,17 @@ void ConsoleUI::find()
     else
     {
         cout << "\nI admire your search skills." << endl;
-        cout << "\'" << search << "\' was found in " << found.size() << " entries:" << endl;
-        show(found);
+
+        if(isPerson)
+        {
+            cout << "\'" << search << "\' was found in " << p_found.size() << " entries:" << endl;
+            show(p_found);
+        }
+        else
+        {
+            cout << "\'" << search << "\' was found in " << c_found.size() << " entries:" << endl;
+            show(c_found);
+        }
     }
 }
 

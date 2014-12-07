@@ -21,6 +21,7 @@ public:
     CompContainer find_p(string str, const CompContainer &c, bool &exists);
     void search(const string &search_str, CompContainer &c, bool &successful);
     void del(const Computer &c);
+    void add(const Computer &c);
 private:
     Repository repository;
     Database db;
