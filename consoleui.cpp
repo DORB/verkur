@@ -64,8 +64,8 @@ void ConsoleUI::start()
         }
         else
         {
-            cout << "The command \'" << inp << "\' was not recognized." << endl;
-            cout << "And here I thought I knew everything. Dang." << endl;
+            cerr << "The command \'" << inp << "\' was not recognized." << endl;
+            cerr << "And here I thought I knew everything. Dang." << endl;
             vector<string> params = countParam();
         }
     }
@@ -155,7 +155,7 @@ void ConsoleUI::add()
         // Error handling á user input á birth og death year
         while(birth_year > death_year && death_year != 0)
         {
-            cout << "\nWhat a drag. It seems your character has died before being born." << endl;
+            cerr << "\nWhat a drag. It seems your character has died before being born." << endl;
             cout << "Please enter the information joyfully again." << endl;
             cout << "Year of birth: ";
             cin >> years[0];
@@ -175,7 +175,7 @@ void ConsoleUI::add()
         // Error handling á input á kyni
         while(sex != "M" && sex != "F")
         {
-            cout << "Alas, the sex is not right. Must be either M or F. Try again.\n";
+            cerr << "Alas, the sex is not right. Must be either M or F. Try again.\n";
             cout << "Sex: ";
             cin >> sex;
             // breyta kyninu í uppercase...
@@ -230,8 +230,8 @@ void ConsoleUI::add()
     // Spyrjum notanda hvort hann vilji bæta við manneskju sem hefur verið bætt við áður
     if(add_exists)
     {
-        cout << "A person with exactly the same name already exists.\n"
-             << "Are you sure you want to add him/her anyway? (y/n) ";
+        cout << "\nAn entry with the same name already exists.\n"
+             << "Are you sure you want to add it anyway? (y/n) ";
         cin >> add_answer;
         cin.ignore(1000, '\n');
     }
@@ -275,7 +275,7 @@ void ConsoleUI::del()
     PersonContainer p;
     CompContainer c;
 
-    int listsize = 0;
+    int listsize = 0, p_id, c_id;
     bool canDel = false;
     bool isPerson = true;
 
@@ -384,17 +384,23 @@ void ConsoleUI::del()
                 if(canDel)
                 {
                     if(isPerson)
-                        show(p[atoi(params[3].c_str())-1]);
+                    {
+                        p_id = atoi(params[3].c_str()) - 1;
+                        show(p[p_id]);
+                    }
                     else
-                        show(c[atoi(params[3].c_str())-1]);
+                    {
+                        c_id = atoi(params[3].c_str()) - 1;
+                        show(c[c_id]);
+                    }
 
                     do
                     {
                         trimParam(params, 4);
                         if(isPerson)
-                            cout << "\nHeavens, not " << p[atoi(params[3].c_str())-1].getFName() << "?? Are you absolutely sure? (y/n) ";
+                            cout << "\nHeavens, not " << p[p_id].getFName() << "?? Are you absolutely sure? (y/n) ";
                         else
-                            cout << "\nHeavens, not " << c[atoi(params[3].c_str())-1].getName() << "?? Are you absolutely sure? (y/n) ";
+                            cout << "\nHeavens, not " << c[c_id].getName() << "?? Are you absolutely sure? (y/n) ";
                         cin >> param;
                         params.push_back(param);
                         countParam(params);
@@ -404,9 +410,9 @@ void ConsoleUI::del()
                     if(params[4] == "y")
                     {
                         if(isPerson)
-                            service.del(p[atoi(params[3].c_str())-1]);
+                            service.del(p[p_id]);
                         else
-                            service.del(c[atoi(params[3].c_str())-1]);
+                            service.del(c[c_id]);
                         cout << "\nGood-bye, you poor soul." << endl;
                     }
                     else
@@ -419,9 +425,9 @@ void ConsoleUI::del()
         }
         else
         {
-            cout << "But I will not give up. Never.\n" << endl;
-            cout << "Perhaps if you would add '" << params[2] << "' do the database, it" << endl;
-            cout << "would be easier for me to find this person and delete." << endl;
+            cerr << "But I will not give up. Never.\n" << endl;
+            cerr << "Perhaps if you would add '" << params[2] << "' do the database, it" << endl;
+            cerr << "would be easier for me to find this person and delete." << endl;
         }
     }
     else if(params[1] == "list" || params[1] == "l")
@@ -449,19 +455,20 @@ void ConsoleUI::del()
             trimParam(params, 3);
 
             isValidInput(params[2], listsize + 1, canDel);
+            p_id = atoi(params[2].c_str())-1;
         } while(!canDel);
 
         if(canDel)
         {
             if(isPerson)
             {
-                show(p[atoi(params[2].c_str())-1]);
-                cout << "\nWe're talking " << p[atoi(params[2].c_str())-1].getFName() << " here. Is this correct? (y/n) ";
+                show(p[p_id]);
+                cout << "\nWe're talking " << p[p_id].getFName() << " here. Is this correct? (y/n) ";
             }
             else
             {
-                show(c[atoi(params[2].c_str())-1]);
-                cout << "\nWe're talking " << c[atoi(params[2].c_str())-1].getName() << " here. Is this correct? (y/n) ";
+                show(c[p_id]);
+                cout << "\nWe're talking " << c[p_id].getName() << " here. Is this correct? (y/n) ";
             }
 
             cin >> param;
@@ -482,9 +489,9 @@ void ConsoleUI::del()
             if(params[3] == "y" || params[3] == "Y")
             {
                 if(isPerson)
-                    service.del(p[atoi(params[2].c_str())-1]);
+                    service.del(p[p_id]);
                 else
-                    service.del(c[atoi(params[2].c_str())-1]);
+                    service.del(c[p_id]);
 
                 cout << "\nWow, that was weird. 'Tis over with." << endl;
             }
@@ -498,7 +505,7 @@ void ConsoleUI::del()
     // Ef vitlaust var skrifað inn fyrir 'p' eða 'c'
     else
     {
-        cout << "\nWhat a curious choice, young apprentice. I believe I do not know this parameter." << endl;
+        cerr << "\nWhat a curious choice, young apprentice. I believe I do not know this parameter." << endl;
     }
 
 }
@@ -557,12 +564,12 @@ void ConsoleUI::list_c()
     // Error handling með smá attitude
     else
     {
-        cout << "The function 'list' does not use these funny parameters of yours." << endl;
+        cerr << "The function 'list' does not use these funny parameters of yours." << endl;
     }
 
     if(params.size() > 1)
     {
-        cout << "Perhaps try to tone down your use of parameters a little bit." << endl;
+        cerr << "Perhaps try to tone down your use of parameters a little bit." << endl;
     }
 
 }
@@ -597,16 +604,16 @@ void ConsoleUI::sort()
                     desc = true;
 
                     if(params.size() > 2)
-                        cout << "The sort function only has 2 parameters.";
+                        cerr << "The sort function only has 2 parameters.";
                 }
                 else
                 {
-                    cout << "\'" << params[1] << "\' is not a known parameter for the sort function";
+                    cerr << "\'" << params[1] << "\' is not a known parameter for the sort function";
 
                     if(params.size() > 2 && params[1] != "d")
-                        cout << " and only has 2 parameters";
+                        cerr << " and only has 2 parameters";
 
-                    cout << "." << endl;
+                    cerr << "." << endl;
                 }
             }
         }
@@ -641,8 +648,8 @@ void ConsoleUI::sort()
                     desc = true;
                 else
                 {
-                    cout << "\'" << nextparams[0] << "\' is not a paralegal." << endl;
-                    cout << "...uhm sorry. I meant legal parameter." << endl;
+                    cerr << "\'" << nextparams[0] << "\' is not a paralegal." << endl;
+                    cerr << "...uhm sorry. I meant legal parameter." << endl;
                 }
             }
         }
@@ -656,7 +663,7 @@ void ConsoleUI::sort()
     }
     else
     {
-        cout << "\nThe option does not exist. Give it another shot.\n" << endl;
+        cerr << "\nThe option does not exist. Give it another shot.\n" << endl;
     }
 }
 
@@ -728,7 +735,7 @@ void ConsoleUI::find()
 
     if(exists == false)
     {
-        cout << "Search did not give any results." << endl;
+        cerr << "\nSearch did not give any results." << endl;
     }
     else
     {

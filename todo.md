@@ -21,7 +21,7 @@
 		* finna viðkomandi persónu
 		* finna viðkomandi tölvu
 			* **bamm** simple as dat
-* Breyta villutextum í cerr í stað cout
+* ~~Breyta villutextum í cerr í stað cout~~
 * Finna alvöru lista af tölvum
 * Finna alvöru lista af fólki til að tengja við tölvur
 
