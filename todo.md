@@ -24,3 +24,5 @@
 * Breyta villutextum í cerr í stað cout
 * Finna alvöru lista af tölvum
 * Finna alvöru lista af fólki til að tengja við tölvur
+
+Ef tími vinnst til væri geðveikt að implementa fuzzy search
