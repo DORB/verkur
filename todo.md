@@ -25,6 +25,7 @@
 * ~~Breyta villutextum í cerr í stað cout~~ (consoleui.cpp)
 * ~~Finna alvöru lista af tölvum~~
 * ~~Finna alvöru lista af fólki til að tengja við tölvur~~
+* Laga sort til að sýna líka Computers
 * Láta gagnagrunn verða til ef hann er ekki til staðar (CREATE TABLE kóðar fyrir Programmers, Computers og tengitöfluna) (database.cpp)
 * Passa að .h skrár séu læsilegar, overloaduð föll saman osfrv.
 
