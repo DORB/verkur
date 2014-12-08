@@ -35,6 +35,7 @@ Ef tími vinnst til væri geðveikt að
     * Sýna fyrst lista og fyrir neðan bjóða upp á að gera sort. Veit samt ekki aaalveg hvernig á að útfæra það nákvæmlega
 
 Tölvur:
+
 | Name                   | Type            | Year  | Built | Manneskjan bakvið                 |
 |------------------------|-----------------|-------|-------|-----------------------------------|
 | PlayStation            | Electronic	   | 1994  | Yes   | Ken Kutaragi                      |
