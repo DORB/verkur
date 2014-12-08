@@ -14,16 +14,17 @@
 
 ## 7/12 - Það sem eftir er að gera
 
-* **Tengitafla** með færslum
-* Sýna tengda (list relate eða r) (consoleui.cpp)
+* ~~**Tengitafla** með færslum~~
+* ~~Sýna tengda (list relate eða r) (consoleui.cpp)~~
+	* Vantar show() fall fyrir vensl
 * marry() fall og skipun (consoleui.cpp)
 	* Viltu nota leit eða lista?
 		* finna viðkomandi persónu
 		* finna viðkomandi tölvu
 			* **bamm** simple as dat
 * ~~Breyta villutextum í cerr í stað cout~~ (consoleui.cpp)
-* Finna alvöru lista af tölvum
-* Finna alvöru lista af fólki til að tengja við tölvur
+* ~~Finna alvöru lista af tölvum~~
+* ~~Finna alvöru lista af fólki til að tengja við tölvur~~
 * Láta gagnagrunn verða til ef hann er ekki til staðar (CREATE TABLE kóðar fyrir Programmers, Computers og tengitöfluna) (database.cpp)
 * Passa að .h skrár séu læsilegar, overloaduð föll saman osfrv.
 
