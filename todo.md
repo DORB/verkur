@@ -30,9 +30,16 @@
 * ~~Passa að .h skrár séu læsilegar, overloaduð föll saman osfrv. **RÝK**~~
 * Setja færslurnar að neðan inn í töflurnar og tengja saman réttar færslur.
 
-Ef tími vinnst til væri geðveikt að
+## 9/12 - Það sem eftir er
+
+* Klára **show()** fallið og fylgifiska þess.
+* Laga **sort()** til að sýna líka Computers **BB**
+* Láta gagnagrunn verða til ef hann er ekki til staðar (CREATE TABLE kóðar fyrir Programmers, Computers og tengitöfluna) (database.cpp) **MN**
+* Setja færslurnar að neðan inn í töflurnar og tengja saman réttar færslur.
+
+**Ef tími vinnst til væri geðveikt að:**
 * implementa fuzzy search
-* setja sort skipunina undir list skipunina
+* setja **sort** skipunina undir list skipunina
     * Sýna fyrst lista og fyrir neðan bjóða upp á að gera sort. Veit samt ekki aaalveg hvernig á að útfæra það nákvæmlega
 
 Tölvur:
