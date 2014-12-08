@@ -13,10 +13,12 @@
 #include "person.h"
 #include "computer.h"
 #include "database.h"
+#include "relation.h"
 using namespace std;
 
 typedef vector<Person> PersonContainer;
 typedef vector<Computer> CompContainer;
+typedef vector<Relation> RelContainer;
 
 struct marriage
 {
@@ -36,8 +38,9 @@ public:
     void del(const Person& p);
     void del(const Computer &c);
     PersonContainer people;
+    RelContainer relations1;
     CompContainer computers;
-    void get_rel(marriage &m);
+    vector<Relation> get_rel(marriage &m);
 private:
     Database db;
 };

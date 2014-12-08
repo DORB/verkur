@@ -975,6 +975,14 @@ void ConsoleUI::show(const Computer& listed)
     cout << "+----------------------------END-----------------------+\n" << endl;
 }
 
+void ConsoleUI::show(const bool& isPerson, const int& ID, const vector<int>& relations)
+{
+    if(isPerson)
+    {
+
+    }
+}
+
 // isValidInput athugar hvort id sé leyfilegt (innan marka), isOK verður þá true
 // og tekur strenginn inp og kastar yfir í int og skilar því.
 int ConsoleUI::isValidInput(const string& inp, const int& lessThan, bool& isOK)

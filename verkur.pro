@@ -22,7 +22,8 @@ SOURCES += main.cpp \
     computer.cpp \
     database.cpp \
     service.cpp \
-    repository.cpp
+    repository.cpp \
+    relation.cpp
 
 HEADERS += \
     person.h \
@@ -31,7 +32,8 @@ HEADERS += \
     computer.h \
     database.h \
     service.h \
-    repository.h
+    repository.h \
+    relation.h
 
 OTHER_FILES += \
     README.md \

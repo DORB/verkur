@@ -1,4 +1,5 @@
 #include "repository.h"
+#include "relation.h"
 #include <QString>
 
 // Repository smiður. Tekur inn það sem er skrifað í list.txt, býr til persónur
@@ -154,40 +155,82 @@ void Repository::del(const Computer& c)
     list(computers);
 }
 
-void Repository::get_rel(marriage& m)
+vector<Relation> Repository::get_rel(marriage &m)
 {
     if(db.open())
     {
         QSqlQuery query;
-        string from_id;
-        string to_id;
+        string query_prepare;
 
+        query_prepare ="SELECT p.ID, p.first_name, p.last_name, c.ID, c.name ";
+        query_prepare +="FROM Programmers p INNER JOIN Owners u ";
+        query_prepare += "INNER JOIN Owners u ON u.p_ID = p.id ";
+        query_prepare +="INNER JOIN Computers c ON u.c_ID = c.id ";
+        query_prepare +="WHERE ";
         if(m.isPerson)
-        {
-            from_id = "p_ID";
-            to_id = "c_ID";
-        }
+            query_prepare += "p.ID = " + int2str(m.ID);
         else
-        {
-            from_id = "c_ID";
-            to_id = "p_ID";
-        }
+            query_prepare += "c.ID = " + int2str(m.ID);
 
-        string str_prepare = "SELECT * FROM Owners WHERE " + from_id + " = " + int2str(m.ID);
-
-        QString query_str = QString::fromStdString(str_prepare);
-        QString query_to = QString::fromStdString(to_id);
+        QString query_str = QString::fromStdString(query_prepare);
 
         query.exec(query_str);
 
         while(query.next())
         {
-            m.relations.push_back(query.value(query_to).toInt());
+            string names[2], cname;
+            int pid, cid;
+
+            pid = query.value("p.ID").toInt();
+            names[0] = query.value("p.first_name").toString().toStdString();
+            names[1] = query.value("p.last_name").toString().toStdString();
+            cid = query.value("c.ID").toInt();
+            cname = query.value("c.name").toString().toStdString();
+
+            Relation r = Relation(pid, names[0], names[1], cid, cname);
+
+            relations1.push_back(r);
         }
     }
-
     db.close();
+
+    return relations1;
 }
+
+//void Repository::get_rel(marriage& m)
+//{
+//    if(db.open())
+//    {
+//        QSqlQuery query;
+//        string from_id;
+//        string to_id;
+
+//        if(m.isPerson)
+//        {
+//            from_id = "p_ID";
+//            to_id = "c_ID";
+//        }
+//        else
+//        {
+//            from_id = "c_ID";
+//            to_id = "p_ID";
+//        }
+
+//        string str_prepare = "SELECT * FROM Owners WHERE " + from_id + " = " + int2str(m.ID);
+
+//        QString query_str = QString::fromStdString(str_prepare);
+//        QString query_to = QString::fromStdString(to_id);
+
+//        query.exec(query_str);
+
+//        while(query.next())
+//        {
+//            m.relations.push_back(query.value(query_to).toInt());
+//        }
+//    }
+
+//    db.close();
+//}
 
 // list function
 // Skilar vektorum
