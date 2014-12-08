@@ -9,8 +9,8 @@ public:
     Database();
     QSqlDatabase m_db;
     QSqlDatabase db();
-    bool open();
     ~Database();
+    bool open();
     void close();
 };
 

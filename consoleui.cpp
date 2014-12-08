@@ -1,5 +1,5 @@
 #include "consoleui.h"
-
+//hallo
 // User Interface
 ConsoleUI::ConsoleUI()
 {
@@ -1205,6 +1205,14 @@ void ConsoleUI::show(const Computer& listed)
     cout << setw(3) << ""
          << listed;
     cout << "+----------------------------END-----------------------+\n" << endl;
+}
+
+void ConsoleUI::show(const bool& isPerson, const int& ID, const vector<int>& relations)
+{
+    if(isPerson)
+    {
+
+    }
 }
 
 // isValidInput athugar hvort id sé leyfilegt (innan marka), isOK verður þá true
