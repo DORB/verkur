@@ -25,4 +25,7 @@
 * Finna alvöru lista af tölvum
 * Finna alvöru lista af fólki til að tengja við tölvur
 
-Ef tími vinnst til væri geðveikt að implementa fuzzy search
+Ef tími vinnst til væri geðveikt að
+* implementa fuzzy search
+* setja sort skipunina undir list skipunina
+    * Sýna fyrst lista og fyrir neðan bjóða upp á að gera sort. Veit samt ekki aaalveg hvernig á að útfæra það nákvæmlega

@@ -18,6 +18,13 @@ using namespace std;
 typedef vector<Person> PersonContainer;
 typedef vector<Computer> CompContainer;
 
+struct marriage
+{
+    bool isPerson;
+    int ID;
+    vector<int> relations;
+};
+
 class Repository
 {
 public:
@@ -30,10 +37,12 @@ public:
     void del(const Computer &c);
     PersonContainer people;
     CompContainer computers;
+    void get_rel(marriage &m);
 private:
     Database db;
 };
 
 string int2str(const int& a);
+
 
 #endif // PERSONREPO_H

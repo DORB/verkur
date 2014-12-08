@@ -56,6 +56,12 @@ void ConsoleUI::start()
             find();
         }
 
+        // Relations function
+        else if(inp == "rel" || inp == "r")
+        {
+            rel();
+        }
+
         // Quit function
         // Hoppað útúr while lykkju og forritið hættir keyrslu
         else if(inp == "quit" || inp == "exit" || inp == "q" || inp == "bail")
@@ -560,6 +566,10 @@ void ConsoleUI::list_c()
         service.list(c);
         show(c);
     }
+    else if(params[0] == "r")
+    {
+        rel();
+    }
 
     // Error handling með smá attitude
     else
@@ -572,6 +582,127 @@ void ConsoleUI::list_c()
         cerr << "Perhaps try to tone down your use of parameters a little bit." << endl;
     }
 
+}
+
+// Implement relations function
+void ConsoleUI::rel()
+{
+    marriage m;
+    vector<string> params = countParam();
+    string param;
+
+    PersonContainer p;
+    CompContainer c;
+
+    bool search_successful = false, isOK;
+
+    int listsize =0, p_id, c_id;
+
+    cout << "\nSearch for an entry to show relations." << endl;
+    while(params.size() == 0 || (params[0] != "p" && params[0] != "c"))
+    {
+       // Taka inn parameterinn
+       params.clear();
+       cout << "Type 'c' to search from the Computers database " << endl;
+       cout << "or 'p' to search from the Programmers database: ";
+       cin >> param;
+       params.push_back(param);
+       trimParam(params, 1);
+       vector<string> del = countParam();
+    }
+
+    if(params[0] == "p")
+        m.isPerson = true;
+    else
+        m.isPerson = false;
+
+    cout << m.isPerson << endl;
+    cout << "Enter search string: ";
+    cin.ignore(1000, '\n');
+    getline(cin, param);
+    params.push_back(param);
+
+    cout << "\nYour search string is: \'" << params[1] << "\'";
+
+    if(m.isPerson)
+    {
+        service.search(params[1], p, search_successful);
+        listsize = p.size();
+    }
+    else
+    {
+        service.search(params[1], c, search_successful);
+        listsize = c.size();
+    }
+
+    if(listsize == 1)
+    {
+        if(m.isPerson)
+        {
+            m.ID = p[0].getID();
+            show(p);
+        }
+        else
+        {
+            m.ID = c[0].getID();
+            show(c);
+        }
+
+        do
+        {
+            trimParam(params, 2);
+            cout << "See relations for this entry? (y/n) ";
+            cin >> param;
+            params.push_back(param);
+            countParam(params);
+            trimParam(params, 3);
+
+            if(params[2] == "y")
+            {
+                service.get_rel(m);
+                for(unsigned int i = 0; i < m.relations.size(); i++)
+                    cout << m.relations[i] << endl;
+                //show(m);
+            }
+            else if(params[2] == "n" || params[2] == "N")
+            {
+                search_successful = true;
+                cout << "\nPlease try again then. You can do it!" << endl;
+            }
+        } while(params[2] != "y" && params[2] != "n");
+    }
+    if(listsize > 1)
+    {
+        if(m.isPerson)
+            show(p);
+        else
+            show(c);
+
+        do
+        {
+            // Fa inn numerið a personu til að skoða
+            trimParam(params, 2);
+            cout << "Type the no. of the entry: ";
+            cin >> param;
+            params.push_back(param);
+            countParam(params);
+            trimParam(params, 3);
+
+            isValidInput(params[2], listsize + 1, isOK);
+
+            if(isOK)
+            {
+                if(m.isPerson)
+                    m.ID = p[atoi(params[2].c_str()) - 1].getID();
+                else
+                    m.ID = c[atoi(params[2].c_str()) - 1].getID();
+                service.get_rel(m);
+                for(unsigned int i = 0; i < m.relations.size(); i++)
+                    cout << m.relations[i] << endl;
+                // show(m);
+            }
+        }while(!isOK && params[2] != "q");
+    }
 }
 
 // Implement sort function
@@ -755,7 +886,7 @@ void ConsoleUI::find()
 }
 
 // Fall sem prentar út lista eftir vektor sem er gefinn með mörgum persónum í
-void ConsoleUI::show(PersonContainer listed)
+void ConsoleUI::show(const PersonContainer& listed)
 {
     int size = listed.size();
 
@@ -813,7 +944,7 @@ void ConsoleUI::show(const CompContainer& listed)
 }
 
 // Fall sem prentar út einstakling
-void ConsoleUI::show(Person listed)
+void ConsoleUI::show(const Person& listed)
 {
     cout << "\n+-----------------------------------------------------------------------+" << endl;
     cout << setw(3) << ""
@@ -929,14 +1060,4 @@ void ConsoleUI::countParam(vector<string>& result)
 void ConsoleUI::trimParam(vector<string>& result, const int& keep)
 {
     result.erase(result.begin() + keep, result.begin() + result.size());
-}
-
-void ConsoleUI::emptyContainer(PersonContainer& result)
-{
-    result.erase(result.begin(), result.begin() + result.size());
-}
-
-void ConsoleUI::emptyContainer(CompContainer& result)
-{
-    result.erase(result.begin(), result.begin() + result.size());
 }
