@@ -79,7 +79,7 @@ void Repository::add(const Person& p)
     }
     else
     {
-        cout << "Problem with writing to database." << endl;
+        cerr << "Problem with writing to database." << endl;
     }
 
     db.close();
@@ -156,7 +156,7 @@ void Repository::del(const Computer& c)
 
 void Repository::get_rel(marriage& m)
 {
-    if(db.open())
+    /*if(db.open())
     {
         QSqlQuery query;
         string from_id;
@@ -186,7 +186,7 @@ void Repository::get_rel(marriage& m)
         }
     }
 
-    db.close();
+    db.close();*/
 }
 
 // list function
@@ -203,6 +203,31 @@ void Repository::list(CompContainer& c)
     Repository temp;
 
     c = temp.computers;
+}
+
+void Repository::marry(const int& p_ID, const int& c_ID)
+{
+    if(db.open())
+    {
+        QSqlQuery query;
+        string insert;
+
+        insert = "INSERT INTO Owners (\"p_ID\", \"c_ID\") VALUES (";
+        insert += int2str(p_ID) + ",";
+        insert += int2str(c_ID) + ");";
+
+        cout << insert << endl;
+
+        QString query_str = QString::fromStdString(insert);
+
+        query.exec(query_str);
+    }
+    else
+    {
+        cerr << "Problem writing to database. Most likely you're screwed" << endl;
+    }
+
+    db.close();
 }
 
 string int2str(const int& a)

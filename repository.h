@@ -22,7 +22,6 @@ struct marriage
 {
     bool isPerson;
     int ID;
-    vector<int> relations;
 };
 
 class Repository
@@ -38,6 +37,7 @@ public:
     PersonContainer people;
     CompContainer computers;
     void get_rel(marriage &m);
+    void marry(const int &p_ID, const int &c_ID);
 private:
     Database db;
 };

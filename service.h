@@ -23,6 +23,7 @@ public:
     void del(const Computer &c);
     void add(const Computer &c);
     void get_rel(marriage &m);
+    void marry(const int &p_ID, const int &c_ID);
 private:
     Repository repository;
     Database db;

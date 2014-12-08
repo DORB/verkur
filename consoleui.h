@@ -29,6 +29,7 @@ public:
     void countParam(vector<string>& result);
     void trimParam(vector<string>& result, const int& keep);
     void rel();
+    void marry();
 private:
     Service service;
 };

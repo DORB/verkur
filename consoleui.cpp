@@ -62,6 +62,13 @@ void ConsoleUI::start()
             rel();
         }
 
+        // Marry function
+        else if(inp == "marry" || inp == "m")
+        {
+            // cout << "This function hasn't been implemented yet. Sorry!" << endl;
+            marry();
+        }
+
         // Quit function
         // Hoppað útúr while lykkju og forritið hættir keyrslu
         else if(inp == "quit" || inp == "exit" || inp == "q" || inp == "bail")
@@ -596,7 +603,7 @@ void ConsoleUI::rel()
 
     bool search_successful = false, isOK;
 
-    int listsize =0, p_id, c_id;
+    int listsize = 0, p_id, c_id;
 
     cout << "\nSearch for an entry to show relations." << endl;
     while(params.size() == 0 || (params[0] != "p" && params[0] != "c"))
@@ -659,9 +666,9 @@ void ConsoleUI::rel()
 
             if(params[2] == "y")
             {
-                service.get_rel(m);
-                for(unsigned int i = 0; i < m.relations.size(); i++)
-                    cout << m.relations[i] << endl;
+                // service.get_rel(m);
+                /*for(unsigned int i = 0; i < m.relations.size(); i++)
+                    cout << m.relations[i] << endl;*/
                 //show(m);
             }
             else if(params[2] == "n" || params[2] == "N")
@@ -696,9 +703,9 @@ void ConsoleUI::rel()
                     m.ID = p[atoi(params[2].c_str()) - 1].getID();
                 else
                     m.ID = c[atoi(params[2].c_str()) - 1].getID();
-                service.get_rel(m);
-                for(unsigned int i = 0; i < m.relations.size(); i++)
-                    cout << m.relations[i] << endl;
+                // service.get_rel(m);
+                /*for(unsigned int i = 0; i < m.relations.size(); i++)
+                    cout << m.relations[i] << endl;*/
                 // show(m);
             }
         }while(!isOK && params[2] != "q");
@@ -885,6 +892,231 @@ void ConsoleUI::find()
     }
 }
 
+// Implement marry function
+void ConsoleUI::marry()
+{
+    vector<string> params = countParam();
+    string param;
+
+    PersonContainer p;
+    CompContainer c;
+    bool search_successful = false;
+    bool isCorrect = false;
+    bool quit = false;
+    string search_str;
+    int p_ID, c_ID;
+
+    params.clear();
+
+    do
+    {
+        while(!search_successful && !quit)
+        {
+            params.clear();
+            p.clear();
+            cout << "\nSearch for a Programmer to marry." << endl;
+            cout << "Enter search string: ";
+            cin >> param;
+
+            countParam(params);
+
+            for(unsigned int i = 0; i < params.size(); i++)
+                param += " " + params[i];
+
+            params.clear();
+            params.push_back(param);
+
+            if(params[0] != "q")
+            {
+                service.search(params[0], p, search_successful);
+
+                if(!search_successful)
+                    cerr << "\nPlease try again." << endl;
+            }
+            else
+                quit = true;
+        }
+
+        if(!quit)
+        {
+            cout << "\nYou searched for '" + params[0] + "':" << endl;
+            show(p);
+        }
+
+        if(p.size() == 1)
+        {
+            trimParam(params, 1);
+            cout << "Is this the right Programmer? (y/n) ";
+            cin >> param;
+            params.push_back(param);
+            countParam(params);
+            trimParam(params, 2);
+
+            if(params[1] == "y")
+            {
+                p_ID = p[0].getID();
+                isCorrect = true;
+            }
+            else if(params[1] == "n")
+            {
+                cerr << "Shame, let's try again." << endl;
+                p.clear();
+                search_successful = false;
+                isCorrect = false;
+            }
+            else if(params[1] == "q")
+            {
+                cerr << "Quitter";
+                quit = true;
+            }
+        }
+        else if(p.size() > 1)
+        {
+            cout << "\nEnter no. of Programmer to marry: ";
+            cin >> param;
+            params.push_back(param);
+            countParam(params);
+            trimParam(params, 2);
+
+            int temp_id = atoi(params[1].c_str()) - 1;
+            show(p[temp_id]);
+
+            cout << "Is this the right Programmer? (y/n) ";
+            cin >> param;
+            params.push_back(param);
+            countParam(params);
+            trimParam(params, 3);
+
+            if(params[2] == "y")
+            {
+                p_ID = p[temp_id].getID();
+                isCorrect = true;
+            }
+            else if(params[2] == "n")
+            {
+                cerr << "Shame, let's try again." << endl;
+                p.clear();
+                search_successful = false;
+                isCorrect = false;
+            }
+            else if(params[2] == "q")
+            {
+                cerr << "\nQuitter." << endl;
+                quit = true;
+            }
+        }
+
+    } while(!isCorrect && !quit);
+
+    isCorrect = false;
+    search_successful = false;
+
+    while(!search_successful && !quit)
+    {
+        do
+        {
+            while(!search_successful && !quit)
+            {
+                params.clear();
+                c.clear();
+                cout << "\nSearch for a Computer to marry to your handsome Programmer." << endl;
+                cout << "Enter search string: ";
+                cin >> param;
+
+                countParam(params);
+
+                for(unsigned int i = 0; i < params.size(); i++)
+                    param += " " + params[i];
+
+                params.clear();
+                params.push_back(param);
+
+                if(params[0] != "q")
+                {
+                    service.search(params[0], c, search_successful);
+
+                    if(!search_successful)
+                        cerr << "\nPlease try again." << endl;
+                }
+                else
+                    quit = true;
+            }
+
+            if(!quit)
+            {
+                cout << "\nYou searched for '" + params[0] + "':" << endl;
+                show(c);
+            }
+
+            if(c.size() == 1)
+            {
+                trimParam(params, 1);
+                cout << "Is this the right Computer? (y/n) ";
+                cin >> param;
+                params.push_back(param);
+                countParam(params);
+                trimParam(params, 2);
+
+                if(params[1] == "y")
+                {
+                    c_ID = c[0].getID();
+                    isCorrect = true;
+                }
+                else if(params[1] == "n")
+                {
+                    cerr << "Shame, let's try again." << endl;
+                    c.clear();
+                    search_successful = false;
+                    isCorrect = false;
+                }
+                else if(params[1] == "q")
+                {
+                    cerr << "Quitter";
+                    quit = true;
+                }
+            }
+            else if(c.size() > 1)
+            {
+                cout << "\nEnter no. of Programmer to marry: ";
+                cin >> param;
+                params.push_back(param);
+                countParam(params);
+                trimParam(params, 2);
+
+                int temp_id = atoi(params[1].c_str()) - 1;
+                show(c[temp_id]);
+
+                cout << "Is this the right Programmer? (y/n) ";
+                cin >> param;
+                params.push_back(param);
+                countParam(params);
+                trimParam(params, 3);
+
+                if(params[2] == "y")
+                {
+                    c_ID = c[temp_id].getID();
+                    isCorrect = true;
+                }
+                else if(params[2] == "n")
+                {
+                    cerr << "Shame, let's try again." << endl;
+                    c.clear();
+                    search_successful = false;
+                    isCorrect = false;
+                }
+                else if(params[2] == "q")
+                {
+                    cerr << "\nQuitter." << endl;
+                    quit = true;
+                }
+            }
+
+        } while(!isCorrect && !quit);
+    }
+    service.marry(p_ID, c_ID);
+    cout << "\nThank you for trying marriage out." << endl;
+}
+
 // Fall sem prentar út lista eftir vektor sem er gefinn með mörgum persónum í
 void ConsoleUI::show(const PersonContainer& listed)
 {
@@ -999,7 +1231,7 @@ int ConsoleUI::isValidInput(const string& inp, const int& lessThan, bool& isOK)
 // Prenta út mögulegar aðgerðir
 void ConsoleUI::printComms()
 {
-    cout << "\n[add] [del] [list] [find] [sort] [quit]" << endl;
+    cout << "\n[add] [del] [list] [find] [sort] [rel] [marry] [quit]" << endl;
 }
 
 // Fall til að taka inn parametra og skila þeim í vektor af strengjum

@@ -121,6 +121,11 @@ void Service::get_rel(marriage& m)
     repository.get_rel(m);
 }
 
+void Service::marry(const int& p_ID, const int& c_ID)
+{
+    repository.marry(p_ID, c_ID);
+}
+
 // Sort fallið
 // Tekur inn leitaraðferðina (sort_after) og bool breytu hvernig a að raða (asc/desc)
 PersonContainer Service::sort_list(const int& sort_after, const bool& desc)
