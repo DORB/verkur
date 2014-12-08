@@ -22,6 +22,7 @@ public:
     void search(const string &search_str, CompContainer &c, bool &successful);
     void del(const Computer &c);
     void add(const Computer &c);
+    void get_rel(marriage &m);
 private:
     Repository repository;
     Database db;

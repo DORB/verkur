@@ -43,19 +43,6 @@ void Service::del(const Computer& c)
 // Skilar PersonContainer með leitarniðurstöðunum
 PersonContainer Service::find_p(string str,const PersonContainer& p, bool& exists)
 {
-//{
-//    if(db.open());
-//    {
-//        QSqlQuery query;
-
-//        string str_prepare = "SELECT * FROM Programmers WHERE first_name LIKE \"first_name\"" + str;
-
-//        QString query_str = QString::fromStdString(str_prepare);
-
-//        query.exec(query_str);
-//    }
-//    db.close();
-//}
     PersonContainer tofind;
 
     if(p.size() == 0)
@@ -124,6 +111,14 @@ void Service::search(const string& search_str, CompContainer& c, bool& successfu
 {
     repository.list(c);
     c = find_p(search_str, c, successful);
+}
+
+void Service::get_rel(marriage& m)
+{
+    // Er með IDið og þarf að fa inn i relations vektorinn
+    // ur tengitöflunni hverjir tengjast IDinu
+
+    repository.get_rel(m);
 }
 
 // Sort fallið

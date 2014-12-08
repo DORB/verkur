@@ -19,17 +19,16 @@ public:
     void list_c();
     void sort();
     void find();
-    void show(PersonContainer listed);
-    void show(Person listed);
+    void show(const PersonContainer& listed);
+    void show(const Person& listed);
     void show(const CompContainer& listed);
+    void show(const Computer &listed);
     int isValidInput(const string& inp, const int& lessThan, bool& isOK);
     void printComms();
     vector<string> countParam();
     void countParam(vector<string>& result);
     void trimParam(vector<string>& result, const int& keep);
-    void emptyContainer(PersonContainer& result);
-    void emptyContainer(CompContainer& result);
-    void show(const Computer &listed);
+    void rel();
 private:
     Service service;
 };

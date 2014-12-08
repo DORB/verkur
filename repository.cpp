@@ -127,7 +127,6 @@ void Repository::del(const Person& p)
         QString query_str = QString::fromStdString(str_prepare);
 
         query.exec(query_str);
-        // people.clear();
     }
 
     db.close();
@@ -148,12 +147,46 @@ void Repository::del(const Computer& c)
         QString query_str = QString::fromStdString(str_prepare);
 
         query.exec(query_str);
-        // computers.clear();
     }
 
     db.close();
 
     list(computers);
+}
+
+void Repository::get_rel(marriage& m)
+{
+    if(db.open())
+    {
+        QSqlQuery query;
+        string from_id;
+        string to_id;
+
+        if(m.isPerson)
+        {
+            from_id = "p_ID";
+            to_id = "c_ID";
+        }
+        else
+        {
+            from_id = "c_ID";
+            to_id = "p_ID";
+        }
+
+        string str_prepare = "SELECT * FROM Owners WHERE " + from_id + " = " + int2str(m.ID);
+
+        QString query_str = QString::fromStdString(str_prepare);
+        QString query_to = QString::fromStdString(to_id);
+
+        query.exec(query_str);
+
+        while(query.next())
+        {
+            m.relations.push_back(query.value(query_to).toInt());
+        }
+    }
+
+    db.close();
 }
 
 // list function
