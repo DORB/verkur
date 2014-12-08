@@ -24,5 +24,6 @@
 * ~~Breyta villutextum í cerr í stað cout~~
 * Finna alvöru lista af tölvum
 * Finna alvöru lista af fólki til að tengja við tölvur
+* Láta gagnagrunn verða til ef hann er ekki til staðar (CREATE TABLE kóðar fyrir Programmers, Computers og tengitöfluna)
 
 Ef tími vinnst til væri geðveikt að implementa fuzzy search
