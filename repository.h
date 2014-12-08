@@ -13,6 +13,7 @@
 #include "person.h"
 #include "computer.h"
 #include "database.h"
+
 using namespace std;
 
 typedef vector<Person> PersonContainer;
@@ -30,14 +31,14 @@ class Repository
 public:
     Repository();
     void add(const Person& p);
+    void add(const Computer &c);
     void list(PersonContainer& p);
     void list(CompContainer& c);
-    void add(const Computer &c);
     void del(const Person& p);
     void del(const Computer &c);
-    PersonContainer people;
-    CompContainer computers;
     void get_rel(marriage &m);
+    PersonContainer people;
+    CompContainer computers; 
 private:
     Database db;
 };
