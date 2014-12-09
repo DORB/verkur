@@ -32,7 +32,7 @@
 
 ## 9/12 - Það sem eftir er
 
-* Klára **show()** fallið og fylgifiska þess.
+* ~~Klára **show()** fallið og fylgifiska þess.~~
 * Laga **sort()** til að sýna líka Computers **BB**
 * Láta gagnagrunn verða til ef hann er ekki til staðar (CREATE TABLE kóðar fyrir Programmers, Computers og tengitöfluna) (database.cpp) **MN**
 * Setja færslurnar að neðan inn í töflurnar og tengja saman réttar færslur.
