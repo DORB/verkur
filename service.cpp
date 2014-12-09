@@ -128,9 +128,9 @@ void Service::marry(const int& p_ID, const int& c_ID)
 
 // Sort fallið
 // Tekur inn leitaraðferðina (sort_after) og bool breytu hvernig a að raða (asc/desc)
-PersonContainer Service::sort_list(const string& s_sort_after, const bool& desc, const int& temp)
+PersonContainer Service::sort_list(const int& sort_after, const bool& desc, const int& temp)
 {
-    int sort_after = atoi(s_sort_after.c_str());
+    // int sort_after = atoi(s_sort_after.c_str());
 
     PersonContainer p_sorted;
 
@@ -142,9 +142,9 @@ PersonContainer Service::sort_list(const string& s_sort_after, const bool& desc,
     return p_sorted;
 }
 
-CompContainer Service::sort_list(const string& s_sort_after, const bool& desc, const bool& temp)
+CompContainer Service::sort_list(const int& sort_after, const bool& desc, const bool& temp)
 {
-    int sort_after = atoi(s_sort_after.c_str());
+    // int sort_after = atoi(s_sort_after.c_str());
 
     CompContainer c_sorted;
 
