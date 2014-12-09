@@ -73,7 +73,7 @@ void Repository::add(const Person& p)
         string insert;
 
         insert =  "INSERT INTO \"main\".\"Programmers\" (\"first_name\",\"last_name\",\"birth_year\",\"death_year\",\"sex\",\"nationality\") ";
-        insert += "VALUES (\"" + p.getFName()+ "\", \"" + p.getLName() + "\", \"" + int2str(p.getBY()) + "\", \"" + int2str(p.getDY()) +"\", \"" + p.getSex() + "\", \"" + p.getNationality() + "\")";
+        insert += "VALUES (\"" + p.getFName()+ "\", \"" + p.getLName() + "\", \"" + utils::int2str(p.getBY()) + "\", \"" + utils::int2str(p.getDY()) +"\", \"" + p.getSex() + "\", \"" + p.getNationality() + "\")";
 
         QString qinsert = QString::fromStdString(insert);
 
@@ -102,7 +102,7 @@ void Repository::add(const Computer& c)
             built = "0";
 
         insert =  "INSERT INTO \"main\".\"Computers\" (\"name\",\"year_built\",\"type\",\"build\") ";
-        insert += "VALUES (\"" + c.getName()+ "\", \"" + int2str(c.getBuildYear()) + "\", \"" + c.getType() + "\", \"" + built + "\")";
+        insert += "VALUES (\"" + c.getName()+ "\", \"" + utils::int2str(c.getBuildYear()) + "\", \"" + c.getType() + "\", \"" + built + "\")";
 
         QString qinsert = QString::fromStdString(insert);
 
@@ -125,7 +125,7 @@ void Repository::del(const Person& p)
 
         int pid = p.getID();
 
-        string str_prepare = "DELETE FROM Programmers WHERE ID = " + int2str(pid);
+        string str_prepare = "DELETE FROM Programmers WHERE ID = " + utils::int2str(pid);
 
         QString query_str = QString::fromStdString(str_prepare);
 
@@ -145,7 +145,7 @@ void Repository::del(const Computer& c)
 
         int cid = c.getID();
 
-        string str_prepare = "DELETE FROM Computers WHERE ID = " + int2str(cid);
+        string str_prepare = "DELETE FROM Computers WHERE ID = " + utils::int2str(cid);
 
         QString query_str = QString::fromStdString(str_prepare);
 
@@ -172,9 +172,9 @@ RelContainer Repository::get_rel(const marriage& m)
         query_prepare +="INNER JOIN Computers c ON u.c_ID = c.ID ";
         query_prepare +="WHERE ";
         if(m.isPerson)
-            query_prepare += "p.ID = " + int2str(m.ID);
+            query_prepare += "p.ID = " + utils::int2str(m.ID);
         else
-            query_prepare += "c.ID = " + int2str(m.ID);
+            query_prepare += "c.ID = " + utils::int2str(m.ID);
 
         // cout << query_prepare << endl;
 
@@ -274,8 +274,8 @@ void Repository::marry(const int& p_ID, const int& c_ID)
         string insert;
 
         insert = "INSERT INTO Owners (\"p_ID\", \"c_ID\") VALUES (";
-        insert += int2str(p_ID) + ",";
-        insert += int2str(c_ID) + ");";
+        insert += utils::int2str(p_ID) + ",";
+        insert += utils::int2str(c_ID) + ");";
 
         // cout << insert << endl;
 
@@ -289,14 +289,4 @@ void Repository::marry(const int& p_ID, const int& c_ID)
     }
 
     db.close();
-}
-
-string int2str(const int& a)
-{
-    stringstream ss;
-    ss << a;
-    string str;
-    ss >> str;
-
-    return str;
 }

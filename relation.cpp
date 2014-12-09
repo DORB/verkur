@@ -42,7 +42,7 @@ string Relation::getPname() const
 
 string Relation::getPlife() const
 {
-    return int2str(p.getBY()) + "-" + int2str(p.getDY());
+    return utils::int2str(p.getBY()) + "-" + utils::int2str(p.getDY());
 }
 
 string Relation::getPnationality() const

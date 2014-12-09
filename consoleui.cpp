@@ -183,7 +183,7 @@ void ConsoleUI::add()
         cin >> sex;
 
         // breyta Sex í uppercase (M/F)
-        sex = str2upper(sex);
+        sex = utils::str2upper(sex);
 
         // Error handling á input á kyni
         while(sex != "M" && sex != "F")
@@ -192,7 +192,7 @@ void ConsoleUI::add()
             cout << "Sex: ";
             cin >> sex;
             // breyta kyninu í uppercase...
-            sex = str2upper(sex);
+            sex = utils::str2upper(sex);
         }
 
         cout << "Nationality: ";
@@ -214,7 +214,7 @@ void ConsoleUI::add()
         {
             cout << "Was it built? (y/n) ";
             cin >> param;
-            param = str2lower(param);
+            param = utils::str2lower(param);
             if(param == "y")
                 built = true;
             else
@@ -827,8 +827,6 @@ void ConsoleUI::sort()
     vector<string> params = countParam();
     bool desc = false;
 
-    // cout << params.size() << endl;
-
     if(params.size() > 0)
     {
         bool isOK;
@@ -946,7 +944,7 @@ void ConsoleUI::sort()
         cerr << "\n'" << params[2] << "' is not an option here." << endl;
 
     int sort_after = atoi(params[1].c_str());
-    cout << sort_after << endl;
+    // cout << sort_after << endl;
 
     if(params[0] == "p")
     {
@@ -981,7 +979,7 @@ void ConsoleUI::find()
         if(params.size() == 0)
             params.push_back(param);
         else
-            params[0] = str2lower(param);
+            params[0] = utils::str2lower(param);
     }
 
     if(params[0] == "p")
@@ -1459,7 +1457,7 @@ vector<string> ConsoleUI::countParam()
                     break;
                 }
             }
-            p.push_back(str2lower(param));
+            p.push_back(utils::str2lower(param));
         }
     }
     else
