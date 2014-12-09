@@ -183,7 +183,7 @@ void ConsoleUI::add()
         cin >> sex;
 
         // breyta Sex í uppercase (M/F)
-        sex = str2upper(sex);
+        sex = utils::str2upper(sex);
 
         // Error handling á input á kyni
         while(sex != "M" && sex != "F")
@@ -192,7 +192,7 @@ void ConsoleUI::add()
             cout << "Sex: ";
             cin >> sex;
             // breyta kyninu í uppercase...
-            sex = str2upper(sex);
+            sex = utils::str2upper(sex);
         }
 
         cout << "Nationality: ";
@@ -214,7 +214,7 @@ void ConsoleUI::add()
         {
             cout << "Was it built? (y/n) ";
             cin >> param;
-            param = str2lower(param);
+            param = utils::str2lower(param);
             if(param == "y")
                 built = true;
             else
@@ -600,7 +600,7 @@ void ConsoleUI::rel()
 
     bool search_successful = false, isOK, quit = false;
 
-    int listsize = 0, p_id;
+    int listsize = 0;
 
     cout << "\nSearch for an entry to show relations." << endl;
     while(params.size() == 0 || (params[0] != "p" && params[0] != "c"))
@@ -679,7 +679,10 @@ void ConsoleUI::rel()
             if(params[2] == "y")
             {
                 r = service.get_rel(m);
-                show(r, m);
+                if(r.size() > 0)
+                    show(r, m);
+                else
+                    cout << "\nThere are no relations connected to this Programmer" << endl;
             }
             else if(params[2] == "n" || params[2] == "N")
             {
@@ -714,7 +717,10 @@ void ConsoleUI::rel()
                 else
                     m.ID = c[atoi(params[2].c_str()) - 1].getID();
                 r = service.get_rel(m);
-                show(r, m);
+                if(r.size() > 0)
+                    show(r, m);
+                else
+                    cout << "\nThere are no relations connected to this Computer" << endl;
             }
         }while(!isOK && params[2] != "q");
     }
@@ -827,8 +833,6 @@ void ConsoleUI::sort()
     vector<string> params = countParam();
     bool desc = false;
 
-    // cout << params.size() << endl;
-
     if(params.size() > 0)
     {
         bool isOK;
@@ -914,7 +918,7 @@ void ConsoleUI::sort()
         {
             cout << "(1) Name\n"
                  << "(2) Type\n"
-                 << "(3) Build Year";
+                 << "(3) Build Year\n";
 
             bool isOK;
 
@@ -946,7 +950,7 @@ void ConsoleUI::sort()
         cerr << "\n'" << params[2] << "' is not an option here." << endl;
 
     int sort_after = atoi(params[1].c_str());
-    cout << sort_after << endl;
+    // cout << sort_after << endl;
 
     if(params[0] == "p")
     {
@@ -981,7 +985,7 @@ void ConsoleUI::find()
         if(params.size() == 0)
             params.push_back(param);
         else
-            params[0] = str2lower(param);
+            params[0] = utils::str2lower(param);
     }
 
     if(params[0] == "p")
@@ -1063,6 +1067,9 @@ void ConsoleUI::marry()
 
     params.clear();
 
+    cout << "\nThank you for choosing marry. The marry function links" << endl;
+    cout << "Programmers and Computers together and saves the relation to database." << endl;
+
     do
     {
         while(!search_successful && !quit)
@@ -1070,7 +1077,7 @@ void ConsoleUI::marry()
             params.clear();
             p.clear();
             cout << "\nSearch for a Programmer to marry." << endl;
-            cout << "Enter search string: ";
+            cout << "Enter search string (press q to back out): ";
             cin >> param;
 
             countParam(params);
@@ -1127,11 +1134,19 @@ void ConsoleUI::marry()
         }
         else if(p.size() > 1)
         {
-            cout << "\nEnter no. of Programmer to marry: ";
-            cin >> param;
-            params.push_back(param);
-            countParam(params);
-            trimParam(params, 2);
+            bool isOK;
+
+            do
+            {
+                cout << "\nEnter no. of Programmer to marry: ";
+                cin >> param;
+
+                params.push_back(param);
+                countParam(params);
+                trimParam(params, 2);
+
+                int temp = isValidInput(param, p.size() + 1, isOK);
+            }while(!isOK);
 
             int temp_id = atoi(params[1].c_str()) - 1;
             show(p[temp_id]);
@@ -1174,7 +1189,8 @@ void ConsoleUI::marry()
             {
                 params.clear();
                 c.clear();
-                cout << "\nSearch for a Computer to marry to your handsome Programmer." << endl;
+                cout << "\nSearch for a Computer to marry your handsome Programmer." << endl;
+                cout << "You can though, back out of the marrage by pressing q" << endl;
                 cout << "Enter search string: ";
                 cin >> param;
 
@@ -1232,7 +1248,7 @@ void ConsoleUI::marry()
             }
             else if(c.size() > 1)
             {
-                cout << "\nEnter no. of Programmer to marry: ";
+                cout << "\nEnter no. of Computer to marry: ";
                 cin >> param;
                 params.push_back(param);
                 countParam(params);
@@ -1241,7 +1257,7 @@ void ConsoleUI::marry()
                 int temp_id = atoi(params[1].c_str()) - 1;
                 show(c[temp_id]);
 
-                cout << "Is this the right Programmer? (y/n) ";
+                cout << "Is this the right Computer? (y/n) ";
                 cin >> param;
                 params.push_back(param);
                 countParam(params);
@@ -1362,13 +1378,13 @@ void ConsoleUI::show(const Computer& listed)
     cout << "+----------------------------END-----------------------+\n" << endl;
 }
 
-void ConsoleUI::show(const bool& isPerson, const int& ID, const vector<int>& relations)
+/*void ConsoleUI::show(const bool& isPerson, const int& ID, const vector<int>& relations)
 {
     if(isPerson)
     {
 
     }
-}
+}*/
 
 void ConsoleUI::show(const RelContainer& r, const marriage& m)
 {
@@ -1379,7 +1395,7 @@ void ConsoleUI::show(const RelContainer& r, const marriage& m)
         if(m.isPerson)
             cout << r[0].getPname() << " is related to the following computers:" << endl;
         else
-            cout << "The " << r[0].getCname() << " is connected to the following people:" << endl;
+            cout << setw(6) << "The " << r[0].getCname() << " is connected to the following people:" << endl;
 
         cout << "+----------------------------------------------------------------+" << endl;
         for(unsigned int i = 0; i < r.size(); i++)
@@ -1459,7 +1475,7 @@ vector<string> ConsoleUI::countParam()
                     break;
                 }
             }
-            p.push_back(str2lower(param));
+            p.push_back(utils::str2lower(param));
         }
     }
     else
@@ -1480,7 +1496,7 @@ void ConsoleUI::countParam(vector<string>& result)
 
 void ConsoleUI::trimParam(vector<string>& result, const int& keep)
 {
-    if(result.size() > keep)
+    if(result.size() > (unsigned int) keep)
         result.erase(result.begin() + keep, result.begin() + result.size());
 }
 

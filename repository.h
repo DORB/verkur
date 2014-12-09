@@ -14,6 +14,7 @@
 #include "computer.h"
 #include "database.h"
 #include "relation.h"
+#include "utilities.h"
 
 using namespace std;
 
@@ -45,8 +46,6 @@ public:
 private:
     Database db;
 };
-
-string int2str(const int& a);
 
 
 #endif // PERSONREPO_H

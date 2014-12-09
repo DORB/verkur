@@ -30,7 +30,4 @@ private:
     Database db;
 };
 
-string str2upper(string str);
-string str2lower(string str);
-
 #endif // SERVICE_H
