@@ -4,11 +4,14 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <algorithm>
+
+using namespace std;
 
 namespace utils {
-    std::string str2upper(std::string str);
-    std::string str2lower(std::string str);
-    std::string int2str(const int& a);
+    string str2upper(string str);
+    string str2lower(string str);
+    string int2str(const int& a);
 }
 
 #endif // UTILITIES_H

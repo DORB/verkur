@@ -918,7 +918,7 @@ void ConsoleUI::sort()
         {
             cout << "(1) Name\n"
                  << "(2) Type\n"
-                 << "(3) Build Year";
+                 << "(3) Build Year\n";
 
             bool isOK;
 
