@@ -1146,6 +1146,9 @@ void ConsoleUI::marry()
                 trimParam(params, 2);
 
                 int temp = isValidInput(param, p.size() + 1, isOK);
+
+                if(!isOK)
+                    trimParam(params, 1);
             }while(!isOK);
 
             int temp_id = atoi(params[1].c_str()) - 1;
@@ -1248,14 +1251,25 @@ void ConsoleUI::marry()
             }
             else if(c.size() > 1)
             {
-                cout << "\nEnter no. of Computer to marry: ";
-                cin >> param;
-                params.push_back(param);
-                countParam(params);
-                trimParam(params, 2);
+                bool isOK;
 
-                int temp_id = atoi(params[1].c_str()) - 1;
-                show(c[temp_id]);
+                do
+                {
+                    cout << "\nEnter no. of Computer to marry: ";
+                    cin >> param;
+
+                    params.push_back(param);
+                    countParam(params);
+                    trimParam(params, 2);
+
+                    int temp = isValidInput(param, p.size() + 1, isOK);
+
+                    if(!isOK)
+                        trimParam(params, 1);
+                } while(!isOK);
+
+                    int temp_id = atoi(params[1].c_str()) - 1;
+                    show(c[temp_id]);
 
                 cout << "Is this the right Computer? (y/n) ";
                 cin >> param;
