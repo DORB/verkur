@@ -2,8 +2,6 @@
 #include "relation.h"
 #include <QString>
 
-
-
 // Repository smiður. Tekur inn það sem er skrifað í list.txt, býr til persónur
 // og populatear vektor með þessum persónum
 Repository::Repository()
@@ -72,6 +70,8 @@ void Repository::add(const Person& p)
         QSqlQuery query;
         string insert;
 
+        // Vitum af því að syntaxinn hér að neðan er ekki sá besti, en við studdumst við hann áður en var farið í þetta
+        // í fyrirlestrunum.
         insert =  "INSERT INTO \"main\".\"Programmers\" (\"first_name\",\"last_name\",\"birth_year\",\"death_year\",\"sex\",\"nationality\") ";
         insert += "VALUES (\"" + p.getFName()+ "\", \"" + p.getLName() + "\", \"" + utils::int2str(p.getBY()) + "\", \"" + utils::int2str(p.getDY()) +"\", \"" + p.getSex() + "\", \"" + p.getNationality() + "\")";
 
