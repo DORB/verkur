@@ -16,7 +16,7 @@
 
 * ~~**Tengitafla** með færslum~~
 * ~~Sýna tengda (list relate eða r) (consoleui.cpp)~~
-	* Vantar show() fall fyrir vensl **ÓKS**
+	* ~~Vantar show() fall fyrir vensl **ÓKS**~~
 * ~~marry() fall og skipun (consoleui.cpp) **BB**~~
 	* ~~Viltu nota leit eða lista?~~
 		* ~~finna viðkomandi persónu~~
@@ -25,10 +25,10 @@
 * ~~Breyta villutextum í cerr í stað cout~~ (consoleui.cpp)
 * ~~Finna alvöru lista af tölvum~~
 * ~~Finna alvöru lista af fólki til að tengja við tölvur~~
-* Laga sort til að sýna líka Computers **BB**
-* Láta gagnagrunn verða til ef hann er ekki til staðar (CREATE TABLE kóðar fyrir Programmers, Computers og tengitöfluna) (database.cpp) **MN**
+* ~~Laga sort til að sýna líka Computers **BB**~~
+* ~~Láta gagnagrunn verða til ef hann er ekki til staðar (CREATE TABLE kóðar fyrir Programmers, Computers og tengitöfluna) (database.cpp) **MN**~~
 * ~~Passa að .h skrár séu læsilegar, overloaduð föll saman osfrv. **RÝK**~~
-* Setja færslurnar að neðan inn í töflurnar og tengja saman réttar færslur.
+* ~~Setja færslurnar að neðan inn í töflurnar og tengja saman réttar færslur.~~
 
 ## 9/12 - Það sem eftir er
 
@@ -36,6 +36,7 @@
 * Laga **sort()** til að sýna líka Computers **BB**
 * Láta gagnagrunn verða til ef hann er ekki til staðar (CREATE TABLE kóðar fyrir Programmers, Computers og tengitöfluna) (database.cpp) **MN**
 * Setja færslurnar að neðan inn í töflurnar og tengja saman réttar færslur.
+* BÖGGPRÓFA!!! REYNA AÐ GERA VILLUR KRAKKAR, BARA ALVEG BRJÁLAÐ STUÐ!!!
 
 **Ef tími vinnst til væri geðveikt að:**
 * implementa fuzzy search
