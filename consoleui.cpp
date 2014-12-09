@@ -725,7 +725,7 @@ void ConsoleUI::rel()
 }
 
 // Implement sort function
-void ConsoleUI::sort()
+/*void ConsoleUI::sort()
 {
     string sort_inp;
     bool canSort;
@@ -816,6 +816,139 @@ void ConsoleUI::sort()
             cerr << "\nThe option does not exist. Give it another shot.\n" << endl;
         }
     }
+}*/
+
+void ConsoleUI::sort()
+{
+    string param;
+    vector<string> params = countParam();
+    vector<string> del_params;
+    bool quit = false;
+
+    while(params.size() == 0 || (params[0] != "c" && params[0] != "p") && !quit)
+    {
+        cout << "Please type 'c' for the sorting of Computers" << endl;
+        cout << "or 'p' for the sorting of Programmers.";
+        cin >> param;
+
+        if(param == "c" || param == "p")
+        {
+            params.push_back(param);
+            countParam(del_params);
+        }
+        else if(param == "q")
+        {
+            quit = true;
+            cout << "\nThank you for considering the sort function. Good-bye now." << endl;
+        }
+        else
+            cerr << "What is '" << param << "' ??" << endl;
+    }
+
+    bool maySort;
+    bool desc = false;
+    // Viðbjoður
+    bool b;
+    int i;
+
+    cout << "\nYou chose wisely. Please continue by choosing the order you would like." << endl;
+    cout << "Remember you can add a '<space>d' after the order number to order in descending order." << endl;
+    cout << "\nHow would you like to order the list?" << endl;
+
+    if(params[0] == "p")
+    {
+        do
+        {
+            cout << "(1) Name\n"
+                 << "(2) Nationality\n"
+                 << "(3) Year of birth\n"
+                 << "(4) Year of death\n"
+                 << "(5) Sex"
+                 << endl;
+            cin >> param;
+
+            if(param == "q")
+            {
+                quit = true;
+                cout << "\nThank you for considering the sort function. Good-bye now." << endl;
+            }
+
+            int temp = isValidInput(param, 6, maySort);
+
+            if(maySort)
+            {
+                params.push_back(param);
+                countParam(params);
+                trimParam(params, 3);
+            }
+        } while (!maySort && !quit);
+
+        if(!quit)
+        {
+            if(params[2] == "d")
+                desc = true;
+            else
+                cerr << "Don't know '" << params[2] << "'." << endl;
+
+            if(params[0] == "p")
+            {
+                PersonContainer p_sorted = service.sort_list(params[1], desc, i);
+                show(p_sorted);
+            }
+            else
+            {
+                CompContainer c_sorted = service.sort_list(params[1], desc, b);
+                show(c_sorted);
+            }
+        }
+    }
+    else if (params[0] == "p")
+    {
+        do
+        {
+            cout << "(1) Name\n"
+                 << "(2) Type\n"
+                 << "(3) Build year"
+                 << endl;
+            cin >> param;
+
+            int temp = isValidInput(param, 4, maySort);
+
+            if(param == "q")
+            {
+                quit = true;
+                cout << "\nThank you for considering the sort function. Good-bye now." << endl;
+            }
+
+            if(maySort)
+            {
+                params.push_back(param);
+                countParam(params);
+                trimParam(params, 3);
+            }
+
+        } while (!maySort && !quit);
+
+        if(!quit)
+        {
+            if(params[2] == "d")
+                desc = true;
+            else
+                cerr << "Don't know '" << params[2] << "'." << endl;
+
+            if(params[0] == "p")
+            {
+                PersonContainer p_sorted = service.sort_list(params[1], desc, i);
+                show(p_sorted);
+            }
+            else
+            {
+                CompContainer c_sorted = service.sort_list(params[1], desc, b);
+                show(c_sorted);
+            }
+        }
+    }
+
 }
 
 //Implement find function
