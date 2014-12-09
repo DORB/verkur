@@ -8,7 +8,7 @@ namespace utils {
         return str;
     }
 
-    string str2lower(std::string str)
+    string str2lower(string str)
     {
         transform(str.begin(), str.end(), str.begin(),::tolower);
 
