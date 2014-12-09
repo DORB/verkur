@@ -19,7 +19,7 @@ public:
     void del(const Computer &c);
     void search(const string &search_str, PersonContainer& p, bool& successful);
     void search(const string &search_str, CompContainer &c, bool &successful);
-    void get_rel(marriage &m);
+    RelContainer get_rel(const marriage& m);
     void marry(const int &p_ID, const int &c_ID);
     PersonContainer find_p(string str, const PersonContainer& p, bool& exists);
     CompContainer find_p(string str, const CompContainer &c, bool &exists);

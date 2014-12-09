@@ -31,6 +31,7 @@ public:
     void trimParam(vector<string>& result, const int& keep);
     void rel();
     void marry();
+    void show(const RelContainer &r, const marriage &m);
 private:
     Service service;
 };

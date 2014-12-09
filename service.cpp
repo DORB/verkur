@@ -113,12 +113,12 @@ void Service::search(const string& search_str, CompContainer& c, bool& successfu
     c = find_p(search_str, c, successful);
 }
 
-void Service::get_rel(marriage& m)
+RelContainer Service::get_rel(const marriage& m)
 {
     // Er með IDið og þarf að fa inn i relations vektorinn
     // ur tengitöflunni hverjir tengjast IDinu
 
-    repository.get_rel(m);
+    return repository.get_rel(m);
 }
 
 void Service::marry(const int& p_ID, const int& c_ID)

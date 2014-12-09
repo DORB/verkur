@@ -40,8 +40,8 @@ public:
     PersonContainer people;
     RelContainer relations1;
     CompContainer computers;
-    vector<Relation> get_rel(marriage &m);
     void marry(const int &p_ID, const int &c_ID);
+    RelContainer get_rel(const marriage& m);
 private:
     Database db;
 };

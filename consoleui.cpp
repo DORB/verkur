@@ -600,10 +600,11 @@ void ConsoleUI::rel()
 
     PersonContainer p;
     CompContainer c;
+    RelContainer r;
 
-    bool search_successful = false, isOK;
+    bool search_successful = false, isOK, quit = false;
 
-    int listsize = 0, p_id, c_id;
+    int listsize = 0, p_id;
 
     cout << "\nSearch for an entry to show relations." << endl;
     while(params.size() == 0 || (params[0] != "p" && params[0] != "c"))
@@ -623,24 +624,39 @@ void ConsoleUI::rel()
     else
         m.isPerson = false;
 
-    cout << m.isPerson << endl;
-    cout << "Enter search string: ";
     cin.ignore(1000, '\n');
-    getline(cin, param);
-    params.push_back(param);
 
-    cout << "\nYour search string is: \'" << params[1] << "\'";
+    do
+    {
+        trimParam(params, 1);
+        cout << "Enter search string: ";
+        getline(cin, param);
+        params.push_back(param);
 
-    if(m.isPerson)
-    {
-        service.search(params[1], p, search_successful);
-        listsize = p.size();
-    }
-    else
-    {
-        service.search(params[1], c, search_successful);
-        listsize = c.size();
-    }
+        if(params[1] != "q")
+        {
+            cout << "\nYour search string is: \'" << params[1] << "\'" << endl;
+
+            if(m.isPerson)
+            {
+                service.search(params[1], p, search_successful);
+                listsize = p.size();
+            }
+            else
+            {
+                service.search(params[1], c, search_successful);
+                listsize = c.size();
+            }
+
+            if(!search_successful)
+                cerr << "Please try again, or type 'q' to go back to menu." << endl;
+        }
+        else
+        {
+            quit = true;
+        }
+
+    } while(!search_successful && !quit);
 
     if(listsize == 1)
     {
@@ -666,19 +682,17 @@ void ConsoleUI::rel()
 
             if(params[2] == "y")
             {
-                // service.get_rel(m);
-                /*for(unsigned int i = 0; i < m.relations.size(); i++)
-                    cout << m.relations[i] << endl;*/
-                //show(m);
+                r = service.get_rel(m);
+                show(r, m);
             }
             else if(params[2] == "n" || params[2] == "N")
             {
                 search_successful = true;
-                cout << "\nPlease try again then. You can do it!" << endl;
+                cerr << "\nPlease try again then. You can do it!" << endl;
             }
         } while(params[2] != "y" && params[2] != "n");
     }
-    if(listsize > 1)
+    else if(listsize > 1)
     {
         if(m.isPerson)
             show(p);
@@ -703,12 +717,14 @@ void ConsoleUI::rel()
                     m.ID = p[atoi(params[2].c_str()) - 1].getID();
                 else
                     m.ID = c[atoi(params[2].c_str()) - 1].getID();
-                // service.get_rel(m);
-                /*for(unsigned int i = 0; i < m.relations.size(); i++)
-                    cout << m.relations[i] << endl;*/
-                // show(m);
+                r = service.get_rel(m);
+                show(r, m);
             }
         }while(!isOK && params[2] != "q");
+    }
+    else
+    {
+        cerr << "I'm gathering this didn't work out too well... Pleast try again." << endl;
     }
 }
 
@@ -1212,6 +1228,29 @@ void ConsoleUI::show(const bool& isPerson, const int& ID, const vector<int>& rel
     if(isPerson)
     {
 
+    }
+}
+
+void ConsoleUI::show(const RelContainer& r, const marriage& m)
+{
+    // cout << r.size() << endl;
+    if(r.size() > 0)
+    {
+        cout << "\n+----------------------------------------------------------------+" << endl;
+        if(m.isPerson)
+            cout << r[0].getPname() << " is related to the following computers:" << endl;
+        else
+            cout << "The " << r[0].getCname() << " is connected to the following people:" << endl;
+
+        cout << "+----------------------------------------------------------------+" << endl;
+        for(unsigned int i = 0; i < r.size(); i++)
+        {
+            if(m.isPerson)
+                cout << setw(3) << "" << r[i].getCname() << " (" << r[i].getCyearBuilt() << ") : " << r[i].getCtype() << endl;
+            else
+                cout << setw(3) << "" << r[i].getPname() << ", " << r[i].getPnationality() << " (" << r[i].getPlife() << ")" << endl;
+        }
+        cout << "+--------------------------------END-----------------------------+\n" << endl;
     }
 }
 

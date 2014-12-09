@@ -155,22 +155,26 @@ void Repository::del(const Computer& c)
     list(computers);
 }
 
-vector<Relation> Repository::get_rel(marriage &m)
+RelContainer Repository::get_rel(const marriage& m)
 {
-    /*if(db.open())
+    RelContainer rel;
+
+    if(db.open())
     {
         QSqlQuery query;
         string query_prepare;
 
-        query_prepare ="SELECT p.ID, p.first_name, p.last_name, c.ID, c.name ";
-        query_prepare +="FROM Programmers p INNER JOIN Owners u ";
-        query_prepare += "INNER JOIN Owners u ON u.p_ID = p.id ";
-        query_prepare +="INNER JOIN Computers c ON u.c_ID = c.id ";
+        query_prepare ="SELECT * ";
+        query_prepare +="FROM Programmers p ";
+        query_prepare += "INNER JOIN Owners u ON u.p_ID = p.ID ";
+        query_prepare +="INNER JOIN Computers c ON u.c_ID = c.ID ";
         query_prepare +="WHERE ";
         if(m.isPerson)
             query_prepare += "p.ID = " + int2str(m.ID);
         else
             query_prepare += "c.ID = " + int2str(m.ID);
+
+        // cout << query_prepare << endl;
 
         QString query_str = QString::fromStdString(query_prepare);
 
@@ -178,23 +182,35 @@ vector<Relation> Repository::get_rel(marriage &m)
 
         while(query.next())
         {
-            string names[2], cname;
-            int pid, cid;
+            string names[2], sex, nationality, cname, ctype;
+            int pid, cid, cyear_built, years[2];
+            bool built;
 
-            pid = query.value("p.ID").toInt();
-            names[0] = query.value("p.first_name").toString().toStdString();
-            names[1] = query.value("p.last_name").toString().toStdString();
-            cid = query.value("c.ID").toInt();
-            cname = query.value("c.name").toString().toStdString();
+            pid = query.value("ID").toInt();
+            names[0] = query.value("first_name").toString().toStdString();
+            names[1] = query.value("last_name").toString().toStdString();
+            years[0] = query.value("birth_year").toInt();
+            years[1] = query.value("death_year").toInt();
+            sex = query.value("sex").toString().toStdString();
+            nationality = query.value("nationality").toString().toStdString();
+            cid = query.value("ID").toInt();
+            cname = query.value("name").toString().toStdString();
+            ctype = query.value("type").toString().toStdString();
+            cyear_built = query.value("year_built").toInt();
+            built = query.value("build").toBool();
 
-            Relation r = Relation(pid, names[0], names[1], cid, cname);
+            Person p = Person(pid, names[0], names[1], years[0], years[1], sex, nationality);
+            Computer c = Computer(cid, cname, ctype, cyear_built, built);
 
-            relations1.push_back(r);
+            Relation r = Relation(p, c);
+
+            rel.push_back(r);
         }
     }
-    db.close();*/
 
-    return relations1;
+    db.close();
+
+    return rel;
 }
 
 //void Repository::get_rel(marriage& m)
@@ -259,7 +275,7 @@ void Repository::marry(const int& p_ID, const int& c_ID)
         insert += int2str(p_ID) + ",";
         insert += int2str(c_ID) + ");";
 
-        cout << insert << endl;
+        // cout << insert << endl;
 
         QString query_str = QString::fromStdString(insert);
 
