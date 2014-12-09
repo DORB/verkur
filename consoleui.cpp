@@ -8,6 +8,8 @@ ConsoleUI::ConsoleUI()
 // Fall sem keyrir user interfaceið, notað í main falli - forritið sjálft
 void ConsoleUI::start()
 {
+    clear();
+
     // köllum a fallið sem prentar logo
     verkurLogo();
 
@@ -20,15 +22,21 @@ void ConsoleUI::start()
 
     string inp;
 
-    // Loopa sem promptar userinn um input, keyrir svo lengi sem ekki er gefið inn 'quit' eða álíka
+    // MENU
     while(inp != "quit" && inp != "exit" && inp != "q" && inp != "bail")
     {
         printComms();
         cout << ":";
         cin >> inp;
 
+        // Clear function
+        if(inp == "clear" || inp == "c")
+        {
+            clear();
+        }
+
         // Add function
-        if(inp == "add" || inp == "a")
+        else if(inp == "add" || inp == "a")
         {
             add();
         }
@@ -140,14 +148,6 @@ void ConsoleUI::add()
     // Lesum inn í breyturnar
     // Allt strengir til að forritið beyglist ekki við
     // einhverjar kjánalegar innsetningar
-
-    // add() hendir út öllu úr straumnum sem á eftir skipuninni kemur
-    // og biður síðan gagngert aðeins um einn hlut í einu til að
-    // inputtið sé örugglega rétt
-
-    // Nafn getur verið hvað sem er og fyrstu stafir eru viljandi
-    // ekki hækkaðir upp í uppercase
-    // Dæmi: Ludwig van Beethoven, dr. Martin Luther King
 
     if(isPerson)
     {
@@ -572,10 +572,6 @@ void ConsoleUI::list_c()
     {
         service.list(c);
         show(c);
-    }
-    else if(params[0] == "r")
-    {
-        rel();
     }
 
     // Error handling með smá attitude
@@ -1278,12 +1274,15 @@ int ConsoleUI::isValidInput(const string& inp, const int& lessThan, bool& isOK)
 // Prenta út mögulegar aðgerðir
 void ConsoleUI::printComms()
 {
-    cout << "\n[add] [del] [list] [find] [sort] [rel] [marry] [quit]" << endl;
+    cout << "\n[add] [del] * [list] [find] [sort] * [rel] [marry] * [quit]" << endl;
 }
 
 // Fall til að taka inn parametra og skila þeim í vektor af strengjum
 vector<string> ConsoleUI::countParam()
 {
+    // Flókið fall sem þarf að endurskrifa þegar ég er ekki latur
+    // ábyggilega miklu auðveldara að gera þetta
+
     char nextin;
     vector<string> p;
     string param = "";
@@ -1339,4 +1338,10 @@ void ConsoleUI::countParam(vector<string>& result)
 void ConsoleUI::trimParam(vector<string>& result, const int& keep)
 {
     result.erase(result.begin() + keep, result.begin() + result.size());
+}
+
+// Stolið af netinu, vibbakoði en virkar a öllum platformum...
+void ConsoleUI::clear()
+{
+    cout << string(100, '\n');
 }

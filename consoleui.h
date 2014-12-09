@@ -32,6 +32,7 @@ public:
     void rel();
     void marry();
     void show(const RelContainer &r, const marriage &m);
+    void clear();
 private:
     Service service;
 };
