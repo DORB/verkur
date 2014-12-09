@@ -183,7 +183,7 @@ void ConsoleUI::add()
         cin >> sex;
 
         // breyta Sex í uppercase (M/F)
-        sex = str2upper(sex);
+        sex = utils::str2upper(sex);
 
         // Error handling á input á kyni
         while(sex != "M" && sex != "F")
@@ -192,7 +192,7 @@ void ConsoleUI::add()
             cout << "Sex: ";
             cin >> sex;
             // breyta kyninu í uppercase...
-            sex = str2upper(sex);
+            sex = utils::str2upper(sex);
         }
 
         cout << "Nationality: ";
@@ -214,7 +214,7 @@ void ConsoleUI::add()
         {
             cout << "Was it built? (y/n) ";
             cin >> param;
-            param = str2lower(param);
+            param = utils::str2lower(param);
             if(param == "y")
                 built = true;
             else
@@ -600,7 +600,7 @@ void ConsoleUI::rel()
 
     bool search_successful = false, isOK, quit = false;
 
-    int listsize = 0, p_id;
+    int listsize = 0;
 
     cout << "\nSearch for an entry to show relations." << endl;
     while(params.size() == 0 || (params[0] != "p" && params[0] != "c"))
@@ -826,135 +826,142 @@ void ConsoleUI::rel()
 
 void ConsoleUI::sort()
 {
+    const int MAX_MENU_P = 5 + 1;
+    const int MAX_MENU_C = 3 + 1;
+
     string param;
     vector<string> params = countParam();
-    vector<string> del_params;
-    bool quit = false;
+    bool desc = false;
 
-    while(params.size() == 0 || (params[0] != "c" && params[0] != "p") && !quit)
+    if(params.size() > 0)
     {
-        cout << "Please type 'c' for the sorting of Computers" << endl;
-        cout << "or 'p' for the sorting of Programmers.";
-        cin >> param;
+        bool isOK;
 
-        if(param == "c" || param == "p")
-        {
-            params.push_back(param);
-            countParam(del_params);
-        }
-        else if(param == "q")
-        {
-            quit = true;
-            cout << "\nThank you for considering the sort function. Good-bye now." << endl;
-        }
+        if(params[0] != "p" && params[0] != "c")
+            params.clear();
         else
-            cerr << "What is '" << param << "' ??" << endl;
+        {
+            if(params.size() > 1)
+            {
+                if(params[0] == "p")
+                    int temp = isValidInput(params[1], MAX_MENU_P, isOK);
+                else
+                    int temp = isValidInput(params[1], MAX_MENU_C, isOK);
+
+                if(isOK)
+                {
+                    if(params.size() > 2)
+                    {
+                        if(params[2] != "d")
+                        {
+                            cerr << "\n'" << params[2] << "' is not cool." << endl;
+                            trimParam(params, 2);
+                        }
+                    }
+                }
+                else
+                    trimParam(params, 1);
+            }
+        }
     }
 
-    bool maySort;
-    bool desc = false;
-    // Viðbjoður
-    bool b;
-    int i;
-
-    cout << "\nYou chose wisely. Please continue by choosing the order you would like." << endl;
-    cout << "Remember you can add a '<space>d' after the order number to order in descending order." << endl;
-    cout << "\nHow would you like to order the list?" << endl;
-
-    if(params[0] == "p")
+    while(params.size() < 1)
     {
-        do
+        cout << "Please type 'c' for the sorting of Computers" << endl;
+        cout << "or 'p' for the sorting of Programmers: ";
+        cin >> param;
+
+        params.push_back(param);
+        countParam(params);
+        trimParam(params, 1);
+
+        if(params[0] != "c" && params[0] != "p")
+            params.clear();
+    }
+
+    if(params.size() == 1)
+    {
+        cout << "\nYou chose wisely. Please continue by choosing the order you would like." << endl;
+        cout << "Remember you can add a '<space>d' after the order number to order in descending order." << endl;
+        cout << "\nHow would you like to order the list?" << endl;
+    }
+
+    while(params.size() < 2)
+    {
+        if(params[0] == "p")
         {
             cout << "(1) Name\n"
                  << "(2) Nationality\n"
                  << "(3) Year of birth\n"
                  << "(4) Year of death\n"
-                 << "(5) Sex"
-                 << endl;
-            cin >> param;
+                 << "(5) Sex\n";
 
-            if(param == "q")
+            bool isOK;
+
+            do
             {
-                quit = true;
-                cout << "\nThank you for considering the sort function. Good-bye now." << endl;
-            }
-
-            int temp = isValidInput(param, 6, maySort);
-
-            if(maySort)
-            {
+                cout << ":";
+                cin >> param;
                 params.push_back(param);
                 countParam(params);
                 trimParam(params, 3);
-            }
-        } while (!maySort && !quit);
 
-        if(!quit)
-        {
-            if(params[2] == "d")
-                desc = true;
-            else
-                cerr << "Don't know '" << params[2] << "'." << endl;
-
-            if(params[0] == "p")
-            {
-                PersonContainer p_sorted = service.sort_list(params[1], desc, i);
-                show(p_sorted);
-            }
-            else
-            {
-                CompContainer c_sorted = service.sort_list(params[1], desc, b);
-                show(c_sorted);
-            }
+                int temp = isValidInput(params[1], MAX_MENU_P, isOK);
+                if(!isOK)
+                {
+                    cerr << "\nBehave now. Try again." << endl;
+                    trimParam(params, 1);
+                }
+            } while (!isOK);
         }
-    }
-    else if (params[0] == "p")
-    {
-        do
+        else // if "c"
         {
             cout << "(1) Name\n"
                  << "(2) Type\n"
-                 << "(3) Build year"
-                 << endl;
-            cin >> param;
+                 << "(3) Build Year";
 
-            int temp = isValidInput(param, 4, maySort);
+            bool isOK;
 
-            if(param == "q")
+            do
             {
-                quit = true;
-                cout << "\nThank you for considering the sort function. Good-bye now." << endl;
-            }
-
-            if(maySort)
-            {
+                cout << ":";
+                cin >> param;
                 params.push_back(param);
                 countParam(params);
                 trimParam(params, 3);
-            }
 
-        } while (!maySort && !quit);
-
-        if(!quit)
-        {
-            if(params[2] == "d")
-                desc = true;
-            else
-                cerr << "Don't know '" << params[2] << "'." << endl;
-
-            if(params[0] == "p")
-            {
-                PersonContainer p_sorted = service.sort_list(params[1], desc, i);
-                show(p_sorted);
-            }
-            else
-            {
-                CompContainer c_sorted = service.sort_list(params[1], desc, b);
-                show(c_sorted);
-            }
+                int temp = isValidInput(params[1], MAX_MENU_C, isOK);
+                if(!isOK)
+                {
+                    cerr << "\nYeah. Uhm. Try again please." << endl;
+                    trimParam(params, 1);
+                }
+            } while(!isOK);
         }
+        trimParam(params, 3);
     }
 
+    /*for(unsigned int i = 0; i < params.size(); i++)
+        cout << params[i] << endl;*/
+
+    if(params.size() == 3 && params[2] == "d")
+        desc = true;
+    else if (params.size() == 3)
+        cerr << "\n'" << params[2] << "' is not an option here." << endl;
+
+    int sort_after = atoi(params[1].c_str());
+    // cout << sort_after << endl;
+
+    if(params[0] == "p")
+    {
+        PersonContainer p = service.sort_list(sort_after, desc, 1);
+        show(p);
+    }
+    else
+    {
+        CompContainer c = service.sort_list(sort_after, desc, true);
+        show(c);
+    }
 }
 
 //Implement find function
@@ -978,7 +985,7 @@ void ConsoleUI::find()
         if(params.size() == 0)
             params.push_back(param);
         else
-            params[0] = str2lower(param);
+            params[0] = utils::str2lower(param);
     }
 
     if(params[0] == "p")
@@ -1371,13 +1378,13 @@ void ConsoleUI::show(const Computer& listed)
     cout << "+----------------------------END-----------------------+\n" << endl;
 }
 
-void ConsoleUI::show(const bool& isPerson, const int& ID, const vector<int>& relations)
+/*void ConsoleUI::show(const bool& isPerson, const int& ID, const vector<int>& relations)
 {
     if(isPerson)
     {
 
     }
-}
+}*/
 
 void ConsoleUI::show(const RelContainer& r, const marriage& m)
 {
@@ -1468,7 +1475,7 @@ vector<string> ConsoleUI::countParam()
                     break;
                 }
             }
-            p.push_back(str2lower(param));
+            p.push_back(utils::str2lower(param));
         }
     }
     else
@@ -1489,7 +1496,8 @@ void ConsoleUI::countParam(vector<string>& result)
 
 void ConsoleUI::trimParam(vector<string>& result, const int& keep)
 {
-    result.erase(result.begin() + keep, result.begin() + result.size());
+    if(result.size() > (unsigned int) keep)
+        result.erase(result.begin() + keep, result.begin() + result.size());
 }
 
 // Stolið af netinu, vibbakoði en virkar a öllum platformum...

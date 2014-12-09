@@ -23,14 +23,11 @@ public:
     void marry(const int &p_ID, const int &c_ID);
     PersonContainer find_p(string str, const PersonContainer& p, bool& exists);
     CompContainer find_p(string str, const CompContainer &c, bool &exists);
-    PersonContainer sort_list(const string &s_sort_after, const bool& desc, const int& temp);
-    CompContainer sort_list(const string &s_sort_after, const bool &desc, const bool& temp);
+    PersonContainer sort_list(const int &sort_after, const bool& desc, const int& temp);
+    CompContainer sort_list(const int &sort_after, const bool &desc, const bool& temp);
 private:
     Repository repository;
     Database db;
 };
-
-string str2upper(string str);
-string str2lower(string str);
 
 #endif // SERVICE_H

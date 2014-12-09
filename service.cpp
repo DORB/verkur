@@ -54,10 +54,10 @@ PersonContainer Service::find_p(string str,const PersonContainer& p, bool& exist
 
     for(unsigned int i = 0; i < tofind.size(); i++)
     {
-        string data = tofind[i].getFName() + " " + tofind[i].getLName() + " " + int2str(tofind[i].getBY()) + " " + int2str(tofind[i].getDY()) + " " + tofind[i].getNationality();
+        string data = tofind[i].getFName() + " " + tofind[i].getLName() + " " + utils::int2str(tofind[i].getBY()) + " " + utils::int2str(tofind[i].getDY()) + " " + tofind[i].getNationality();
 
-        data = str2lower(data);
-        str = str2lower(str);
+        data = utils::str2lower(data);
+        str = utils::str2lower(str);
 
         size_t found = data.find(str);
 
@@ -84,10 +84,10 @@ CompContainer Service::find_p(string str,const CompContainer& c, bool& exists)
 
     for(unsigned int i = 0; i < tofind.size(); i++)
     {
-        string data = tofind[i].getName() + " " + tofind[i].getType() + " " + int2str(tofind[i].getBuildYear());
+        string data = tofind[i].getName() + " " + tofind[i].getType() + " " + utils::int2str(tofind[i].getBuildYear());
 
-        data = str2lower(data);
-        str = str2lower(str);
+        data = utils::str2lower(data);
+        str = utils::str2lower(str);
 
         size_t found = data.find(str);
 
@@ -128,9 +128,9 @@ void Service::marry(const int& p_ID, const int& c_ID)
 
 // Sort fallið
 // Tekur inn leitaraðferðina (sort_after) og bool breytu hvernig a að raða (asc/desc)
-PersonContainer Service::sort_list(const string& s_sort_after, const bool& desc, const int& temp)
+PersonContainer Service::sort_list(const int& sort_after, const bool& desc, const int& temp)
 {
-    int sort_after = atoi(s_sort_after.c_str());
+    // int sort_after = atoi(s_sort_after.c_str());
 
     PersonContainer p_sorted;
 
@@ -142,9 +142,9 @@ PersonContainer Service::sort_list(const string& s_sort_after, const bool& desc,
     return p_sorted;
 }
 
-CompContainer Service::sort_list(const string& s_sort_after, const bool& desc, const bool& temp)
+CompContainer Service::sort_list(const int& sort_after, const bool& desc, const bool& temp)
 {
-    int sort_after = atoi(s_sort_after.c_str());
+    // int sort_after = atoi(s_sort_after.c_str());
 
     CompContainer c_sorted;
 
@@ -154,18 +154,4 @@ CompContainer Service::sort_list(const string& s_sort_after, const bool& desc, c
 
     sort(c_sorted.begin(), c_sorted.end(), c);
     return c_sorted;
-}
-
-string str2upper(string str)
-{
-    transform(str.begin(), str.end(), str.begin(),::toupper);
-
-    return str;
-}
-
-string str2lower(string str)
-{
-    transform(str.begin(), str.end(), str.begin(),::tolower);
-
-    return str;
 }
