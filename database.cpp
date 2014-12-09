@@ -19,7 +19,7 @@ bool Database::open()
     // Ef gagnagrunnurinn er ekki til
     if(!db_exists)
     {
-        std::cout << "Database does not exist, let me make one for you." << endl;
+        std::cerr << "Database does not exist, let me make one for you." << endl;
         m_db = QSqlDatabase::addDatabase("QSQLITE");
         m_db.setDatabaseName("verkur.sqlite");
 
@@ -70,9 +70,13 @@ bool Database::open()
             QString oinsert = QString::fromStdString(inserto);
 
             queryo.exec(oinsert);
-        }
 
-        m_db.close();
+            std::cout << "\nAll done. Now move along, nothing to see." << endl;
+
+            m_db.close();
+        }
+        else
+            std::cerr << "I'm terribly sorry, but something has gone wrong and you should contact Daniel Brandur." << endl;
     }
 
     else
