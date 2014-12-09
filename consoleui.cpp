@@ -1262,7 +1262,7 @@ void ConsoleUI::marry()
                     countParam(params);
                     trimParam(params, 2);
 
-                    int temp = isValidInput(param, p.size() + 1, isOK);
+                    int temp = isValidInput(param, c.size() + 1, isOK);
 
                     if(!isOK)
                         trimParam(params, 1);
