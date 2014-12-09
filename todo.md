@@ -51,6 +51,7 @@
 					* sjá
 						* hvað
 							* gerist
+								* híhí, margir punktar.
 
 
 Tölvur:
