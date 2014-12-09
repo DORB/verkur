@@ -36,7 +36,7 @@
 * Laga **sort()** til að sýna líka Computers **BB**
 * Láta gagnagrunn verða til ef hann er ekki til staðar (CREATE TABLE kóðar fyrir Programmers, Computers og tengitöfluna) (database.cpp) **MN**
 * Setja færslurnar að neðan inn í töflurnar og tengja saman réttar færslur.
-* BÖGGPRÓFA!!! REYNA AÐ GERA VILLUR KRAKKAR, BARA ALVEG BRJÁLAÐ STUÐ!!!
+* ***BÖGGPRÓFA!!! REYNA AÐ GERA VILLUR KRAKKAR, BARA ALVEG BRJÁLAÐ STUÐ!!!***
 
 **Ef tími vinnst til væri geðveikt að:**
 * implementa fuzzy search
