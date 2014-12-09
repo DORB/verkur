@@ -2,6 +2,8 @@
 #include "relation.h"
 #include <QString>
 
+
+
 // Repository smiður. Tekur inn það sem er skrifað í list.txt, býr til persónur
 // og populatear vektor með þessum persónum
 Repository::Repository()

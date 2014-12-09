@@ -600,7 +600,7 @@ void ConsoleUI::rel()
 
     bool search_successful = false, isOK, quit = false;
 
-    int listsize = 0, p_id;
+    int listsize = 0;
 
     cout << "\nSearch for an entry to show relations." << endl;
     while(params.size() == 0 || (params[0] != "p" && params[0] != "c"))
@@ -1362,13 +1362,13 @@ void ConsoleUI::show(const Computer& listed)
     cout << "+----------------------------END-----------------------+\n" << endl;
 }
 
-void ConsoleUI::show(const bool& isPerson, const int& ID, const vector<int>& relations)
+/*void ConsoleUI::show(const bool& isPerson, const int& ID, const vector<int>& relations)
 {
     if(isPerson)
     {
 
     }
-}
+}*/
 
 void ConsoleUI::show(const RelContainer& r, const marriage& m)
 {
@@ -1480,7 +1480,7 @@ void ConsoleUI::countParam(vector<string>& result)
 
 void ConsoleUI::trimParam(vector<string>& result, const int& keep)
 {
-    if(result.size() > keep)
+    if(result.size() > (unsigned int) keep)
         result.erase(result.begin() + keep, result.begin() + result.size());
 }
 
