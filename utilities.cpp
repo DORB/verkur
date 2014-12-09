@@ -3,14 +3,14 @@
 namespace utils {
     std::string str2upper(std::string str)
     {
-        std::transform(str.begin(), str.end(), str.begin(),::toupper);
+        transform(str.begin(), str.end(), str.begin(),::toupper);
 
         return str;
     }
 
     std::string str2lower(std::string str)
     {
-        std::transform(str.begin(), str.end(), str.begin(),::tolower);
+        transform(str.begin(), str.end(), str.begin(),::tolower);
 
         return str;
     }
