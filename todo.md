@@ -42,6 +42,8 @@
 * implementa fuzzy search
 * setja **sort** skipunina undir list skipunina
     * Sýna fyrst lista og fyrir neðan bjóða upp á að gera sort. Veit samt ekki aaalveg hvernig á að útfæra það nákvæmlega
+* Væri algjörlega brjálað að henda inn hvort það séu Relations inn í list() skipunina. Það er kannski doltið dýrt, en kannski ekki. Kannski fyrir næstu viku? Ka segiði? Iggibara stuð?
+
 
 Tölvur:
 
