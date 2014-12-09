@@ -19,7 +19,7 @@ bool Database::open()
     // Ef gagnagrunnurinn er ekki til
     if(!db_exists)
     {
-        std::cout << "Database does not exist, let me make one for you." << endl;
+        std::cerr << "Database does not exist, let me make one for you." << endl;
         m_db = QSqlDatabase::addDatabase("QSQLITE");
         m_db.setDatabaseName("verkur.sqlite");
 
@@ -70,35 +70,13 @@ bool Database::open()
             QString oinsert = QString::fromStdString(inserto);
 
             queryo.exec(oinsert);
+
+            std::cout << "\nAll done. Now move along, nothing to see." << endl;
+
+            m_db.close();
         }
-
-                m_db.close();
-
-
-        // Og svo kemur svona progress indicator sem ég fékk héðan og lagfærði örlítið:
-        // https://stackoverflow.com/questions/14539867/how-to-display-a-progress-indicator-in-pure-c-c-cout-printf
-
-//        float progress = 0.00000001;
-//        while (progress < 1.0)
-//        {
-//            int barWidth = 70;
-
-//            std::cout << "[";
-//            int pos = barWidth * progress;
-//            for (int i = 0; i < barWidth; ++i) {
-//                if (i < pos) std::cout << "=";
-//                else if (i == pos) std::cout << ">";
-//                else std::cout << " ";
-//            }
-//            if(progress < 0.999)
-//                std::cout << "] " << int(progress * 100.0) << " %\r";
-//            else
-//                std::cout << "] 100 %" << " \r";
-//            std::cout.flush();
-
-//            progress *= 1.0003; // for demonstration only
-//        }
-//        std::cout << std::endl;
+        else
+            std::cerr << "I'm terribly sorry, but something has gone wrong and you should contact Daniel Brandur." << endl;
     }
 
     else
