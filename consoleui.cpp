@@ -774,9 +774,10 @@ void ConsoleUI::sort()
     {
         cout << "What would you like to sort in the list? (Choose a number)" << endl;
         cout << "(1) Names\n"
-             << "(2) Year of birth\n"
-             << "(3) Year of death\n"
-             << "(4) Sex"
+             << "(2) Nationality\n"
+             << "(3) Year of birth\n"
+             << "(4) Year of death\n"
+             << "(5) Sex"
              << endl;
 
         // d fyrir descending
@@ -803,17 +804,17 @@ void ConsoleUI::sort()
                 }
             }
         }
-    }
 
-    // Sortum listann á þann hátt sem userinn bað um
-    if(canSort)
-    {
-        PersonContainer sorted = service.sort_list(sort_after, desc);
-        show(sorted);
-    }
-    else
-    {
-        cerr << "\nThe option does not exist. Give it another shot.\n" << endl;
+        // Sortum listann á þann hátt sem userinn bað um
+        if(canSort)
+        {
+            PersonContainer sorted = service.sort_list(sort_after, desc);
+            show(sorted);
+        }
+        else
+        {
+            cerr << "\nThe option does not exist. Give it another shot.\n" << endl;
+        }
     }
 }
 
