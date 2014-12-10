@@ -12,6 +12,7 @@ class ConsoleUI
 {
 public:
     ConsoleUI();
+    void clear();
     void start();
     void verkurLogo();
     void add();
@@ -19,20 +20,20 @@ public:
     void list_c();
     void sort();
     void find();
+    void rel();
+    void marry();
+    void printComms();
     void show(const PersonContainer& listed);
     void show(const Person& listed);
     void show(const CompContainer& listed);
     void show(const Computer &listed);
     void show(const bool& isPerson, const int& ID, const vector<int>& relations);
+    void show(const RelContainer &r, const marriage &m);
+    // Utilities föll
     int isValidInput(const string& inp, const int& lessThan, bool& isOK);
-    void printComms();
     vector<string> countParam();
     void countParam(vector<string>& result);
     void trimParam(vector<string>& result, const int& keep);
-    void rel();
-    void marry();
-    void show(const RelContainer &r, const marriage &m);
-    void clear();
 private:
     Service service;
 };
