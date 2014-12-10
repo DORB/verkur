@@ -1077,7 +1077,7 @@ void ConsoleUI::marry()
             params.clear();
             p.clear();
             cout << "\nSearch for a Programmer to marry." << endl;
-            cout << "Enter search string (press q to back out): ";
+            cout << "Enter search string (type 'q' to back out): ";
             cin >> param;
 
             countParam(params);
@@ -1193,7 +1193,7 @@ void ConsoleUI::marry()
                 params.clear();
                 c.clear();
                 cout << "\nSearch for a Computer to marry your handsome Programmer." << endl;
-                cout << "You can though, back out of the marrage by pressing q" << endl;
+                cout << "You can though, back out of the marriage by typing 'q'" << endl;
                 cout << "Enter search string: ";
                 cin >> param;
 
@@ -1245,7 +1245,7 @@ void ConsoleUI::marry()
                 }
                 else if(params[1] == "q")
                 {
-                    cerr << "Quitter";
+                    cerr << "\nQuitter." << endl;
                     quit = true;
                 }
             }
@@ -1391,14 +1391,6 @@ void ConsoleUI::show(const Computer& listed)
          << listed;
     cout << "+----------------------------END-----------------------+\n" << endl;
 }
-
-/*void ConsoleUI::show(const bool& isPerson, const int& ID, const vector<int>& relations)
-{
-    if(isPerson)
-    {
-
-    }
-}*/
 
 void ConsoleUI::show(const RelContainer& r, const marriage& m)
 {
