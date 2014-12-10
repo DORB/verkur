@@ -18,7 +18,7 @@ ostream& operator <<(ostream& out, const Computer& listed)
     // out << setw(3) << listed.getID()
     out  << setw(27) << listed.getName()
          << setw(15) << listed.getType()
-         << setw(5)  << listed.getBuildYear();
+         << setw(5); if(listed.getBuildYear() == 0) { out << "-"; } else { out << listed.getBuildYear(); }
     out << setw(6); (listed.getBuild())? out << "Yes" : out << "No";
     out << endl;
 

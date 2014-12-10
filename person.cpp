@@ -27,9 +27,9 @@ ostream& operator <<(ostream& out, const Person& listed)
         // out << setw(3) << listed.getID()+1
         out  << setw(37) << listed.getFName() + " " + listed.getLName()
              << setw(18) << listed.getNationality()
-             << setw(5) << listed.getBY()
-             << setw(5); if(listed.getDY() == 0){ out << "-"; } else { out << listed.getDY(); }
-        out << setw(5) << listed.getSex()
+             << setw(5); if(listed.getBY() == 0){ out << "-"; } else { out << listed.getBY(); }
+        out  << setw(5); if(listed.getDY() == 0){ out << "-"; } else { out << listed.getDY(); }
+        out  << setw(5) << listed.getSex()
              << endl;
 
     return out;
