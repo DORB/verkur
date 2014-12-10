@@ -27,7 +27,6 @@ public:
     void show(const Person& listed);
     void show(const CompContainer& listed);
     void show(const Computer &listed);
-    void show(const bool& isPerson, const int& ID, const vector<int>& relations);
     void show(const RelContainer &r, const marriage &m);
     // Utilities föll
     int isValidInput(const string& inp, const int& lessThan, bool& isOK);
