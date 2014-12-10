@@ -25,10 +25,8 @@ bool Database::open()
 
 
         // Hér þarf svo að gera CREATE TABLE fyrir allar töflurnar
-
         if(m_db.open())
         {
-
             QSqlQuery query;
             std::string insert =
                     "CREATE TABLE Computers(";

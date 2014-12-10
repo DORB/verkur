@@ -14,8 +14,8 @@ void ConsoleUI::start()
     verkurLogo();
 
     cout << "OMG. Welcome to this awesome program.\n" << endl;
-    cout << "The program contains two databases." << endl;
-    cout << "One is a database of Programmers and the other one of Computers." << endl;
+    cout << "It enables you to maintain a database, which contains" << endl;
+    cout << "lists of famous programmers and the computers that they have developed." << endl;
     cout << "It is possible to check out if the two are married." << endl;
     cout << endl;
     cout << "The available commands are:" << endl;
@@ -730,100 +730,6 @@ void ConsoleUI::rel()
     }
 }
 
-// Implement sort function
-/*void ConsoleUI::sort()
-{
-    string sort_inp;
-    bool canSort;
-    int sort_after;
-
-    bool done = false;
-    bool desc = false;
-
-    vector<string> params = countParam();
-
-    if(params.size() > 0)
-    {
-        done = true;
-        sort_inp = params[0];
-
-        // isValidInput athugar hvort id sé leyfilegt (innan marka), canDel verður þá true
-        // og tekur strenginn id_input og kastar yfir í int og skilar því.
-        sort_after = isValidInput(sort_inp, 5, canSort);
-
-        if(canSort)
-        {
-            if(params.size() > 1)
-            {
-                if(params[1] == "d")
-                {
-                    desc = true;
-
-                    if(params.size() > 2)
-                        cerr << "The sort function only has 2 parameters.";
-                }
-                else
-                {
-                    cerr << "\'" << params[1] << "\' is not a known parameter for the sort function";
-
-                    if(params.size() > 2 && params[1] != "d")
-                        cerr << " and only has 2 parameters";
-
-                    cerr << "." << endl;
-                }
-            }
-        }
-    }
-
-    // Ef done er false þá er promptað um hvernig userinn vilji raða listanum
-    if(!done)
-    {
-        cout << "What would you like to sort in the list? (Choose a number)" << endl;
-        cout << "(1) Names\n"
-             << "(2) Nationality\n"
-             << "(3) Year of birth\n"
-             << "(4) Year of death\n"
-             << "(5) Sex"
-             << endl;
-
-        // d fyrir descending
-        cout << "Append with <space>d for descending (Ex: '3 d')";
-        cout << ":";
-        cin >> sort_inp;
-
-        // isValidInput athugar hvort id sé leyfilegt (innan marka), canDel verður þá true
-        // og tekur strenginn id_input og kastar yfir í int og skilar því.
-        sort_after = isValidInput(sort_inp, 5, canSort);
-
-        vector<string> nextparams = countParam();
-
-        if(canSort)
-        {
-            if(nextparams.size() >= 1)
-            {
-                if(nextparams[0] == "d")
-                    desc = true;
-                else
-                {
-                    cerr << "\'" << nextparams[0] << "\' is not a paralegal." << endl;
-                    cerr << "...uhm sorry. I meant legal parameter." << endl;
-                }
-            }
-        }
-
-        // Sortum listann á þann hátt sem userinn bað um
-        if(canSort)
-        {
-            PersonContainer sorted = service.sort_list(sort_after, desc);
-            show(sorted);
-        }
-        else
-        {
-            cerr << "\nThe option does not exist. Give it another shot.\n" << endl;
-        }
-    }
-}*/
-
 void ConsoleUI::sort()
 {
     const int MAX_MENU_P = 5 + 1;
@@ -1391,14 +1297,6 @@ void ConsoleUI::show(const Computer& listed)
          << listed;
     cout << "+----------------------------END-----------------------+\n" << endl;
 }
-
-/*void ConsoleUI::show(const bool& isPerson, const int& ID, const vector<int>& relations)
-{
-    if(isPerson)
-    {
-
-    }
-}*/
 
 void ConsoleUI::show(const RelContainer& r, const marriage& m)
 {
