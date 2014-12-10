@@ -144,6 +144,7 @@ void ConsoleUI::add()
     int build_year;
     bool built;
     int birth_year, death_year;
+    vector<string> del_params;
 
     // Lesum inn í breyturnar
     // Allt strengir til að forritið beyglist ekki við
@@ -154,12 +155,16 @@ void ConsoleUI::add()
         cout << "First Name: ";
         cin.ignore(1000, '\n');
         getline(cin, first_name);
+        utils::trimeWS(first_name);
         cout << "Last Name: ";
         getline(cin, last_name);
+        utils::trimeWS(last_name);
         cout << "Year of birth: ";
         cin >> years[0];
+        countParam(del_params);
         cout << "Year of death (If alive, write 'alive'): ";
         cin >> years[1];
+        countParam(del_params);
 
         // Breyta strengjum í int
         birth_year = atoi(years[0].c_str());
@@ -181,6 +186,7 @@ void ConsoleUI::add()
 
         cout << "Sex: ";
         cin >> sex;
+        countParam(del_params);
 
         // breyta Sex í uppercase (M/F)
         sex = utils::str2upper(sex);
@@ -191,6 +197,7 @@ void ConsoleUI::add()
             cerr << "Alas, the sex is not right. Must be either M or F. Try again.\n";
             cout << "Sex: ";
             cin >> sex;
+            countParam(del_params);
             // breyta kyninu í uppercase...
             sex = utils::str2upper(sex);
         }
@@ -205,8 +212,10 @@ void ConsoleUI::add()
         cout << "Name: ";
         cin.ignore(1000, '\n');
         getline(cin, name);
+        utils::trimeWS(name);
         cout << "Type: ";
         getline(cin, type);
+        utils::trimeWS(type);
         cout << "Build Year: ";
         cin >> years[0];
         cin.ignore(1000, '\n');
@@ -214,6 +223,7 @@ void ConsoleUI::add()
         {
             cout << "Was it built? (y/n) ";
             cin >> param;
+            countParam(del_params);
             param = utils::str2lower(param);
             if(param == "y")
                 built = true;
