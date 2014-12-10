@@ -3,24 +3,7 @@
 
 Relation::Relation()
 {
-    /*pid = 0;
-    first_name = "";
-    last_name = "";
-    cid = 0;
-    cname = "";*/
-
 }
-
-/*Relation::Relation(int id1, string fn, string ln, int id2, string name, string type, int cyb)
-{
-    pid = id1;
-    first_name = fn;
-    last_name = ln;
-    cid = id2;
-    cname = name;
-    ctype = type;
-    cyear_built = cyb;
-}*/
 
 Relation::Relation(const Person &person, const Computer &comp)
 {
