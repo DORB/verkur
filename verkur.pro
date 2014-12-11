@@ -5,7 +5,8 @@
 #-------------------------------------------------
 
 QT       += core sql
-
+QT       += core gui
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QT       -= gui
 
 TARGET = verkur
@@ -24,7 +25,8 @@ SOURCES += main.cpp \
     service.cpp \
     repository.cpp \
     relation.cpp \
-    utilities.cpp
+    utilities.cpp \
+    mainwindow.cpp
 
 HEADERS += \
     person.h \
@@ -35,9 +37,13 @@ HEADERS += \
     service.h \
     repository.h \
     relation.h \
-    utilities.h
+    utilities.h \
+    mainwindow.h
 
 OTHER_FILES += \
     README.md \
     splash.txt \
     todo.md
+
+FORMS += \
+    mainwindow.ui
