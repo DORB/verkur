@@ -5,13 +5,14 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
-#include "personservice.h"
+#include "service.h"
 using namespace std;
 
 class ConsoleUI
 {
 public:
     ConsoleUI();
+    void clear();
     void start();
     void verkurLogo();
     void add();
@@ -19,16 +20,21 @@ public:
     void list_c();
     void sort();
     void find();
+    void rel();
+    void marry();
+    void printComms();
+    void show(const PersonContainer& listed);
+    void show(const Person& listed);
+    void show(const CompContainer& listed);
+    void show(const Computer &listed);
+    void show(const RelContainer &r, const marriage &m);
+    // Utilities föll
+    int isValidInput(const string& inp, const int& lessThan, bool& isOK);
+    vector<string> countParam();
+    void countParam(vector<string>& result);
+    void trimParam(vector<string>& result, const int& keep);
 private:
-    PersonService personService;
+    Service service;
 };
-
-void list(PersonContainer listed);
-void list(Person listed);
-int isValidInput(const string& inp, const int& lessThan, bool& isOK);
-bool isDone(string& str);
-bool isDoneFind(string& str);
-void printComms();
-vector<string> countParam();
 
 #endif // CONSOLEUI_H

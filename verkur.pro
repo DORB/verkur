@@ -5,11 +5,11 @@
 #-------------------------------------------------
 
 QT       += core sql
-
+QT       += core gui
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QT       -= gui
 
 TARGET = verkur
-CONFIG   += console
 CONFIG   -= app_bundle
 
 TEMPLATE = app
@@ -18,18 +18,31 @@ TEMPLATE = app
 SOURCES += main.cpp \
     person.cpp \
     consoleui.cpp \
-    personservice.cpp \
-    personrepo.cpp \
-    comparer.cpp
+    comparer.cpp \
+    computer.cpp \
+    database.cpp \
+    service.cpp \
+    repository.cpp \
+    relation.cpp \
+    utilities.cpp \
+    mainwindow.cpp
 
 HEADERS += \
     person.h \
     consoleui.h \
-    personservice.h \
-    personrepo.h \
-    comparer.h
+    comparer.h \
+    computer.h \
+    database.h \
+    service.h \
+    repository.h \
+    relation.h \
+    utilities.h \
+    mainwindow.h
 
 OTHER_FILES += \
     README.md \
     splash.txt \
     todo.md
+
+FORMS += \
+    mainwindow.ui

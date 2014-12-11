@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "person.h"
+#include <computer.h>
 using namespace std;
 
 class Comparer
@@ -15,6 +16,7 @@ public:
     Comparer();
     Comparer(int col, bool a);
     bool operator()(const Person p1, const Person p2);
+    bool operator ()(const Computer p1, const Computer p2);
 };
 
 #endif // COMPARER_H

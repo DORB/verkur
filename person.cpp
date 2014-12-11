@@ -2,34 +2,52 @@
 
 Person::Person()
 {
-    name = "";
+    pid = 0;
+    first_name = "";
+    last_name = "";
     sex = '\0';
     birth_year = 0;
     death_year = 0;
-
+    nationality = "";
 }
 
-Person::Person(string n, int by, int dy, string s)
+Person::Person(int id, string fn, string ln, int by, int dy, string s, string n)
 {
-    name = n;
+    pid = id;
+    first_name = fn;
+    last_name = ln;
     sex = s;
     birth_year = by;
     death_year = dy;
+    nationality = n;
 }
 
-// Til að einfalda prentun á Person. Óþarfi, bara notað einu sinni, en ágætt að hafa
-ostream& operator <<(ostream& out, const Person& p)
+ostream& operator <<(ostream& out, const Person& listed)
 {
-    out << p.name << ";" << p.birth_year << ";" << p.death_year << ";" << p.sex << ";";
+        // out << setw(3) << listed.getID()+1
+        out  << setw(37) << listed.getFName() + " " + listed.getLName()
+             << setw(18) << listed.getNationality()
+             << setw(5); if(listed.getBY() == 0){ out << "-"; } else { out << listed.getBY(); }
+        out  << setw(5); if(listed.getDY() == 0){ out << "-"; } else { out << listed.getDY(); }
+        out  << setw(5) << listed.getSex()
+             << endl;
 
     return out;
 }
 
 // Gettarar:
-
-string Person::getName() const
+int Person::getID() const
 {
-    return name;
+    return pid;
+}
+string Person::getFName() const
+{
+    return first_name;
+}
+
+string Person::getLName() const
+{
+    return last_name;
 }
 
 int Person::getBY() const
@@ -45,4 +63,9 @@ int Person::getDY() const
 string Person::getSex() const
 {
     return sex;
+}
+
+string Person::getNationality() const
+{
+    return nationality;
 }
