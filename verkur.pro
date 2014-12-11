@@ -10,7 +10,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QT       -= gui
 
 TARGET = verkur
-CONFIG   += console
 CONFIG   -= app_bundle
 
 TEMPLATE = app
